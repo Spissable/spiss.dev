@@ -14,8 +14,6 @@ Anyways
 
 Peace
 
-[Arch Linux]: https://www.archlinux.org/
-
 ## Contact
 
 See the footer for my email and social media links.
