@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+  <channel>
+    <title>Lukas Spiss</title>
+    <link>https:&#x2F;&#x2F;www.spiss.dev</link>
+    <description>Posts by Lukas Spiss</description>
+    <generator>Zola</generator>
+    <language>en</language>
+    <managingEditor>lukas@spiss.dev (Lukas Spiss)</managingEditor>
+    <webMaster>lukas@spiss.dev (Lukas Spiss)</webMaster>
+    <atom:link href="https:&#x2F;&#x2F;www.spiss.dev&#x2F;rss.xml" rel="self" type="application/rss+xml"/>
+    <lastBuildDate>Sat, 25 May 2019 15:42:29 +1100</lastBuildDate>
+    
+    <item>
+      <title>i3wm - the world of tiling window managers</title>
+      <pubDate>Sat, 25 May 2019 15:42:29 +1100</pubDate>
+      <atom:published>2019-05-25T15:42:29+11:00</atom:published>
+      
+      <author>lukas@spiss.dev (Lukas Spiss)</author>
+      <link>https:&#x2F;&#x2F;www.spiss.dev&#x2F;posts&#x2F;2020&#x2F;i3wm&#x2F;</link>
+      <guid>https:&#x2F;&#x2F;www.spiss.dev&#x2F;posts&#x2F;2020&#x2F;i3wm&#x2F;</guid>
+      <description>&lt;p&gt;Disclaimer: If you prefer your system to be production ready right away, shiny to the very last pixel and intuitive without spending some time to get used to it, then i3 is most likely not for you. For anyone else, enjoy the post and I hope you&#x27;ll give it a try yourself! &lt;&#x2F;p&gt;
+&lt;p id=&quot;zola-continue-reading&quot;&gt;&lt;a name=&quot;continue-reading&quot;&gt;&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;floating-vs-tiling&quot;&gt;Floating vs. Tiling&lt;&#x2F;h3&gt;
+&lt;p&gt;The window manager landscape for the Linux ecosystem is quite crowded. Major names like Gnome, KDE or XFCE satisfy most users&#x27; needs and give a lot of room for customization. One feature that unites them is, that they are all floating window managers. It&#x27;s the concept of dragging windows around freely (mostly with your mouse), probably everyone is familiar with from using Windows or MacOS. &lt;&#x2F;p&gt;
+&lt;p&gt;On the other side, there are tiling window managers like i3, awesome or herbstluft, just to name a few. They are way less popular amongst the average user, but the concept of automatically tiling windows by default, not just helps you to stay organized, but enforces it. And once you get accustomed to it, you&#x27;ll find your workflow to be vastly improved in speed. &lt;&#x2F;p&gt;
+&lt;h3 id=&quot;i3wm&quot;&gt;i3wm&lt;&#x2F;h3&gt;
+&lt;p&gt;i3wm is my window manager of choice for some years now whenever I&#x27;m working on a Linux machine. Initially I encountered it during a presentation at the university. I had been using Linux for years at that point, but I wasn&#x27;t familiar with the concept of tiling window managers. Clearly impressed, I installed it right away and well... it was a game changer. A few of the main features (for me):&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;Tiling (duh.)&lt;&#x2F;li&gt;
+&lt;li&gt;Binding applications to workspaces&lt;&#x2F;li&gt;
+&lt;li&gt;Horizontal &#x2F; Vertical &#x2F; Tabbed &#x2F; Stacked &#x2F; Floating&lt;&#x2F;li&gt;
+&lt;li&gt;Configuration in a single config file&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h3 id=&quot;binding-applications-to-workspaces&quot;&gt;Binding applications to workspaces&lt;&#x2F;h3&gt;
+&lt;p&gt;In order to stay truly organized in a tiling window manager environment, it&#x27;s quite fundamental that your windows open in pre-defined workspaces. Otherwise your screen would become really crowded, really fast. This is how I organize my workspaces:&lt;&#x2F;p&gt;
+&lt;p&gt;1: Browsers&lt;&#x2F;p&gt;
+&lt;p&gt;2: Editors&lt;&#x2F;p&gt;
+&lt;p&gt;3: Terminals&lt;&#x2F;p&gt;
+&lt;p&gt;4: Communication&lt;&#x2F;p&gt;
+&lt;p&gt;5: Music&lt;&#x2F;p&gt;
+&lt;p&gt;Scratchpad: Notes&lt;&#x2F;p&gt;
+&lt;p&gt;With this setup, I got my everyday needs covered. It became second nature to me and going back to any other window manager without this feature (which I occasionally do, because I love to experiment) is just a pain in the ass.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;configuration&quot;&gt;Configuration&lt;&#x2F;h3&gt;
+&lt;p&gt;All keybinds, workspaces etc. are configured in one config file (~&#x2F;.config&#x2F;i3&#x2F;config). While this might be a little bit intimidating at first, it becomes more and more advantageous with time. i3 has a great documentation for beginners, making it actually quite easy to tailor the window manger the way you like it. And once configured, you can just backup your configuration file and have it ready whenever you decide to install a new OS.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;additional-tools&quot;&gt;Additional tools&lt;&#x2F;h3&gt;
+&lt;p&gt;&lt;strong&gt;Polybar:&lt;&#x2F;strong&gt; Alternative, feature rich and beautiful statusbar&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;strong&gt;Rofi:&lt;&#x2F;strong&gt; Application launcher, window switcher and much more&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;strong&gt;Udev rule + systemd service + bash script:&lt;&#x2F;strong&gt; to properly manage monitor hotplug&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;helpful-ressources&quot;&gt;Helpful ressources&lt;&#x2F;h3&gt;
+&lt;p&gt;&lt;a href=&quot;https:&#x2F;&#x2F;i3wm.org&#x2F;docs&#x2F;&quot;&gt;i3 documentation&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;a href=&quot;https:&#x2F;&#x2F;swaywm.org&#x2F;&quot;&gt;Sway (wayland implementation of i3)&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;a href=&quot;https:&#x2F;&#x2F;www.reddit.com&#x2F;r&#x2F;unixporn&#x2F;&quot;&gt;Subreddit for inspiration&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;Spissable&#x2F;dotfiles&#x2F;&quot;&gt;My dotfiles&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

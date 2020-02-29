@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    
+        <url>
+            <loc>https://www.spiss.dev/</loc>
+            
+        </url>
+    
+        <url>
+            <loc>https://www.spiss.dev/about/</loc>
+            
+        </url>
+    
+        <url>
+            <loc>https://www.spiss.dev/posts/</loc>
+            
+        </url>
+    
+        <url>
+            <loc>https://www.spiss.dev/posts/2020/</loc>
+            
+        </url>
+    
+        <url>
+            <loc>https://www.spiss.dev/posts/2020/i3wm/</loc>
+            
+                <lastmod>2019-05-25T15:42:29+11:00</lastmod>
+            
+        </url>
+    
+        <url>
+            <loc>https://www.spiss.dev/posts/2020/page/1/</loc>
+            
+        </url>
+    
+</urlset>
