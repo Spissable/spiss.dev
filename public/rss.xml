@@ -9,12 +9,38 @@
     <managingEditor>lukas@spiss.dev (Lukas Spiss)</managingEditor>
     <webMaster>lukas@spiss.dev (Lukas Spiss)</webMaster>
     <atom:link href="https:&#x2F;&#x2F;www.spiss.dev&#x2F;rss.xml" rel="self" type="application/rss+xml"/>
-    <lastBuildDate>Sat, 25 May 2019 15:42:29 +1100</lastBuildDate>
+    <lastBuildDate>Sun, 01 Mar 2020 13:00:00 +0100</lastBuildDate>
+    
+    <item>
+      <title>Giving Clear Linux a Try</title>
+      <pubDate>Sun, 01 Mar 2020 13:00:00 +0100</pubDate>
+      <atom:published>2020-03-01T13:00:00+01:00</atom:published>
+      
+      <author>lukas@spiss.dev (Lukas Spiss)</author>
+      <link>https:&#x2F;&#x2F;www.spiss.dev&#x2F;posts&#x2F;2020&#x2F;clearlinux&#x2F;</link>
+      <guid>https:&#x2F;&#x2F;www.spiss.dev&#x2F;posts&#x2F;2020&#x2F;clearlinux&#x2F;</guid>
+      <description>&lt;p&gt;After over a year of exclusively using Arch Linux on my work laptop, the distro hopping itch has gotten the better of me and I decided to give &lt;a href=&quot;https:&#x2F;&#x2F;clearlinux.org&#x2F;&quot;&gt;Clear Linux&lt;&#x2F;a&gt; a try. And since I don&#x27;t do half arsed things, I wiped my disk and used Clear Linux as my main distro... at least for a while.&lt;&#x2F;p&gt;
+&lt;p id=&quot;zola-continue-reading&quot;&gt;&lt;a name=&quot;continue-reading&quot;&gt;&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;installation&quot;&gt;Installation&lt;&#x2F;h3&gt;
+&lt;p&gt;The installation experience was very straight forward, similar to the one of Ubuntu I&#x27;d say. The graphical interface leaves next to no room for mistakes and presents you with a ready-to-go system with just a few clicks.&lt;&#x2F;p&gt;
+&lt;p&gt;The only thing I was missing was F2FS (Flash-Friendly File System) support, which is my preferred filesystem. However, at the time of me writing this post, a pull request adding support for it has been &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;clearlinux&#x2F;clr-installer&#x2F;pull&#x2F;654#event-3079095310&quot;&gt;merged&lt;&#x2F;a&gt;. &lt;&#x2F;p&gt;
+&lt;h3 id=&quot;the-good&quot;&gt;The Good&lt;&#x2F;h3&gt;
+&lt;p&gt;The very first thing I noticed when booting Clear Linux, was actually the boot process itself. It is &lt;em&gt;blazing fast&lt;&#x2F;em&gt;! Despite full root encryption. I also found confirmation of that impression &lt;a href=&quot;https:&#x2F;&#x2F;phoronix.com&#x2F;scan.php?page=news_item&amp;amp;px=Clear-Linux-Kernel-3s-to-300ms&quot;&gt;here&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
+&lt;p&gt;Since the default desktop environment of the distro is Gnome, I was then greeted by the Gnome Desktop Manager. A choice I very much support, as Gnome gives a very complete desktop experience in my opinion, including support for X11 and Wayland.&lt;&#x2F;p&gt;
+&lt;p&gt;Last but not least, all the software I installed was up-to-date, which is one of the big promises on the distros website.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;the-bad&quot;&gt;The Bad&lt;&#x2F;h3&gt;
+&lt;p&gt;While the software I installed was up-to-date, it still cost me quite some frustration. Clear Linux offers a lot of its packages in bundles, e.g. the desktop-dev bundle, which includes lots of different packages which you might need or might not. As for me, I prefer being in control of what is being installed, rather than having to get a whole bundle of things of which half of it is useless to me.&lt;&#x2F;p&gt;
+&lt;p&gt;Another packaging format that is supported is &lt;a href=&quot;https:&#x2F;&#x2F;flatpak.org&#x2F;&quot;&gt;Flatpak&lt;&#x2F;a&gt;. A containerized, distribution independent packaging format which claims to be &amp;quot;The Future Of Apps On Linux.&amp;quot; As they offer Visual Studio Code, which is my main code editor, I gave it a try. First problem, the integrated terminal was not working as I was used to. The Z shell didn&#x27;t respect my config files, certain executables weren&#x27;t usable... and I am &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;Microsoft&#x2F;vscode&#x2F;issues&#x2F;44646&quot;&gt;not the only one&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
+&lt;p&gt;Last but not least, only 1 week into the experiment, my Gnome Wayland setup didn&#x27;t load anymore, but instead I was greeted with a black screen on log-in. The X11 variant still worked though, so I tried to repair it from there. However, attempt after attempt the frustration grew bigger and bigger and I really need my system to be reliable at work, so I just decided to pull the plug and re-install the trusted Arch Linux.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;conclusion&quot;&gt;Conclusion&lt;&#x2F;h3&gt;
+&lt;p&gt;I am still glad I gave Clear Linux a try and despite the problems that I faced, I am still very impressed how far this very young distro has come. Especially the performance is astonishing, and I hope other distros can integrate some of Clear Linux&#x27;s patches. I can&#x27;t wait to try out the next up and coming distro, whichever it might be.&lt;&#x2F;p&gt;
+</description>
+    </item>
     
     <item>
       <title>i3wm - the world of tiling window managers</title>
-      <pubDate>Sat, 25 May 2019 15:42:29 +1100</pubDate>
-      <atom:published>2019-05-25T15:42:29+11:00</atom:published>
+      <pubDate>Sat, 25 May 2019 15:42:29 +0100</pubDate>
+      <atom:published>2019-05-25T15:42:29+01:00</atom:published>
       
       <author>lukas@spiss.dev (Lukas Spiss)</author>
       <link>https:&#x2F;&#x2F;www.spiss.dev&#x2F;posts&#x2F;2020&#x2F;i3wm&#x2F;</link>

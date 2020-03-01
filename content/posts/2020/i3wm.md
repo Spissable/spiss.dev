@@ -1,6 +1,6 @@
 +++
 title = "i3wm - the world of tiling window managers"
-date = 2019-05-25T15:42:29+11:00
+date = 2019-05-25T15:42:29+01:00
 
 # [extra]
 # updated = 2019-05-25T22:40:53+10:00
