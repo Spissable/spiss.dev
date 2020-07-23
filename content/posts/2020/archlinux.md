@@ -1,9 +1,9 @@
 +++
 title = "Arch Linux - it's really not that complicated"
-date = 2020-03-07T17:30:00+01:00
+date = 2020-07-23T15:37:00+01:00
 
 # [extra]
-# updated = 2020-03-07T17:30:00+01:00
+# updated = 2020-07-23T15:37:00+01:00
 +++
 
 This is a step by step installation documentation on how I install Arch Linux on my Dell XPS 13 (9370) - my primary work setup. This is quite opinionated (e.g. f2fs root partition) and not applicable on every machine out there. But perhaps a rough guideline on how to easily install Arch Linux nonetheless.
