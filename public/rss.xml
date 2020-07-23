@@ -9,7 +9,137 @@
     <managingEditor>lukas@spiss.dev (Lukas Spiss)</managingEditor>
     <webMaster>lukas@spiss.dev (Lukas Spiss)</webMaster>
     <atom:link href="https:&#x2F;&#x2F;www.spiss.dev&#x2F;rss.xml" rel="self" type="application/rss+xml"/>
-    <lastBuildDate>Sun, 01 Mar 2020 13:00:00 +0100</lastBuildDate>
+    <lastBuildDate>Sat, 07 Mar 2020 17:30:00 +0100</lastBuildDate>
+    
+    <item>
+      <title>Arch Linux - it&#x27;s really not that complicated</title>
+      <pubDate>Sat, 07 Mar 2020 17:30:00 +0100</pubDate>
+      <atom:published>2020-03-07T17:30:00+01:00</atom:published>
+      
+      <author>lukas@spiss.dev (Lukas Spiss)</author>
+      <link>https:&#x2F;&#x2F;www.spiss.dev&#x2F;posts&#x2F;2020&#x2F;archlinux&#x2F;</link>
+      <guid>https:&#x2F;&#x2F;www.spiss.dev&#x2F;posts&#x2F;2020&#x2F;archlinux&#x2F;</guid>
+      <description>&lt;p&gt;This is a step by step installation documentation on how I install Arch Linux on my Dell XPS 13 (9370) - my primary work setup. This is quite opinionated (e.g. f2fs root partition) and not applicable on every machine out there. But perhaps a rough guideline on how to easily install Arch Linux nonetheless.&lt;&#x2F;p&gt;
+&lt;span id=&quot;continue-reading&quot;&gt;&lt;&#x2F;span&gt;&lt;h3 id=&quot;overview&quot;&gt;Overview&lt;&#x2F;h3&gt;
+&lt;ul&gt;
+&lt;li&gt;2 partitions: boot (fat32), root (f2fs - encrypted)&lt;&#x2F;li&gt;
+&lt;li&gt;Bootloader: Systemd-boot (formerly gummiboot)&lt;&#x2F;li&gt;
+&lt;li&gt;Desktop Environment: Gnome&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;Please also consult the official &lt;a href=&quot;https:&#x2F;&#x2F;wiki.archlinux.org&#x2F;index.php&#x2F;Installation_Guide&quot;&gt;Arch Linux Documentation&lt;&#x2F;a&gt;.&lt;br &#x2F;&gt;
+The step by step instructions can also be found on my &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;Spissable&#x2F;arch-linux-installation&quot;&gt;Github&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;enter-bios-with-f2-and-configure&quot;&gt;Enter BIOS with F2 and configure:&lt;&#x2F;h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&amp;quot;System Configuration&amp;quot; &amp;gt; &amp;quot;SATA Operation&amp;quot;: &amp;quot;AHCI&amp;quot;&lt;&#x2F;li&gt;
+&lt;li&gt;&amp;quot;Secure Boot&amp;quot; &amp;gt; &amp;quot;Secure Boot Enable&amp;quot;: &amp;quot;Disabled&amp;quot;&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h3 id=&quot;boot-from-usb&quot;&gt;Boot from USB&lt;&#x2F;h3&gt;
+&lt;p&gt;&lt;strong&gt;Make sure to boot from USB using UEFI - this is required by systemd-boot!&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;set-desired-keymap&quot;&gt;Set desired keymap&lt;&#x2F;h3&gt;
+&lt;p&gt;&lt;code&gt;loadkeys en_US-utf8&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;optional-connect-to-wifi&quot;&gt;(Optional) Connect to wifi&lt;&#x2F;h3&gt;
+&lt;p&gt;&lt;code&gt;wifi-menu&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;Once done it can take some seconds - confirm it worked using ping&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;code&gt;ping 1.1.1.1&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;sync-clock&quot;&gt;Sync clock&lt;&#x2F;h3&gt;
+&lt;p&gt;&lt;code&gt;timedatectl set-ntp true&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;create-two-partitions&quot;&gt;Create two partitions:&lt;&#x2F;h3&gt;
+&lt;ul&gt;
+&lt;li&gt;1000MB EFI partition with hex code &lt;strong&gt;ef00&lt;&#x2F;strong&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;100% Linux partiton (to be encrypted) with hex code &lt;strong&gt;8300&lt;&#x2F;strong&gt;&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;&lt;strong&gt;CAUTION&lt;&#x2F;strong&gt; Find the correct disk&#x2F;partition names for yourself using &lt;code&gt;lsblk&lt;&#x2F;code&gt;. From here on I am using mine as an example. Do not blindly copy paste these, it might not work or you might destroy partitions you don&#x27;t want to destroy.&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;code&gt;cgdisk &#x2F;dev&#x2F;nvme0n1&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;optional-install-f2fs-tools&quot;&gt;(Optional) Install f2fs-tools&lt;&#x2F;h3&gt;
+&lt;p&gt;&lt;code&gt;pacman -S f2fs-tools&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;formatting-and-encyption&quot;&gt;Formatting and encyption&lt;&#x2F;h3&gt;
+&lt;p&gt;&lt;strong&gt;Boot&lt;&#x2F;strong&gt; partition&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;code&gt;mkfs.fat -F32 &#x2F;dev&#x2F;nvme0n1p1&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;strong&gt;Root&lt;&#x2F;strong&gt; partition&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;code&gt;cryptsetup luksFormat --type=luks2 &#x2F;dev&#x2F;nvme0n1p2&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;code&gt;cryptsetup open &#x2F;dev&#x2F;nvme0n1p2 luks&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;(choose filesystem - assuming f2fs)&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;code&gt;mkfs.f2fs -l luks &#x2F;dev&#x2F;mapper&#x2F;luks&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;mount-root-and-boot-partition&quot;&gt;Mount root and boot partition&lt;&#x2F;h3&gt;
+&lt;p&gt;&lt;code&gt;mount &#x2F;dev&#x2F;mapper&#x2F;luks &#x2F;mnt&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;code&gt;mkdir -p &#x2F;mnt&#x2F;boot&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;code&gt;mount &#x2F;dev&#x2F;nvme0n1p1 &#x2F;mnt&#x2F;boot&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;change-pacman-mirror-priority-move-closer-mirror-to-the-top&quot;&gt;Change pacman mirror priority, move closer mirror to the top&lt;&#x2F;h3&gt;
+&lt;p&gt;&lt;code&gt;vim &#x2F;etc&#x2F;pacman.d&#x2F;mirrorlist&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;install-the-base-system-plus-a-few-extra-packages&quot;&gt;Install the base system plus a few extra packages&lt;&#x2F;h3&gt;
+&lt;p&gt;&lt;strong&gt;f2fs-tools is needed if you chose f2fs as your partition&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;strong&gt;With some recent XPS Laptops linux-zen seems to be working better, e.g. resolves screen flickering issues&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;pacstrap &#x2F;mnt base linux linux-firmware zsh vim git sudo efibootmgr wpa_supplicant
+dialog iw f2fs-tools
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;&lt;h3 id=&quot;generate-fstab&quot;&gt;Generate fstab&lt;&#x2F;h3&gt;
+&lt;p&gt;&lt;code&gt;genfstab -L &#x2F;mnt &amp;gt;&amp;gt; &#x2F;mnt&#x2F;etc&#x2F;fstab&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;enter-the-new-system&quot;&gt;Enter the new system&lt;&#x2F;h3&gt;
+&lt;p&gt;&lt;code&gt;arch-chroot &#x2F;mnt&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;setup-time&quot;&gt;Setup time&lt;&#x2F;h3&gt;
+&lt;p&gt;&lt;code&gt;rm &#x2F;etc&#x2F;localtime&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;code&gt;ln -s &#x2F;usr&#x2F;share&#x2F;zoneinfo&#x2F;Europe&#x2F;Berlin &#x2F;etc&#x2F;localtime&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;code&gt;hwclock --systohc&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;generate-required-locales&quot;&gt;Generate required locales&lt;&#x2F;h3&gt;
+&lt;p&gt;&lt;code&gt;vim &#x2F;etc&#x2F;locale.gen&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;code&gt;locale-gen&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;set-desired-locale&quot;&gt;Set desired locale&lt;&#x2F;h3&gt;
+&lt;p&gt;&lt;code&gt;echo &#x27;LANG=en_US.UTF-8&#x27; &amp;gt; &#x2F;etc&#x2F;locale.conf&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;set-desired-keymap-and-font&quot;&gt;Set desired keymap and font&lt;&#x2F;h3&gt;
+&lt;p&gt;&lt;code&gt;echo &#x27;KEYMAP=us&#x27; &amp;gt; &#x2F;etc&#x2F;vconsole.conf&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;set-the-hostname&quot;&gt;Set the hostname&lt;&#x2F;h3&gt;
+&lt;p&gt;&lt;code&gt;echo &#x27;&amp;lt;hostname&amp;gt;&#x27; &amp;gt; &#x2F;etc&#x2F;hostname&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;add-hostname-to-etc-hosts&quot;&gt;Add hostname to &#x2F;etc&#x2F;hosts:&lt;&#x2F;h3&gt;
+&lt;p&gt;&lt;code&gt;vim &#x2F;etc&#x2F;hosts&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;127.0.0.1	localhost
+::1		localhost
+127.0.1.1	&amp;lt;hostname&amp;gt;.localdomain &amp;lt;hostname&amp;gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;&lt;h3 id=&quot;set-password-for-root&quot;&gt;Set password for root&lt;&#x2F;h3&gt;
+&lt;p&gt;&lt;code&gt;passwd&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;add-real-user&quot;&gt;Add real user&lt;&#x2F;h3&gt;
+&lt;p&gt;&lt;code&gt;useradd -m -g users -G wheel -s &#x2F;bin&#x2F;zsh &amp;lt;username&amp;gt;&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;code&gt;passwd &amp;lt;username&amp;gt;&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;code&gt;echo &#x27;&amp;lt;username&amp;gt; ALL=(ALL) ALL&#x27; &amp;gt; &#x2F;etc&#x2F;sudoers.d&#x2F;&amp;lt;username&amp;gt;&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;configure-mkinitcpio-with-modules-needed-for-the-initrd-image&quot;&gt;Configure mkinitcpio with modules needed for the initrd image&lt;&#x2F;h3&gt;
+&lt;p&gt;&lt;code&gt;vim &#x2F;etc&#x2F;mkinitcpio.conf&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;# Optional - for f2fs module crypto-crc32 is required however
+MODULES=(crypto-crc32)
+
+# Important - Use the correct order
+HOOKS=(base systemd autodetect modconf block keyboard sd-vconsole sd-encrypt filesystems)
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;&lt;h3 id=&quot;regenerate-initrd-image&quot;&gt;Regenerate initrd image&lt;&#x2F;h3&gt;
+&lt;p&gt;&lt;code&gt;mkinitcpio -P&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;setup-systemd-boot&quot;&gt;Setup systemd-boot&lt;&#x2F;h3&gt;
+&lt;p&gt;&lt;code&gt;bootctl --path=&#x2F;boot install&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;enable-intel-microcode-updates&quot;&gt;Enable Intel microcode updates&lt;&#x2F;h3&gt;
+&lt;p&gt;(For AMD replace &lt;strong&gt;intel-ucode&lt;&#x2F;strong&gt; with &lt;strong&gt;amd-ucode&lt;&#x2F;strong&gt; in every step that follows)&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;code&gt;pacman -S intel-ucode&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;create-bootloader-entry&quot;&gt;Create bootloader entry&lt;&#x2F;h3&gt;
+&lt;p&gt;Get luks-uuid with: &lt;&#x2F;p&gt;
+&lt;p&gt;&lt;code&gt;cryptsetup luksUUID &#x2F;dev&#x2F;nvme0n1p2&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;Create the entry:&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;code&gt;vim &#x2F;boot&#x2F;loader&#x2F;entries&#x2F;arch.conf&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;title		Arch Linux
+linux		&#x2F;vmlinuz-linux
+initrd		&#x2F;intel-ucode.img
+initrd		&#x2F;initramfs-linux.img
+options		rw luks.uuid=&amp;lt;uuid&amp;gt; luks.name=&amp;lt;uuid&amp;gt;=luks root=&#x2F;dev&#x2F;mapper&#x2F;luks
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;&lt;h3 id=&quot;set-default-bootloader-entry&quot;&gt;Set default bootloader entry&lt;&#x2F;h3&gt;
+&lt;p&gt;&lt;code&gt;vim &#x2F;boot&#x2F;loader&#x2F;loader.conf&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;default		arch
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;&lt;h3 id=&quot;optional-setup-gnome&quot;&gt;(Optional) - Setup Gnome&lt;&#x2F;h3&gt;
+&lt;p&gt;&lt;code&gt;pacman -S gnome&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;code&gt;systemctl enable gdm&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;exit-unmount-and-reboot&quot;&gt;Exit, unmount and reboot&lt;&#x2F;h3&gt;
+&lt;p&gt;&lt;code&gt;exit&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;code&gt;umount -R &#x2F;mnt&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;code&gt;reboot&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+</description>
+    </item>
     
     <item>
       <title>Giving Clear Linux a Try</title>
@@ -20,8 +150,7 @@
       <link>https:&#x2F;&#x2F;www.spiss.dev&#x2F;posts&#x2F;2020&#x2F;clearlinux&#x2F;</link>
       <guid>https:&#x2F;&#x2F;www.spiss.dev&#x2F;posts&#x2F;2020&#x2F;clearlinux&#x2F;</guid>
       <description>&lt;p&gt;After over a year of exclusively using Arch Linux on my work laptop, the distro hopping itch has gotten the better of me and I decided to give &lt;a href=&quot;https:&#x2F;&#x2F;clearlinux.org&#x2F;&quot;&gt;Clear Linux&lt;&#x2F;a&gt; a try. And since I don&#x27;t do half arsed things, I wiped my disk and used Clear Linux as my main distro... at least for a while.&lt;&#x2F;p&gt;
-&lt;p id=&quot;zola-continue-reading&quot;&gt;&lt;a name=&quot;continue-reading&quot;&gt;&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
-&lt;h3 id=&quot;installation&quot;&gt;Installation&lt;&#x2F;h3&gt;
+&lt;span id=&quot;continue-reading&quot;&gt;&lt;&#x2F;span&gt;&lt;h3 id=&quot;installation&quot;&gt;Installation&lt;&#x2F;h3&gt;
 &lt;p&gt;The installation experience was very straight forward, similar to the one of Ubuntu I&#x27;d say. The graphical interface leaves next to no room for mistakes and presents you with a ready-to-go system with just a few clicks.&lt;&#x2F;p&gt;
 &lt;p&gt;The only thing I was missing was F2FS (Flash-Friendly File System) support, which is my preferred filesystem. However, at the time of me writing this post, a pull request adding support for it has been &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;clearlinux&#x2F;clr-installer&#x2F;pull&#x2F;654#event-3079095310&quot;&gt;merged&lt;&#x2F;a&gt;. &lt;&#x2F;p&gt;
 &lt;h3 id=&quot;the-good&quot;&gt;The Good&lt;&#x2F;h3&gt;
@@ -46,8 +175,7 @@
       <link>https:&#x2F;&#x2F;www.spiss.dev&#x2F;posts&#x2F;2020&#x2F;i3wm&#x2F;</link>
       <guid>https:&#x2F;&#x2F;www.spiss.dev&#x2F;posts&#x2F;2020&#x2F;i3wm&#x2F;</guid>
       <description>&lt;p&gt;Disclaimer: If you prefer your system to be production ready right away, shiny to the very last pixel and intuitive without spending some time to get used to it, then i3 is most likely not for you. For anyone else, enjoy the post and I hope you&#x27;ll give it a try yourself! &lt;&#x2F;p&gt;
-&lt;p id=&quot;zola-continue-reading&quot;&gt;&lt;a name=&quot;continue-reading&quot;&gt;&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
-&lt;h3 id=&quot;floating-vs-tiling&quot;&gt;Floating vs. Tiling&lt;&#x2F;h3&gt;
+&lt;span id=&quot;continue-reading&quot;&gt;&lt;&#x2F;span&gt;&lt;h3 id=&quot;floating-vs-tiling&quot;&gt;Floating vs. Tiling&lt;&#x2F;h3&gt;
 &lt;p&gt;The window manager landscape for the Linux ecosystem is quite crowded. Major names like Gnome, KDE or XFCE satisfy most users&#x27; needs and give a lot of room for customization. One feature that unites them is, that they are all floating window managers. It&#x27;s the concept of dragging windows around freely (mostly with your mouse), probably everyone is familiar with from using Windows or MacOS. &lt;&#x2F;p&gt;
 &lt;p&gt;On the other side, there are tiling window managers like i3, awesome or herbstluft, just to name a few. They are way less popular amongst the average user, but the concept of automatically tiling windows by default, not just helps you to stay organized, but enforces it. And once you get accustomed to it, you&#x27;ll find your workflow to be vastly improved in speed. &lt;&#x2F;p&gt;
 &lt;h3 id=&quot;i3wm&quot;&gt;i3wm&lt;&#x2F;h3&gt;

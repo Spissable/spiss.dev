@@ -14,7 +14,7 @@ html {
   min-height: 100%;
   background-image: url("images/welcome.png");
   background-position: left;
-  background-repeat: no-repeat;
+  background-repeat: repeat-y;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -38,11 +38,12 @@ body.home {
 pre, code {
   font-family: "Pragmata Pro", "Pragmata Pro Mono", "JetBrains Mono", "Iosevka", "Consolas", monospace;
   font-size: 16px;
+  overflow-x: auto;
 }
 code {
-  background-color: #ffedf0;
-  padding: 0.1em 0.2em;
-  border-radius: 3px;
+  background-color: #2b303b;
+  color: #c0c5ce;
+  padding: 0.3em 0.4em;
 }
 pre {
   padding: 0.5em 1em;
