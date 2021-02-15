@@ -4,7 +4,7 @@ title = "About"
 
 {{ resize_image(image="../static/images/profile.png", width=1600, quality=60, alt="Photo of me.") }}
 
-Hi I'm Lukas. I'm a software developer currently based in in Porto, Portugal with roots in South Tyrol, Italy.
+Hi I'm Lukas. I'm a software developer currently based in Porto, Portugal with roots in South Tyrol, Italy.
 
 Besides my obvious passions for programming and Linux, I love football (Juventus FC), cooking a decent meal and visiting gaming buddies all across Europe.
 
