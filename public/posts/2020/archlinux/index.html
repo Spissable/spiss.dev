@@ -40,7 +40,7 @@
   <div class="post-metadata">
     <div class="date-published">
       <svg class="date-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" version="1.1" x="0px" y="0px"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><path d="M38.6172116,78.6191533 L47.8030928,78.6191533 L47.8030928,69.4332721 L38.6172116,69.4332721 L38.6172116,78.6191533 Z M24.8586734,78.6191533 L34.0445546,78.6191533 L34.0445546,69.4332721 L24.8586734,69.4332721 L24.8586734,78.6191533 Z M66.1332478,64.2656288 L75.319129,64.2656288 L75.319129,55.0797476 L66.1332478,55.0797476 L66.1332478,64.2656288 Z M52.3757498,64.2656288 L61.561631,64.2656288 L61.561631,55.0797476 L52.3757498,55.0797476 L52.3757498,64.2656288 Z M38.6172116,64.2656288 L47.8030928,64.2656288 L47.8030928,55.0797476 L38.6172116,55.0797476 L38.6172116,64.2656288 Z M24.8586734,64.2656288 L34.0445546,64.2656288 L34.0445546,55.0797476 L24.8586734,55.0797476 L24.8586734,64.2656288 Z M66.1332478,49.9110641 L75.319129,49.9110641 L75.319129,40.7251829 L66.1332478,40.7251829 L66.1332478,49.9110641 Z M52.3757498,49.9110641 L61.561631,49.9110641 L61.561631,40.7251829 L52.3757498,40.7251829 L52.3757498,49.9110641 Z M38.6172116,49.9110641 L47.8030928,49.9110641 L47.8030928,40.7251829 L38.6172116,40.7251829 L38.6172116,49.9110641 Z M24.8586734,49.9110641 L34.0445546,49.9110641 L34.0445546,40.7251829 L24.8586734,40.7251829 L24.8586734,49.9110641 Z M13.1607434,90.8382164 L87.7337471,90.8382164 L87.7337471,30.2016227 L13.1607434,30.2016227 L13.1607434,90.8382164 Z M13.1617836,26.0408793 L87.7347873,26.0408793 L87.7347873,16.2662529 L13.1617836,16.2662529 L13.1617836,26.0408793 Z M73.5237682,12.1055095 L73.5237682,5 L69.3630249,5 L69.3630249,12.1055095 L31.5314656,12.1055095 L31.5314656,5 L27.3707222,5 L27.3707222,12.1055095 L9,12.1055095 L9,95 L91.8955307,95 L91.8955307,12.1055095 L73.5237682,12.1055095 Z" fill="currentColor"/></g></svg>
-      <time datetime="2020-07-23T15:37:00+01:00">23 July 2020</time>
+      <time datetime="2020-07-23">23 July 2020</time>
     </div>
   </div>
   
@@ -96,10 +96,10 @@ The step by step instructions can also be found on my <a href="https://github.co
 <h3 id="install-the-base-system-plus-a-few-extra-packages">Install the base system plus a few extra packages</h3>
 <p><strong>f2fs-tools is needed if you chose f2fs as your partition</strong></p>
 <p><strong>With some recent XPS Laptops linux-zen seems to be working better, e.g. resolves screen flickering issues</strong></p>
-<pre style="background-color:#2b303b;">
-<code><span style="color:#c0c5ce;">pacstrap /mnt base linux linux-firmware zsh vim git sudo efibootmgr wpa_supplicant
+<pre><code>pacstrap /mnt base linux linux-firmware zsh vim git sudo efibootmgr wpa_supplicant
 dialog iw f2fs-tools
-</span></code></pre><h3 id="generate-fstab">Generate fstab</h3>
+</code></pre>
+<h3 id="generate-fstab">Generate fstab</h3>
 <p><code>genfstab -L /mnt &gt;&gt; /mnt/etc/fstab</code></p>
 <h3 id="enter-the-new-system">Enter the new system</h3>
 <p><code>arch-chroot /mnt</code></p>
@@ -118,11 +118,11 @@ dialog iw f2fs-tools
 <p><code>echo '&lt;hostname&gt;' &gt; /etc/hostname</code></p>
 <h3 id="add-hostname-to-etc-hosts">Add hostname to /etc/hosts:</h3>
 <p><code>vim /etc/hosts</code></p>
-<pre style="background-color:#2b303b;">
-<code><span style="color:#c0c5ce;">127.0.0.1	localhost
+<pre><code>127.0.0.1	localhost
 ::1		localhost
-127.0.1.1	&lt;hostname&gt;.localdomain &lt;hostname&gt;
-</span></code></pre><h3 id="set-password-for-root">Set password for root</h3>
+127.0.1.1	<hostname>.localdomain <hostname>
+</code></pre>
+<h3 id="set-password-for-root">Set password for root</h3>
 <p><code>passwd</code></p>
 <h3 id="add-real-user">Add real user</h3>
 <p><code>useradd -m -g users -G wheel -s /bin/zsh &lt;username&gt;</code></p>
@@ -130,13 +130,13 @@ dialog iw f2fs-tools
 <p><code>echo '&lt;username&gt; ALL=(ALL) ALL' &gt; /etc/sudoers.d/&lt;username&gt;</code></p>
 <h3 id="configure-mkinitcpio-with-modules-needed-for-the-initrd-image">Configure mkinitcpio with modules needed for the initrd image</h3>
 <p><code>vim /etc/mkinitcpio.conf</code></p>
-<pre style="background-color:#2b303b;">
-<code><span style="color:#c0c5ce;"># Optional - for f2fs module crypto-crc32 is required however
+<pre><code># Optional - for f2fs module crypto-crc32 is required however
 MODULES=(crypto-crc32)
 
 # Important - Use the correct order
 HOOKS=(base systemd autodetect modconf block keyboard sd-vconsole sd-encrypt filesystems)
-</span></code></pre><h3 id="regenerate-initrd-image">Regenerate initrd image</h3>
+</code></pre>
+<h3 id="regenerate-initrd-image">Regenerate initrd image</h3>
 <p><code>mkinitcpio -P</code></p>
 <h3 id="setup-systemd-boot">Setup systemd-boot</h3>
 <p><code>bootctl --path=/boot install</code></p>
@@ -148,17 +148,17 @@ HOOKS=(base systemd autodetect modconf block keyboard sd-vconsole sd-encrypt fil
 <p><code>cryptsetup luksUUID /dev/nvme0n1p2</code></p>
 <p>Create the entry:</p>
 <p><code>vim /boot/loader/entries/arch.conf</code></p>
-<pre style="background-color:#2b303b;">
-<code><span style="color:#c0c5ce;">title		Arch Linux
+<pre><code>title		Arch Linux
 linux		/vmlinuz-linux
 initrd		/intel-ucode.img
 initrd		/initramfs-linux.img
-options		rw luks.uuid=&lt;uuid&gt; luks.name=&lt;uuid&gt;=luks root=/dev/mapper/luks
-</span></code></pre><h3 id="set-default-bootloader-entry">Set default bootloader entry</h3>
+options		rw luks.uuid=<uuid> luks.name=<uuid>=luks root=/dev/mapper/luks
+</code></pre>
+<h3 id="set-default-bootloader-entry">Set default bootloader entry</h3>
 <p><code>vim /boot/loader/loader.conf</code></p>
-<pre style="background-color:#2b303b;">
-<code><span style="color:#c0c5ce;">default		arch
-</span></code></pre><h3 id="optional-setup-gnome">(Optional) - Setup Gnome</h3>
+<pre><code>default		arch
+</code></pre>
+<h3 id="optional-setup-gnome">(Optional) - Setup Gnome</h3>
 <p><code>pacman -S gnome</code></p>
 <p><code>systemctl enable gdm</code></p>
 <h3 id="exit-unmount-and-reboot">Exit, unmount and reboot</h3>

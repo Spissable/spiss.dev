@@ -1,9 +1,6 @@
 +++
 title = "Giving Clear Linux a Try"
-date = 2020-03-01T13:00:00+01:00
-
-# [extra]
-# updated = 2020-03-01T13:00:00+01:00
+date = 2020-03-01
 +++
 
 After over a year of exclusively using Arch Linux on my work laptop, the distro hopping itch has gotten the better of me and I decided to give [Clear Linux](https://clearlinux.org/) a try. And since I don't do half arsed things, I wiped my disk and used Clear Linux as my main distro... at least for a while.

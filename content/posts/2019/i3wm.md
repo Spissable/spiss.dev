@@ -1,9 +1,6 @@
 +++
 title = "i3wm - the world of tiling window managers"
-date = 2019-05-25T15:42:29+01:00
-
-# [extra]
-# updated = 2019-05-25T22:40:53+10:00
+date = 2019-05-25
 +++
 
 Disclaimer: If you prefer your system to be production ready right away, shiny to the very last pixel and intuitive without spending some time to get used to it, then i3 is most likely not for you. For anyone else, enjoy the post and I hope you'll give it a try yourself! 
