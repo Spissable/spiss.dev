@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>i3wm - the world of tiling window managers - Lukas Spiss</title>
+  <link rel="stylesheet" href="https:&#x2F;&#x2F;www.spiss.dev/screen.css" type="text/css" charset="utf-8" />
+  <link rel="alternate" type="application/rss+xml" href="https:&#x2F;&#x2F;www.spiss.dev/rss.xml" title="Lukas Spiss" />
+</head>
+<body class="">
+  
+<h1 class="logo"><a href="https:&#x2F;&#x2F;www.spiss.dev/" class="no-border hover-underline">👨🏻‍💻 Lukas Spiss</a></h1>
+
+<nav>
+  
+    
+    
+      <a href="https:&#x2F;&#x2F;www.spiss.dev&#x2F;" class="no-border hover-underline">Home</a>
+    
+  
+    
+    
+      <span class="breadcrumb-sep">/</span>
+      <a href="https:&#x2F;&#x2F;www.spiss.dev/&#x2F;posts&#x2F;" class="no-border hover-underline">Posts</a>
+    
+  
+    
+    
+      <span class="breadcrumb-sep">/</span>
+      <a href="https:&#x2F;&#x2F;www.spiss.dev/&#x2F;posts&#x2F;2019&#x2F;" class="no-border hover-underline">2019</a>
+    
+  
+</nav>
+
+<article id="i3wm">
+  <h2>
+    <a href="/&#x2F;posts&#x2F;2019&#x2F;i3wm&#x2F;">i3wm - the world of tiling window managers</a>
+  </h2>
+  
+  <div class="post-metadata">
+    <div class="date-published">
+      <svg class="date-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" version="1.1" x="0px" y="0px"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><path d="M38.6172116,78.6191533 L47.8030928,78.6191533 L47.8030928,69.4332721 L38.6172116,69.4332721 L38.6172116,78.6191533 Z M24.8586734,78.6191533 L34.0445546,78.6191533 L34.0445546,69.4332721 L24.8586734,69.4332721 L24.8586734,78.6191533 Z M66.1332478,64.2656288 L75.319129,64.2656288 L75.319129,55.0797476 L66.1332478,55.0797476 L66.1332478,64.2656288 Z M52.3757498,64.2656288 L61.561631,64.2656288 L61.561631,55.0797476 L52.3757498,55.0797476 L52.3757498,64.2656288 Z M38.6172116,64.2656288 L47.8030928,64.2656288 L47.8030928,55.0797476 L38.6172116,55.0797476 L38.6172116,64.2656288 Z M24.8586734,64.2656288 L34.0445546,64.2656288 L34.0445546,55.0797476 L24.8586734,55.0797476 L24.8586734,64.2656288 Z M66.1332478,49.9110641 L75.319129,49.9110641 L75.319129,40.7251829 L66.1332478,40.7251829 L66.1332478,49.9110641 Z M52.3757498,49.9110641 L61.561631,49.9110641 L61.561631,40.7251829 L52.3757498,40.7251829 L52.3757498,49.9110641 Z M38.6172116,49.9110641 L47.8030928,49.9110641 L47.8030928,40.7251829 L38.6172116,40.7251829 L38.6172116,49.9110641 Z M24.8586734,49.9110641 L34.0445546,49.9110641 L34.0445546,40.7251829 L24.8586734,40.7251829 L24.8586734,49.9110641 Z M13.1607434,90.8382164 L87.7337471,90.8382164 L87.7337471,30.2016227 L13.1607434,30.2016227 L13.1607434,90.8382164 Z M13.1617836,26.0408793 L87.7347873,26.0408793 L87.7347873,16.2662529 L13.1617836,16.2662529 L13.1617836,26.0408793 Z M73.5237682,12.1055095 L73.5237682,5 L69.3630249,5 L69.3630249,12.1055095 L31.5314656,12.1055095 L31.5314656,5 L27.3707222,5 L27.3707222,12.1055095 L9,12.1055095 L9,95 L91.8955307,95 L91.8955307,12.1055095 L73.5237682,12.1055095 Z" fill="currentColor"/></g></svg>
+      <time datetime="2019-05-25">25 May 2019</time>
+    </div>
+  </div>
+  
+
+  <div class="post-body">
+    <p>Disclaimer: If you prefer your system to be production ready right away, shiny to the very last pixel and intuitive without spending some time to get used to it, then i3 is most likely not for you. For anyone else, enjoy the post and I hope you'll give it a try yourself! </p>
+<span id="continue-reading"></span><h3 id="floating-vs-tiling">Floating vs. Tiling</h3>
+<p>The window manager landscape for the Linux ecosystem is quite crowded. Major names like Gnome, KDE or XFCE satisfy most users' needs and give a lot of room for customization. One feature that unites them is, that they are all floating window managers. It's the concept of dragging windows around freely (mostly with your mouse), probably everyone is familiar with from using Windows or MacOS. </p>
+<p>On the other side, there are tiling window managers like i3, awesome or herbstluft, just to name a few. They are way less popular amongst the average user, but the concept of automatically tiling windows by default, not just helps you to stay organized, but enforces it. And once you get accustomed to it, you'll find your workflow to be vastly improved in speed. </p>
+<h3 id="i3wm">i3wm</h3>
+<p>i3wm is my window manager of choice for some years now whenever I'm working on a Linux machine. Initially I encountered it during a presentation at the university. I had been using Linux for years at that point, but I wasn't familiar with the concept of tiling window managers. Clearly impressed, I installed it right away and well... it was a game changer. A few of the main features (for me):</p>
+<ul>
+<li>Tiling (duh.)</li>
+<li>Binding applications to workspaces</li>
+<li>Horizontal / Vertical / Tabbed / Stacked / Floating</li>
+<li>Configuration in a single config file</li>
+</ul>
+<h3 id="binding-applications-to-workspaces">Binding applications to workspaces</h3>
+<p>In order to stay truly organized in a tiling window manager environment, it's quite fundamental that your windows open in pre-defined workspaces. Otherwise your screen would become really crowded, really fast. This is how I organize my workspaces:</p>
+<p>1: Browsers</p>
+<p>2: Editors</p>
+<p>3: Terminals</p>
+<p>4: Communication</p>
+<p>5: Music</p>
+<p>Scratchpad: Notes</p>
+<p>With this setup, I got my everyday needs covered. It became second nature to me and going back to any other window manager without this feature (which I occasionally do, because I love to experiment) is just a pain in the ass.</p>
+<h3 id="configuration">Configuration</h3>
+<p>All keybinds, workspaces etc. are configured in one config file (~/.config/i3/config). While this might be a little bit intimidating at first, it becomes more and more advantageous with time. i3 has a great documentation for beginners, making it actually quite easy to tailor the window manger the way you like it. And once configured, you can just backup your configuration file and have it ready whenever you decide to install a new OS.</p>
+<h3 id="additional-tools">Additional tools</h3>
+<p><strong>Polybar:</strong> Alternative, feature rich and beautiful statusbar</p>
+<p><strong>Rofi:</strong> Application launcher, window switcher and much more</p>
+<p><strong>Udev rule + systemd service + bash script:</strong> to properly manage monitor hotplug</p>
+<h3 id="helpful-ressources">Helpful ressources</h3>
+<p><a href="https://i3wm.org/docs/">i3 documentation</a></p>
+<p><a href="https://swaywm.org/">Sway (wayland implementation of i3)</a></p>
+<p><a href="https://www.reddit.com/r/unixporn/">Subreddit for inspiration</a></p>
+<p><a href="https://github.com/Spissable/dotfiles/">My dotfiles</a></p>
+
+  </div>
+</article>
+
+  <footer class="text-center">
+    <div class="socials">
+      <a href="https:&#x2F;&#x2F;www.spiss.dev/about/">About</a>
+      &bullet;
+      <a href="https:&#x2F;&#x2F;www.spiss.dev/rss.xml">RSS</a>
+      <a href="mailto:lukas@spiss.dev">Email</a>
+      <a href="https://twitter.com/spissable">Twitter</a>
+      <a href="https://github.com/spissable">GitHub</a>
+    </div>
+    <div class="copyright">
+      Copyright © 2021 Lukas Spiss &mdash;
+      <a href="https://github.com/spissable/spiss.dev">Source on GitHub</a>
+    </div>
+  </footer>
+  <script data-goatcounter="https://spiss.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
+

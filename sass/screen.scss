@@ -39,14 +39,17 @@ pre, code {
   font-family: "Pragmata Pro", "Pragmata Pro Mono", "JetBrains Mono", "Iosevka", "Consolas", monospace;
   font-size: 16px;
   overflow-x: auto;
+  background-color: #2b303b;
 }
 code {
-  background-color: #2b303b;
   color: #c0c5ce;
-  padding: 0.3em 0.4em;
+  word-wrap: break-word;
+  box-decoration-break: clone;
+  padding: .1rem .3rem .2rem;
+  border-radius: .2rem;
 }
 pre {
-  padding: 0.5em 1em;
+  // padding: 0.5em 1em;
 }
 h1,h2,h3,h4 {
   font-family: $heading-family;
@@ -208,9 +211,9 @@ article {
     font-weight: 400;
   }
   blockquote {
-    border-left: 3px solid skyblue;
+    border-left: 3px solid white;
     font-style: oblique 10deg;
-    background-color: hsl(197.4, 23.4%, 97.5%);
+    background-color: #2b303b;
     padding: 1px 1em;
     margin: 1em 0;
     clear: both;
