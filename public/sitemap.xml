@@ -43,4 +43,14 @@
     <url>
         <loc>https://www.spiss.dev/posts/2021/page/1/</loc>
     </url>
+    <url>
+        <loc>https://www.spiss.dev/posts/2022/</loc>
+    </url>
+    <url>
+        <loc>https://www.spiss.dev/posts/2022/jestmemoryleak/</loc>
+        <lastmod>2022-05-03</lastmod>
+    </url>
+    <url>
+        <loc>https://www.spiss.dev/posts/2022/page/1/</loc>
+    </url>
 </urlset>

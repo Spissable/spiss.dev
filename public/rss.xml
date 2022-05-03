@@ -8,7 +8,68 @@
     <managingEditor>lukas@spiss.dev (Lukas Spiss)</managingEditor>
     <webMaster>lukas@spiss.dev (Lukas Spiss)</webMaster>
     <atom:link href="https:&#x2F;&#x2F;www.spiss.dev&#x2F;rss.xml" rel="self" type="application/rss+xml"/>
-    <lastBuildDate>Fri, 20 Aug 2021 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 03 May 2022 00:00:00 +0000</lastBuildDate>
+    
+    <item>
+      <title>Jest Memory Leaks - Some Lessons Learnt</title>
+      <pubDate>Tue, 03 May 2022 00:00:00 +0000</pubDate>
+      <atom:published>2022-05-03T00:00:00+00:00</atom:published>
+      
+      <author>lukas@spiss.dev (Lukas Spiss)</author>
+      <link>https:&#x2F;&#x2F;www.spiss.dev&#x2F;posts&#x2F;2022&#x2F;jestmemoryleak&#x2F;</link>
+      <guid>https:&#x2F;&#x2F;www.spiss.dev&#x2F;posts&#x2F;2022&#x2F;jestmemoryleak&#x2F;</guid>
+      <description>&lt;p&gt;Recently I was facing some memory leaks in the test suits of one of my projects. As I spent a couple of days analyzing the issue and finally fixing it, I wanted to summarize the lessons learnt.&lt;&#x2F;p&gt;
+&lt;span id=&quot;continue-reading&quot;&gt;&lt;&#x2F;span&gt;&lt;h3 id=&quot;project-infos&quot;&gt;Project Infos&lt;&#x2F;h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Nest.JS v8&lt;&#x2F;li&gt;
+&lt;li&gt;Node.JS v14&lt;&#x2F;li&gt;
+&lt;li&gt;~800 unit tests using Jest&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h3 id=&quot;the-build-up&quot;&gt;The Build Up&lt;&#x2F;h3&gt;
+&lt;p&gt;Every once in a while, the Github Actions pipeline would run out of memory during a test run. This is what it looked like:&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;lt;--- JS stacktrace ---&amp;gt;
+
+FATAL ERROR: Reached heap limit Allocation failed - JavaScript heap out of memory
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;While it didn&#x27;t happen consistently, it was still becoming annoying enough. To make matters worse, a Node.JS update to v16 seemed to make the problem unbearable. Time to investigate 🕵🏽‍♂️.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;node-v16&quot;&gt;Node v16&lt;&#x2F;h3&gt;
+&lt;p&gt;There seems to be a &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;facebook&#x2F;jest&#x2F;issues&#x2F;11956&quot;&gt;bug&lt;&#x2F;a&gt;, introduced with Node v16.11, causing memory leaks with Jest. While this bug is certainly putting my Node 16 update to a halt until it&#x27;s resolved, the mentioned Github issue also gives quite some insight on how to debug these kinds of issues. Back to Node 14 🔙.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;early-suspicions&quot;&gt;Early Suspicions&lt;&#x2F;h3&gt;
+&lt;p&gt;Some early ideas what could be causing the issues were:&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;A bad jest&#x2F;ts-jest&#x2F;... package update&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;www.npmjs.com&#x2F;package&#x2F;jest-ts-auto-mock&quot;&gt;Jest-ts-auto-mock&lt;&#x2F;a&gt; as this is messing with the transformer&lt;&#x2F;li&gt;
+&lt;li&gt;The &lt;code&gt;setupFilesBeforeEnv&lt;&#x2F;code&gt; which I had added recently&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;In order to verify any assumptions and changes made, the following command was used to see if any memory was leaking:&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;code&gt;node --expose-gc .&#x2F;node_modules&#x2F;.bin&#x2F;jest --runInBand --logHeapUsage&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;going-back-in-time&quot;&gt;Going Back in Time&lt;&#x2F;h3&gt;
+&lt;p&gt;In order to see if the problem has been happening for a while, just at a smaller scale, I went back to a commit some months ago and ran the above command. Turns out, back then everything was looking fine!&lt;&#x2F;p&gt;
+&lt;p&gt;With that knowledge, I proceded to test whether package updates are responsible for what&#x27;s happening, but no luck there.&lt;&#x2F;p&gt;
+&lt;p&gt;I figured I should try and pin-point to the exact commit where the problem started, but with the normal memory fluctuation it was impossible to spot. To make matters even worse, there seems to be yet a different &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;facebook&#x2F;jest&#x2F;issues&#x2F;12142&quot;&gt;memory issue&lt;&#x2F;a&gt; when using the &lt;code&gt;--runInBand&lt;&#x2F;code&gt; flag.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;detectleaks-flag-to-the-rescue&quot;&gt;detectLeaks Flag to the Rescue&lt;&#x2F;h3&gt;
+&lt;p&gt;Thankfully there is yet another flag called &lt;code&gt;--detectLeaks&lt;&#x2F;code&gt; which will force the garbage collection and fail the test suite if it detects any memory leak.&lt;&#x2F;p&gt;
+&lt;p&gt;The updated command: &lt;code&gt;node --expose-gc .&#x2F;node_modules&#x2F;.bin&#x2F;jest --detectLeaks&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;Going back to the same &amp;quot;suspected-memory-leak-free-commit&amp;quot;, this command proved exactly that. Jumping around commits &amp;quot;bisection&amp;quot; style, while running the leak detection every time, very quickly gave me the exact commit which turned every test suite red.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;setupfilesafterenv-nock&quot;&gt;setupFilesAfterEnv + nock&lt;&#x2F;h3&gt;
+&lt;p&gt;Turns out, the issue was the following jest setup file which I introduced to globally disable any external http requests in tests:&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;&#x2F;&#x2F; jest.setup.ts
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;import &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;* &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;as &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;nock &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;from &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;nock&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;#39;;
+
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;nock&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;disableNetConnect&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;();
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;nock&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;enableNetConnect&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;(&amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;127.0.0.1&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;#39;)
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;There is a section in the &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;nock&#x2F;nock#memory-issues-with-jest&quot;&gt;nock README&lt;&#x2F;a&gt; which actually describes that exact issue. There is also some more context linked there.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;key-lessons-learnt&quot;&gt;Key lessons learnt&lt;&#x2F;h3&gt;
+&lt;ul&gt;
+&lt;li&gt;RTFM&lt;&#x2F;li&gt;
+&lt;li&gt;Run tests with &lt;code&gt;--detectLeaks&lt;&#x2F;code&gt; flag, perhaps even in the CI to detect issues right away, instead of facing 5 different issues at the same time once it all bubbles up.&lt;&#x2F;li&gt;
+&lt;li&gt;Try out newer transformers such as swc&#x2F;jest or esbuild&#x2F;jest for new projects.&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+</description>
+    </item>
     
     <item>
       <title>Code-Server - Taking the home office to the outside</title>
