@@ -34,7 +34,7 @@
 
 <article id="archlinux">
   <h2>
-    <a href="/&#x2F;posts&#x2F;2020&#x2F;archlinux&#x2F;">Arch Linux - it&#x27;s really not that complicated</a>
+    <a href="https:&#x2F;&#x2F;www.spiss.dev&#x2F;posts&#x2F;2020&#x2F;archlinux&#x2F;">Arch Linux - it&#x27;s really not that complicated</a>
   </h2>
   
   <div class="post-metadata">
@@ -96,10 +96,10 @@ The step by step instructions can also be found on my <a href="https://github.co
 <h3 id="install-the-base-system-plus-a-few-extra-packages">Install the base system plus a few extra packages</h3>
 <p><strong>f2fs-tools is needed if you chose f2fs as your partition</strong></p>
 <p><strong>With some recent XPS Laptops linux-zen seems to be working better, e.g. resolves screen flickering issues</strong></p>
-<pre style="background-color:#2b303b;">
-<code><span style="color:#c0c5ce;">pacstrap /mnt base linux linux-firmware zsh vim git sudo efibootmgr wpa_supplicant
+<pre><code>pacstrap &#x2F;mnt base linux linux-firmware zsh vim git sudo efibootmgr wpa_supplicant
 dialog iw f2fs-tools
-</span></code></pre><h3 id="generate-fstab">Generate fstab</h3>
+</code></pre>
+<h3 id="generate-fstab">Generate fstab</h3>
 <p><code>genfstab -L /mnt &gt;&gt; /mnt/etc/fstab</code></p>
 <h3 id="enter-the-new-system">Enter the new system</h3>
 <p><code>arch-chroot /mnt</code></p>
@@ -118,11 +118,11 @@ dialog iw f2fs-tools
 <p><code>echo '&lt;hostname&gt;' &gt; /etc/hostname</code></p>
 <h3 id="add-hostname-to-etc-hosts">Add hostname to /etc/hosts:</h3>
 <p><code>vim /etc/hosts</code></p>
-<pre style="background-color:#2b303b;">
-<code><span style="color:#c0c5ce;">127.0.0.1	localhost
+<pre><code>127.0.0.1	localhost
 ::1		localhost
 127.0.1.1	&lt;hostname&gt;.localdomain &lt;hostname&gt;
-</span></code></pre><h3 id="set-password-for-root">Set password for root</h3>
+</code></pre>
+<h3 id="set-password-for-root">Set password for root</h3>
 <p><code>passwd</code></p>
 <h3 id="add-real-user">Add real user</h3>
 <p><code>useradd -m -g users -G wheel -s /bin/zsh &lt;username&gt;</code></p>
@@ -130,13 +130,13 @@ dialog iw f2fs-tools
 <p><code>echo '&lt;username&gt; ALL=(ALL) ALL' &gt; /etc/sudoers.d/&lt;username&gt;</code></p>
 <h3 id="configure-mkinitcpio-with-modules-needed-for-the-initrd-image">Configure mkinitcpio with modules needed for the initrd image</h3>
 <p><code>vim /etc/mkinitcpio.conf</code></p>
-<pre style="background-color:#2b303b;">
-<code><span style="color:#c0c5ce;"># Optional - for f2fs module crypto-crc32 is required however
+<pre><code># Optional - for f2fs module crypto-crc32 is required however
 MODULES=(crypto-crc32)
 
 # Important - Use the correct order
 HOOKS=(base systemd autodetect modconf block keyboard sd-vconsole sd-encrypt filesystems)
-</span></code></pre><h3 id="regenerate-initrd-image">Regenerate initrd image</h3>
+</code></pre>
+<h3 id="regenerate-initrd-image">Regenerate initrd image</h3>
 <p><code>mkinitcpio -P</code></p>
 <h3 id="setup-systemd-boot">Setup systemd-boot</h3>
 <p><code>bootctl --path=/boot install</code></p>
@@ -148,17 +148,17 @@ HOOKS=(base systemd autodetect modconf block keyboard sd-vconsole sd-encrypt fil
 <p><code>cryptsetup luksUUID /dev/nvme0n1p2</code></p>
 <p>Create the entry:</p>
 <p><code>vim /boot/loader/entries/arch.conf</code></p>
-<pre style="background-color:#2b303b;">
-<code><span style="color:#c0c5ce;">title		Arch Linux
-linux		/vmlinuz-linux
-initrd		/intel-ucode.img
-initrd		/initramfs-linux.img
-options		rw luks.uuid=&lt;uuid&gt; luks.name=&lt;uuid&gt;=luks root=/dev/mapper/luks
-</span></code></pre><h3 id="set-default-bootloader-entry">Set default bootloader entry</h3>
+<pre><code>title		Arch Linux
+linux		&#x2F;vmlinuz-linux
+initrd		&#x2F;intel-ucode.img
+initrd		&#x2F;initramfs-linux.img
+options		rw luks.uuid=&lt;uuid&gt; luks.name=&lt;uuid&gt;=luks root=&#x2F;dev&#x2F;mapper&#x2F;luks
+</code></pre>
+<h3 id="set-default-bootloader-entry">Set default bootloader entry</h3>
 <p><code>vim /boot/loader/loader.conf</code></p>
-<pre style="background-color:#2b303b;">
-<code><span style="color:#c0c5ce;">default		arch
-</span></code></pre><h3 id="optional-setup-gnome">(Optional) - Setup Gnome</h3>
+<pre><code>default		arch
+</code></pre>
+<h3 id="optional-setup-gnome">(Optional) - Setup Gnome</h3>
 <p><code>pacman -S gnome</code></p>
 <p><code>systemctl enable gdm</code></p>
 <h3 id="exit-unmount-and-reboot">Exit, unmount and reboot</h3>

@@ -34,7 +34,7 @@
 
 <article id="jestmemoryleak">
   <h2>
-    <a href="/&#x2F;posts&#x2F;2022&#x2F;jestmemoryleak&#x2F;">Jest Memory Leaks - Some Lessons Learnt</a>
+    <a href="https:&#x2F;&#x2F;www.spiss.dev&#x2F;posts&#x2F;2022&#x2F;jestmemoryleak&#x2F;">Jest Memory Leaks - Some Lessons Learnt</a>
   </h2>
   
   <div class="post-metadata">
@@ -55,11 +55,10 @@
 </ul>
 <h3 id="the-build-up">The Build Up</h3>
 <p>Every once in a while, the Github Actions pipeline would run out of memory during a test run. This is what it looked like:</p>
-<pre style="background-color:#2b303b;">
-<code><span style="color:#c0c5ce;">&lt;--- JS stacktrace ---&gt;
+<pre><code>&lt;--- JS stacktrace ---&gt;
 
 FATAL ERROR: Reached heap limit Allocation failed - JavaScript heap out of memory
-</span></code></pre>
+</code></pre>
 <p>While it didn't happen consistently, it was still becoming annoying enough. To make matters worse, a Node.JS update to v16 seemed to make the problem unbearable. Time to investigate 🕵🏽‍♂️.</p>
 <h3 id="node-v16">Node v16</h3>
 <p>There seems to be a <a href="https://github.com/facebook/jest/issues/11956">bug</a>, introduced with Node v16.11, causing memory leaks with Jest. While this bug is certainly putting my Node 16 update to a halt until it's resolved, the mentioned Github issue also gives quite some insight on how to debug these kinds of issues. Back to Node 14 🔙.</p>
@@ -82,13 +81,12 @@ FATAL ERROR: Reached heap limit Allocation failed - JavaScript heap out of memor
 <p>Going back to the same &quot;suspected-memory-leak-free-commit&quot;, this command proved exactly that. Jumping around commits &quot;bisection&quot; style, while running the leak detection every time, very quickly gave me the exact commit which turned every test suite red.</p>
 <h3 id="setupfilesafterenv-nock">setupFilesAfterEnv + nock</h3>
 <p>Turns out, the issue was the following jest setup file which I introduced to globally disable any external http requests in tests:</p>
-<pre style="background-color:#2b303b;">
-<code><span style="color:#65737e;">// jest.setup.ts
-</span><span style="color:#b48ead;">import </span><span style="color:#d08770;">* </span><span style="color:#b48ead;">as </span><span style="color:#bf616a;">nock </span><span style="color:#b48ead;">from </span><span style="color:#c0c5ce;">&#39;</span><span style="color:#a3be8c;">nock</span><span style="color:#c0c5ce;">&#39;;
+<pre data-lang="typescript" class="language-typescript "><code class="language-typescript" data-lang="typescript">&#x2F;&#x2F; jest.setup.ts
+import * as nock from &#x27;nock&#x27;;
 
-</span><span style="color:#bf616a;">nock</span><span style="color:#c0c5ce;">.</span><span style="color:#8fa1b3;">disableNetConnect</span><span style="color:#c0c5ce;">();
-</span><span style="color:#bf616a;">nock</span><span style="color:#c0c5ce;">.</span><span style="color:#8fa1b3;">enableNetConnect</span><span style="color:#c0c5ce;">(&#39;</span><span style="color:#a3be8c;">127.0.0.1</span><span style="color:#c0c5ce;">&#39;)
-</span></code></pre>
+nock.disableNetConnect();
+nock.enableNetConnect(&#x27;127.0.0.1&#x27;)
+</code></pre>
 <p>There is a section in the <a href="https://github.com/nock/nock#memory-issues-with-jest">nock README</a> which actually describes that exact issue. There is also some more context linked there.</p>
 <h3 id="key-lessons-learnt">Key lessons learnt</h3>
 <ul>

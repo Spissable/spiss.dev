@@ -27,11 +27,10 @@
 &lt;&#x2F;ul&gt;
 &lt;h3 id=&quot;the-build-up&quot;&gt;The Build Up&lt;&#x2F;h3&gt;
 &lt;p&gt;Every once in a while, the Github Actions pipeline would run out of memory during a test run. This is what it looked like:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;lt;--- JS stacktrace ---&amp;gt;
+&lt;pre&gt;&lt;code&gt;&amp;lt;--- JS stacktrace ---&amp;gt;
 
 FATAL ERROR: Reached heap limit Allocation failed - JavaScript heap out of memory
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;While it didn&#x27;t happen consistently, it was still becoming annoying enough. To make matters worse, a Node.JS update to v16 seemed to make the problem unbearable. Time to investigate 🕵🏽‍♂️.&lt;&#x2F;p&gt;
 &lt;h3 id=&quot;node-v16&quot;&gt;Node v16&lt;&#x2F;h3&gt;
 &lt;p&gt;There seems to be a &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;facebook&#x2F;jest&#x2F;issues&#x2F;11956&quot;&gt;bug&lt;&#x2F;a&gt;, introduced with Node v16.11, causing memory leaks with Jest. While this bug is certainly putting my Node 16 update to a halt until it&#x27;s resolved, the mentioned Github issue also gives quite some insight on how to debug these kinds of issues. Back to Node 14 🔙.&lt;&#x2F;p&gt;
@@ -54,13 +53,12 @@ FATAL ERROR: Reached heap limit Allocation failed - JavaScript heap out of memor
 &lt;p&gt;Going back to the same &amp;quot;suspected-memory-leak-free-commit&amp;quot;, this command proved exactly that. Jumping around commits &amp;quot;bisection&amp;quot; style, while running the leak detection every time, very quickly gave me the exact commit which turned every test suite red.&lt;&#x2F;p&gt;
 &lt;h3 id=&quot;setupfilesafterenv-nock&quot;&gt;setupFilesAfterEnv + nock&lt;&#x2F;h3&gt;
 &lt;p&gt;Turns out, the issue was the following jest setup file which I introduced to globally disable any external http requests in tests:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;&#x2F;&#x2F; jest.setup.ts
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;import &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;* &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;as &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;nock &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;from &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;nock&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;#39;;
+&lt;pre data-lang=&quot;typescript&quot; class=&quot;language-typescript &quot;&gt;&lt;code class=&quot;language-typescript&quot; data-lang=&quot;typescript&quot;&gt;&amp;#x2F;&amp;#x2F; jest.setup.ts
+import * as nock from &amp;#x27;nock&amp;#x27;;
 
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;nock&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;disableNetConnect&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;();
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;nock&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;enableNetConnect&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;(&amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;127.0.0.1&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;#39;)
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+nock.disableNetConnect();
+nock.enableNetConnect(&amp;#x27;127.0.0.1&amp;#x27;)
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;There is a section in the &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;nock&#x2F;nock#memory-issues-with-jest&quot;&gt;nock README&lt;&#x2F;a&gt; which actually describes that exact issue. There is also some more context linked there.&lt;&#x2F;p&gt;
 &lt;h3 id=&quot;key-lessons-learnt&quot;&gt;Key lessons learnt&lt;&#x2F;h3&gt;
 &lt;ul&gt;
@@ -91,25 +89,24 @@ And that&#x27;s where &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;cdr&#x2
 &lt;h3 id=&quot;setting-up-code-server&quot;&gt;Setting up Code-Server&lt;&#x2F;h3&gt;
 &lt;p&gt;Code-server is available via the AUR for Arch Linux users at &lt;a href=&quot;https:&#x2F;&#x2F;aur.archlinux.org&#x2F;packages&#x2F;code-server&#x2F;&quot;&gt;AUR link&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
 &lt;p&gt;Once installed, the actual set-up is pretty easy.&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;$ cat ~&#x2F;.config&#x2F;code-server&#x2F;config.yaml
+&lt;pre&gt;&lt;code&gt;$ cat ~&amp;#x2F;.config&amp;#x2F;code-server&amp;#x2F;config.yaml
 
 bind-addr: 0.0.0.0:1897
 auth: password
 password: XXXXXXXXXX
 cert: false
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;$ sudo systemctl edit --full code-server@USER
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre&gt;&lt;code&gt;$ sudo systemctl edit --full code-server@USER
 
 ...
-ExecStart=&#x2F;usr&#x2F;bin&#x2F;code-server --proxy-domain *.XXXXXXXXXX.spiss.dev
+ExecStart=&amp;#x2F;usr&amp;#x2F;bin&amp;#x2F;code-server --proxy-domain *.XXXXXXXXXX.spiss.dev
 ...
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;&lt;h3 id=&quot;setting-up-caddy&quot;&gt;Setting up Caddy&lt;&#x2F;h3&gt;
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h3 id=&quot;setting-up-caddy&quot;&gt;Setting up Caddy&lt;&#x2F;h3&gt;
 &lt;p&gt;As the code-server docs suggest it, I decided to go for Caddy as my reverse proxy. This made the next part of the set-up pretty easy as well.
 The only sort of annoying part was that I couldn&#x27;t use the caddy package from the Arch repo, but I had to compile it from source together with the Route 53 plugin, which I use to manage my domain. See the GitHub Repo for more details: &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;caddy-dns&#x2F;route53&quot;&gt;GitHub link&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
 &lt;p&gt;Once installed, I added this config file:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;$ cat &#x2F;etc&#x2F;caddy&#x2F;Caddyfile
+&lt;pre&gt;&lt;code&gt;$ cat &amp;#x2F;etc&amp;#x2F;caddy&amp;#x2F;Caddyfile
 
 XXXXXXXXXX.spiss.dev *.XXXXXXXXXX.spiss.dev {
   tls {
@@ -120,17 +117,17 @@ XXXXXXXXXX.spiss.dev *.XXXXXXXXXX.spiss.dev {
 
   reverse_proxy 127.0.0.1:1897
 }
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;In order for Caddy to obtain a &lt;strong&gt;wildcard&lt;&#x2F;strong&gt; SSL certificate, I had to add a user which is allowed to manage my Route 53. See the GitHub repo for more details: &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;libdns&#x2F;route53&quot;&gt;GitHub link&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;$ sudo systemctl edit --full caddy.service
+&lt;pre&gt;&lt;code&gt;$ sudo systemctl edit --full caddy.service
 
 ...
 [Service]
 Environment=AWS_ACCESS_KEY_ID=XXXXXXXXXX
 Environment=AWS_SECRET_ACCESS_KEY=XXXXXXXXXX
 ...
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;&lt;h3 id=&quot;setting-up-the-router&quot;&gt;Setting up the Router&lt;&#x2F;h3&gt;
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h3 id=&quot;setting-up-the-router&quot;&gt;Setting up the Router&lt;&#x2F;h3&gt;
 &lt;p&gt;Almost done, phew. After starting all the necessary systemd services, this should be the first time a beautiful VS Code window is accessible on the iPad, but only on the same network.
 Because I actually want to go outside my WI-FI range, I still had to open the 443 port on my router. Kinda scary, but code-server got us covered by blocking too many wrong password attempts. Since this is very router dependent, I&#x27;ll let you figure that one out. It&#x27;s probably a good time to configure a firewall on your PC as well.&lt;&#x2F;p&gt;
 &lt;h3 id=&quot;dyndns&quot;&gt;DynDNS&lt;&#x2F;h3&gt;
@@ -139,7 +136,7 @@ To achieve this, I configured yet another systemd service: &lt;a href=&quot;http
 &lt;h3 id=&quot;et-voila&quot;&gt;Et Voilà&lt;&#x2F;h3&gt;
 &lt;p&gt;Using the power of my desktop PC right from the browser, including forwarding of locally hosted web services. In fact, I wrote this whole blog post on my iPad via code-server on my PC. The locally running &lt;code&gt;0.0.0.0:1111&lt;&#x2F;code&gt; Zola site was automatically served via &lt;code&gt;1111.XXXXXXXXXX.spiss.dev&lt;&#x2F;code&gt; behind the same password protection.
 And nowadays, I even find myself connecting to the code-server from my Dell XPS 13, as the Desktop PC is just way more powerful, especially when compiling large Rust projects ;)&lt;&#x2F;p&gt;
-&lt;img src=&quot;https:&amp;#x2F;&amp;#x2F;www.spiss.dev&amp;#x2F;processed_images&amp;#x2F;a4e19b00ec4d54c200.png&quot; alt=&quot;VS Code on iPad&quot; &#x2F;&gt;
+&lt;img src=&quot;[object]&quot; alt=&quot;VS Code on iPad&quot; &#x2F;&gt;
 </description>
     </item>
     
@@ -201,10 +198,10 @@ The step by step instructions can also be found on my &lt;a href=&quot;https:&#x
 &lt;h3 id=&quot;install-the-base-system-plus-a-few-extra-packages&quot;&gt;Install the base system plus a few extra packages&lt;&#x2F;h3&gt;
 &lt;p&gt;&lt;strong&gt;f2fs-tools is needed if you chose f2fs as your partition&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
 &lt;p&gt;&lt;strong&gt;With some recent XPS Laptops linux-zen seems to be working better, e.g. resolves screen flickering issues&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;pacstrap &#x2F;mnt base linux linux-firmware zsh vim git sudo efibootmgr wpa_supplicant
+&lt;pre&gt;&lt;code&gt;pacstrap &amp;#x2F;mnt base linux linux-firmware zsh vim git sudo efibootmgr wpa_supplicant
 dialog iw f2fs-tools
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;&lt;h3 id=&quot;generate-fstab&quot;&gt;Generate fstab&lt;&#x2F;h3&gt;
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h3 id=&quot;generate-fstab&quot;&gt;Generate fstab&lt;&#x2F;h3&gt;
 &lt;p&gt;&lt;code&gt;genfstab -L &#x2F;mnt &amp;gt;&amp;gt; &#x2F;mnt&#x2F;etc&#x2F;fstab&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
 &lt;h3 id=&quot;enter-the-new-system&quot;&gt;Enter the new system&lt;&#x2F;h3&gt;
 &lt;p&gt;&lt;code&gt;arch-chroot &#x2F;mnt&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
@@ -223,11 +220,11 @@ dialog iw f2fs-tools
 &lt;p&gt;&lt;code&gt;echo &#x27;&amp;lt;hostname&amp;gt;&#x27; &amp;gt; &#x2F;etc&#x2F;hostname&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
 &lt;h3 id=&quot;add-hostname-to-etc-hosts&quot;&gt;Add hostname to &#x2F;etc&#x2F;hosts:&lt;&#x2F;h3&gt;
 &lt;p&gt;&lt;code&gt;vim &#x2F;etc&#x2F;hosts&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;127.0.0.1	localhost
+&lt;pre&gt;&lt;code&gt;127.0.0.1	localhost
 ::1		localhost
 127.0.1.1	&amp;lt;hostname&amp;gt;.localdomain &amp;lt;hostname&amp;gt;
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;&lt;h3 id=&quot;set-password-for-root&quot;&gt;Set password for root&lt;&#x2F;h3&gt;
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h3 id=&quot;set-password-for-root&quot;&gt;Set password for root&lt;&#x2F;h3&gt;
 &lt;p&gt;&lt;code&gt;passwd&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
 &lt;h3 id=&quot;add-real-user&quot;&gt;Add real user&lt;&#x2F;h3&gt;
 &lt;p&gt;&lt;code&gt;useradd -m -g users -G wheel -s &#x2F;bin&#x2F;zsh &amp;lt;username&amp;gt;&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
@@ -235,13 +232,13 @@ dialog iw f2fs-tools
 &lt;p&gt;&lt;code&gt;echo &#x27;&amp;lt;username&amp;gt; ALL=(ALL) ALL&#x27; &amp;gt; &#x2F;etc&#x2F;sudoers.d&#x2F;&amp;lt;username&amp;gt;&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
 &lt;h3 id=&quot;configure-mkinitcpio-with-modules-needed-for-the-initrd-image&quot;&gt;Configure mkinitcpio with modules needed for the initrd image&lt;&#x2F;h3&gt;
 &lt;p&gt;&lt;code&gt;vim &#x2F;etc&#x2F;mkinitcpio.conf&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;# Optional - for f2fs module crypto-crc32 is required however
+&lt;pre&gt;&lt;code&gt;# Optional - for f2fs module crypto-crc32 is required however
 MODULES=(crypto-crc32)
 
 # Important - Use the correct order
 HOOKS=(base systemd autodetect modconf block keyboard sd-vconsole sd-encrypt filesystems)
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;&lt;h3 id=&quot;regenerate-initrd-image&quot;&gt;Regenerate initrd image&lt;&#x2F;h3&gt;
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h3 id=&quot;regenerate-initrd-image&quot;&gt;Regenerate initrd image&lt;&#x2F;h3&gt;
 &lt;p&gt;&lt;code&gt;mkinitcpio -P&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
 &lt;h3 id=&quot;setup-systemd-boot&quot;&gt;Setup systemd-boot&lt;&#x2F;h3&gt;
 &lt;p&gt;&lt;code&gt;bootctl --path=&#x2F;boot install&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
@@ -253,17 +250,17 @@ HOOKS=(base systemd autodetect modconf block keyboard sd-vconsole sd-encrypt fil
 &lt;p&gt;&lt;code&gt;cryptsetup luksUUID &#x2F;dev&#x2F;nvme0n1p2&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
 &lt;p&gt;Create the entry:&lt;&#x2F;p&gt;
 &lt;p&gt;&lt;code&gt;vim &#x2F;boot&#x2F;loader&#x2F;entries&#x2F;arch.conf&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;title		Arch Linux
-linux		&#x2F;vmlinuz-linux
-initrd		&#x2F;intel-ucode.img
-initrd		&#x2F;initramfs-linux.img
-options		rw luks.uuid=&amp;lt;uuid&amp;gt; luks.name=&amp;lt;uuid&amp;gt;=luks root=&#x2F;dev&#x2F;mapper&#x2F;luks
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;&lt;h3 id=&quot;set-default-bootloader-entry&quot;&gt;Set default bootloader entry&lt;&#x2F;h3&gt;
+&lt;pre&gt;&lt;code&gt;title		Arch Linux
+linux		&amp;#x2F;vmlinuz-linux
+initrd		&amp;#x2F;intel-ucode.img
+initrd		&amp;#x2F;initramfs-linux.img
+options		rw luks.uuid=&amp;lt;uuid&amp;gt; luks.name=&amp;lt;uuid&amp;gt;=luks root=&amp;#x2F;dev&amp;#x2F;mapper&amp;#x2F;luks
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h3 id=&quot;set-default-bootloader-entry&quot;&gt;Set default bootloader entry&lt;&#x2F;h3&gt;
 &lt;p&gt;&lt;code&gt;vim &#x2F;boot&#x2F;loader&#x2F;loader.conf&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;default		arch
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;&lt;h3 id=&quot;optional-setup-gnome&quot;&gt;(Optional) - Setup Gnome&lt;&#x2F;h3&gt;
+&lt;pre&gt;&lt;code&gt;default		arch
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h3 id=&quot;optional-setup-gnome&quot;&gt;(Optional) - Setup Gnome&lt;&#x2F;h3&gt;
 &lt;p&gt;&lt;code&gt;pacman -S gnome&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
 &lt;p&gt;&lt;code&gt;systemctl enable gdm&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
 &lt;h3 id=&quot;exit-unmount-and-reboot&quot;&gt;Exit, unmount and reboot&lt;&#x2F;h3&gt;

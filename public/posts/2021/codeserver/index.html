@@ -34,7 +34,7 @@
 
 <article id="codeserver">
   <h2>
-    <a href="/&#x2F;posts&#x2F;2021&#x2F;codeserver&#x2F;">Code-Server - Taking the home office to the outside</a>
+    <a href="https:&#x2F;&#x2F;www.spiss.dev&#x2F;posts&#x2F;2021&#x2F;codeserver&#x2F;">Code-Server - Taking the home office to the outside</a>
   </h2>
   
   <div class="post-metadata">
@@ -58,25 +58,24 @@ And that's where <a href="https://github.com/cdr/code-server">code-server</a> co
 <h3 id="setting-up-code-server">Setting up Code-Server</h3>
 <p>Code-server is available via the AUR for Arch Linux users at <a href="https://aur.archlinux.org/packages/code-server/">AUR link</a>.</p>
 <p>Once installed, the actual set-up is pretty easy.</p>
-<pre style="background-color:#2b303b;">
-<code><span style="color:#c0c5ce;">$ cat ~/.config/code-server/config.yaml
+<pre><code>$ cat ~&#x2F;.config&#x2F;code-server&#x2F;config.yaml
 
 bind-addr: 0.0.0.0:1897
 auth: password
 password: XXXXXXXXXX
 cert: false
-</span></code></pre><pre style="background-color:#2b303b;">
-<code><span style="color:#c0c5ce;">$ sudo systemctl edit --full code-server@USER
+</code></pre>
+<pre><code>$ sudo systemctl edit --full code-server@USER
 
 ...
-ExecStart=/usr/bin/code-server --proxy-domain *.XXXXXXXXXX.spiss.dev
+ExecStart=&#x2F;usr&#x2F;bin&#x2F;code-server --proxy-domain *.XXXXXXXXXX.spiss.dev
 ...
-</span></code></pre><h3 id="setting-up-caddy">Setting up Caddy</h3>
+</code></pre>
+<h3 id="setting-up-caddy">Setting up Caddy</h3>
 <p>As the code-server docs suggest it, I decided to go for Caddy as my reverse proxy. This made the next part of the set-up pretty easy as well.
 The only sort of annoying part was that I couldn't use the caddy package from the Arch repo, but I had to compile it from source together with the Route 53 plugin, which I use to manage my domain. See the GitHub Repo for more details: <a href="https://github.com/caddy-dns/route53">GitHub link</a></p>
 <p>Once installed, I added this config file:</p>
-<pre style="background-color:#2b303b;">
-<code><span style="color:#c0c5ce;">$ cat /etc/caddy/Caddyfile
+<pre><code>$ cat &#x2F;etc&#x2F;caddy&#x2F;Caddyfile
 
 XXXXXXXXXX.spiss.dev *.XXXXXXXXXX.spiss.dev {
   tls {
@@ -87,17 +86,17 @@ XXXXXXXXXX.spiss.dev *.XXXXXXXXXX.spiss.dev {
 
   reverse_proxy 127.0.0.1:1897
 }
-</span></code></pre>
+</code></pre>
 <p>In order for Caddy to obtain a <strong>wildcard</strong> SSL certificate, I had to add a user which is allowed to manage my Route 53. See the GitHub repo for more details: <a href="https://github.com/libdns/route53">GitHub link</a></p>
-<pre style="background-color:#2b303b;">
-<code><span style="color:#c0c5ce;">$ sudo systemctl edit --full caddy.service
+<pre><code>$ sudo systemctl edit --full caddy.service
 
 ...
 [Service]
 Environment=AWS_ACCESS_KEY_ID=XXXXXXXXXX
 Environment=AWS_SECRET_ACCESS_KEY=XXXXXXXXXX
 ...
-</span></code></pre><h3 id="setting-up-the-router">Setting up the Router</h3>
+</code></pre>
+<h3 id="setting-up-the-router">Setting up the Router</h3>
 <p>Almost done, phew. After starting all the necessary systemd services, this should be the first time a beautiful VS Code window is accessible on the iPad, but only on the same network.
 Because I actually want to go outside my WI-FI range, I still had to open the 443 port on my router. Kinda scary, but code-server got us covered by blocking too many wrong password attempts. Since this is very router dependent, I'll let you figure that one out. It's probably a good time to configure a firewall on your PC as well.</p>
 <h3 id="dyndns">DynDNS</h3>
@@ -106,7 +105,7 @@ To achieve this, I configured yet another systemd service: <a href="https://gith
 <h3 id="et-voila">Et Voilà</h3>
 <p>Using the power of my desktop PC right from the browser, including forwarding of locally hosted web services. In fact, I wrote this whole blog post on my iPad via code-server on my PC. The locally running <code>0.0.0.0:1111</code> Zola site was automatically served via <code>1111.XXXXXXXXXX.spiss.dev</code> behind the same password protection.
 And nowadays, I even find myself connecting to the code-server from my Dell XPS 13, as the Desktop PC is just way more powerful, especially when compiling large Rust projects ;)</p>
-<img src="https:&#x2F;&#x2F;www.spiss.dev&#x2F;processed_images&#x2F;a4e19b00ec4d54c200.png" alt="VS Code on iPad" />
+<img src="[object]" alt="VS Code on iPad" />
 
   </div>
 </article>
