@@ -136,8 +136,8 @@ To achieve this, I configured yet another systemd service: &lt;a href=&quot;http
 &lt;h3 id=&quot;et-voila&quot;&gt;Et Voilà&lt;&#x2F;h3&gt;
 &lt;p&gt;Using the power of my desktop PC right from the browser, including forwarding of locally hosted web services. In fact, I wrote this whole blog post on my iPad via code-server on my PC. The locally running &lt;code&gt;0.0.0.0:1111&lt;&#x2F;code&gt; Zola site was automatically served via &lt;code&gt;1111.XXXXXXXXXX.spiss.dev&lt;&#x2F;code&gt; behind the same password protection.
 And nowadays, I even find myself connecting to the code-server from my Dell XPS 13, as the Desktop PC is just way more powerful, especially when compiling large Rust projects ;)&lt;&#x2F;p&gt;
-&lt;img src=&quot;[object]&quot; alt=&quot;VS Code on iPad&quot; &#x2F;&gt;
-</description>
+
+&lt;img src=&quot;https:&amp;#x2F;&amp;#x2F;www.spiss.dev&amp;#x2F;processed_images&amp;#x2F;3e6bf6577170a02600.png&quot; alt=&quot;VS Code on iPad&quot; &#x2F;&gt;</description>
     </item>
     
     <item>
