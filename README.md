@@ -1,7 +1,11 @@
 # spiss.dev
 
-Build with the [Zola] static site compiler:
+Built with the [Zola](https://www.getzola.org) static site compiler and the [tabi](https://github.com/welpo/tabi) theme.
 
-`zola serve`
+## How to run
+```commandline
+zola serve
+```
 
+## Preview
 ![spiss.dev](/content/social_cards/index.png)
