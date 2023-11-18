@@ -1,4 +1,6 @@
 +++
+title = "About"
+path = "/about"
 render = true
 insert_anchor_links = "left"
 +++

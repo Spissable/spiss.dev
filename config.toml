@@ -23,7 +23,7 @@ copy_button = true
 
 menu = [
     { name = "blog", url = "blog", trailing_slash = true },
-    { name = "about", url = "pages/about", trailing_slash = true },
+    { name = "about", url = "about", trailing_slash = true },
 ]
 feed_icon = true
 
