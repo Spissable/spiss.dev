@@ -5,7 +5,7 @@ render = true
 insert_anchor_links = "left"
 +++
 
-{{ full_width_image(src="pages/about/img/profile.png", alt="Photograph of Lukas Spiss") }}
+{{ full_width_image(src="about/img/profile.png", alt="Photograph of Lukas Spiss") }}
 
 Hi, I'm Lukas. I'm a software developer currently based in Porto, Portugal with roots in South Tyrol, Italy.
 
