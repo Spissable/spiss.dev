@@ -1,11 +1,13 @@
 +++
 title = "Arch Linux - it's really not that complicated"
 date = 2020-07-23
+updated = 2020-07-23
+description = "This is a step by step installation documentation on how I install Arch Linux on my Dell XPS 13 (9370) - my primary work setup. This is quite opinionated (e.g. f2fs root partition) and not applicable on every machine out there. But perhaps a rough guideline on how to easily install Arch Linux nonetheless."
+
+[extra]
+footnote_backlinks = true
+quick_navigation_buttons = true
 +++
-
-This is a step by step installation documentation on how I install Arch Linux on my Dell XPS 13 (9370) - my primary work setup. This is quite opinionated (e.g. f2fs root partition) and not applicable on every machine out there. But perhaps a rough guideline on how to easily install Arch Linux nonetheless.
-
-<!-- more -->
 
 ### Overview
 - 2 partitions: boot (fat32), root (f2fs - encrypted)

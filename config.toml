@@ -1,23 +1,35 @@
 # The URL the site will be built for
 base_url = "https://spiss.dev"
-
-title = "Lukas Spiss"
-
-description = "Posts by Lukas Spiss"
-
-# Whether to automatically compile all Sass files in the sass directory
-compile_sass = true
-
+theme = "tabi"
+title = "spiss.dev"
+author = "spissable"
 generate_feed = true
-feed_filename = "rss.xml"
+compile_sass = true
+minify_html = true
+build_search_index = true
 
-# Whether to do syntax highlighting
-# Theme can be customised by setting the `highlight_theme` variable to a theme supported by Zola
+[markdown]
 highlight_code = true
 
-# Whether to build a search index to be used later on by a JavaScript library
-build_search_index = false
-
 [extra]
-author = "Lukas Spiss"
+favicon = "/favicon.ico"
+
+full_content_in_feed = true
+
+skin = "blue"
+
+copy_button = true
+
+menu = [
+    { name = "blog", url = "blog", trailing_slash = true },
+    { name = "about", url = "pages/about", trailing_slash = true },
+]
+feed_icon = true
+
 email = "lukas@spiss.dev"
+
+socials = [
+    { name = "github", url = "https://github.com/spissable/", icon = "github" },
+    { name = "linkedin", url = "https://www.linkedin.com/in/lukas-spiss-b26559143/", icon = "linkedin" },
+    { name = "twitter", url = "https://twitter.com/spissable", icon = "twitter" },
+]

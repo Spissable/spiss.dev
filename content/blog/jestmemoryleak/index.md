@@ -1,11 +1,14 @@
 +++
-title = "Jest Memory Leaks - Some Lessons Learnt"
+title = "Jest Memory Leaks - some lessons learnt"
 date = 2022-05-03
+updated = 2022-05-03
+description = "Recently I was facing some memory leaks in the test suits of one of my projects. As I spent a couple of days analyzing the issue and finally fixing it, I wanted to summarize the lessons learnt."
+
+[extra]
+footnote_backlinks = true
+quick_navigation_buttons = true
 +++
 
-Recently I was facing some memory leaks in the test suits of one of my projects. As I spent a couple of days analyzing the issue and finally fixing it, I wanted to summarize the lessons learnt.
-
-<!-- more -->
 
 ### Project Infos
 - Nest.JS v8

@@ -1,11 +1,13 @@
 +++
 title = "i3wm - the world of tiling window managers"
 date = 2019-05-25
+updated = 2019-05-25
+description = "Disclaimer: If you prefer your system to be production ready right away, shiny to the very last pixel and intuitive without spending some time to get used to it, then i3 is most likely not for you. For anyone else, enjoy the post and I hope you'll give it a try yourself!"
+
+[extra]
+footnote_backlinks = true
+quick_navigation_buttons = true
 +++
-
-Disclaimer: If you prefer your system to be production ready right away, shiny to the very last pixel and intuitive without spending some time to get used to it, then i3 is most likely not for you. For anyone else, enjoy the post and I hope you'll give it a try yourself! 
-
-<!-- more -->
 
 ###  Floating vs. Tiling
 The window manager landscape for the Linux ecosystem is quite crowded. Major names like Gnome, KDE or XFCE satisfy most users' needs and give a lot of room for customization. One feature that unites them is, that they are all floating window managers. It's the concept of dragging windows around freely (mostly with your mouse), probably everyone is familiar with from using Windows or MacOS. 

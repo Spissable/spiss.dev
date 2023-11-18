@@ -1,11 +1,13 @@
 +++
-title = "Code-Server - Taking the home office to the outside"
+title = "Code-Server - taking the home office to the outside"
 date = 2021-08-20
+updated = 2021-08-20
+description = "While working from home is nice and all, I wanted to level up my home office experience to allow me to work from basically anywhere, without having too many compromises. And because using my Dell XPS 13 would have been too easy of a choice, I challenged myself to use an iPad instead."
+
+[extra]
+footnote_backlinks = true
+quick_navigation_buttons = true
 +++
-
-While working from home is nice and all, I wanted to level up my home office experience to allow me to work from basically anywhere, without having too many compromises. And because using my Dell XPS 13 would have been too easy of a choice, I challenged myself to use an iPad instead.
-
-<!-- more -->
 
 ### The Challenge
 While iPads got the shiny new M1 processor and therefore loads of processing power, the coding experience is still pretty much nonexistent, due to the software limitations of iPadOS.
@@ -84,5 +86,5 @@ To achieve this, I configured yet another systemd service: [GitHub link](https:/
 Using the power of my desktop PC right from the browser, including forwarding of locally hosted web services. In fact, I wrote this whole blog post on my iPad via code-server on my PC. The locally running `0.0.0.0:1111` Zola site was automatically served via `1111.XXXXXXXXXX.spiss.dev` behind the same password protection.
 And nowadays, I even find myself connecting to the code-server from my Dell XPS 13, as the Desktop PC is just way more powerful, especially when compiling large Rust projects ;)
 
-{{ resize_image(image="../static/images/codeserver.png", width=1600, alt="VS Code on iPad") }}
+{{ full_width_image(src="blog/codeserver/img/codeserver.png", alt="VS Code on iPad") }}
 

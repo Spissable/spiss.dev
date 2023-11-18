@@ -1,8 +1,9 @@
 +++
-title = "About"
+render = true
+insert_anchor_links = "left"
 +++
 
-{{ resize_image(image="../static/images/profile.png", width=1600, quality=60, alt="Photo of me.") }}
+{{ full_width_image(src="pages/about/img/profile.png", alt="Photograph of Lukas Spiss") }}
 
 Hi I'm Lukas. I'm a software developer currently based in Porto, Portugal with roots in South Tyrol, Italy.
 
@@ -17,10 +18,3 @@ Peace
 ## Contact
 
 See the footer for my email and social media links.
-
-## Credits
-
-This website would not be possible without the generous work of others:
-
-* [Zola](https://www.getzola.org/) static site compiler.
-* [Manrope](https://manropefont.com/) font.

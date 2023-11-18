@@ -1,11 +1,13 @@
 +++
-title = "Giving Clear Linux a Try"
+title = "Giving Clear Linux a try"
 date = 2020-03-01
+updated = 2020-03-01
+description = "After over a year of exclusively using Arch Linux on my work laptop, the distro hopping itch has gotten the better of me and I decided to give [Clear Linux](https://clearlinux.org/) a try. And since I don't do half arsed things, I wiped my disk and used Clear Linux as my main distro... at least for a while."
+
+[extra]
+footnote_backlinks = true
+quick_navigation_buttons = true
 +++
-
-After over a year of exclusively using Arch Linux on my work laptop, the distro hopping itch has gotten the better of me and I decided to give [Clear Linux](https://clearlinux.org/) a try. And since I don't do half arsed things, I wiped my disk and used Clear Linux as my main distro... at least for a while.
-
-<!-- more -->
 
 ###  Installation
 The installation experience was very straight forward, similar to the one of Ubuntu I'd say. The graphical interface leaves next to no room for mistakes and presents you with a ready-to-go system with just a few clicks.
