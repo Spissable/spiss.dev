@@ -2,4 +2,6 @@
 
 Build with the [Zola] static site compiler:
 
-`zola serve``
+`zola serve`
+
+![spiss.dev](/content/social_cards/index.png)

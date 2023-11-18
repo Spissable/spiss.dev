@@ -7,6 +7,7 @@ template = "section.html"
 [extra]
 header = {title = "Hi! I'm Lukas", img = "lukas.webp", img_alt = "Lukas Spiss, page author" }
 section_path = "blog/_index.md"
+social_media_card = "social_cards/index.png"
 max_posts = 2
 +++
 
