@@ -5,7 +5,7 @@ insert_anchor_links = "left"
 
 {{ full_width_image(src="pages/about/img/profile.png", alt="Photograph of Lukas Spiss") }}
 
-Hi I'm Lukas. I'm a software developer currently based in Porto, Portugal with roots in South Tyrol, Italy.
+Hi, I'm Lukas. I'm a software developer currently based in Porto, Portugal with roots in South Tyrol, Italy.
 
 Besides my obvious passions for programming and Linux, I love football (Juventus FC), cooking a decent meal and visiting gaming buddies all across Europe.
 

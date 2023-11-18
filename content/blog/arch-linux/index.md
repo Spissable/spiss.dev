@@ -1,7 +1,7 @@
 +++
 title = "Arch Linux - it's really not that complicated"
 date = 2020-07-23
-updated = 2020-07-23
+updated = 2023-11-18
 description = "This is a step by step installation documentation on how I install Arch Linux on my Dell XPS 13 (9370) - my primary work setup. This is quite opinionated (e.g. f2fs root partition) and not applicable on every machine out there. But perhaps a rough guideline on how to easily install Arch Linux nonetheless."
 
 [extra]
@@ -14,8 +14,8 @@ quick_navigation_buttons = true
 - Bootloader: Systemd-boot (formerly gummiboot)
 - Desktop Environment: Gnome
 
-Please also consult the official [Arch Linux Documentation](https://wiki.archlinux.org/index.php/Installation_Guide).\
-The step by step instructions can also be found on my [Github](https://github.com/Spissable/arch-linux-installation).
+Please also consult the official [Arch Linux Documentation](https://wiki.archlinux.org/index.php/Installation_Guide).
+The step-by-step instructions can also be found on my [Github](https://github.com/Spissable/arch-linux-installation).
 
 ### Enter BIOS with F2 and configure:
 
@@ -25,13 +25,13 @@ The step by step instructions can also be found on my [Github](https://github.co
 ### Boot from USB
 **Make sure to boot from USB using UEFI - this is required by systemd-boot!**
 
-### Set desired keymap
+### Set the desired keymap
 `loadkeys en_US-utf8`
 
 ### (Optional) Connect to wifi
 `wifi-menu`
 
-Once done it can take some seconds - confirm it worked using ping
+Once done it can take some seconds - confirm it worked using _ping_
 
 `ping 1.1.1.1`
 
@@ -40,16 +40,16 @@ Once done it can take some seconds - confirm it worked using ping
 
 ### Create two partitions:
 - 1000MB EFI partition with hex code **ef00**
-- 100% Linux partiton (to be encrypted) with hex code **8300**
+- 100% Linux partition (to be encrypted) with hex code **8300**
 
-**CAUTION** Find the correct disk/partition names for yourself using `lsblk`. From here on I am using mine as an example. Do not blindly copy paste these, it might not work or you might destroy partitions you don't want to destroy.
+**CAUTION** Find the correct disk/partition names for yourself using `lsblk`. From here on I am using mine as an example. Do not blindly copy and paste these, it might not work or you might destroy partitions you don't want to destroy.
 
 `cgdisk /dev/nvme0n1`
 
 ### (Optional) Install f2fs-tools
 `pacman -S f2fs-tools`
 
-### Formatting and encyption
+### Formatting and encryption
 **Boot** partition
 
 `mkfs.fat -F32 /dev/nvme0n1p1`
@@ -71,7 +71,7 @@ Once done it can take some seconds - confirm it worked using ping
 
 `mount /dev/nvme0n1p1 /mnt/boot`
 
-### Change pacman mirror priority, move closer mirror to the top
+### Change Pacman mirror priority, move the closer mirrors to the top
 `vim /etc/pacman.d/mirrorlist`
 
 ### Install the base system plus a few extra packages 
@@ -103,7 +103,7 @@ dialog iw f2fs-tools
 
 `locale-gen`
 
-### Set desired locale
+### Set the desired locale
 `echo 'LANG=en_US.UTF-8' > /etc/locale.conf`
 
 ### Set desired keymap and font
@@ -142,7 +142,7 @@ MODULES=(crypto-crc32)
 HOOKS=(base systemd autodetect modconf block keyboard sd-vconsole sd-encrypt filesystems)
 ```
 
-### Regenerate initrd image
+### Regenerate the initrd image
 `mkinitcpio -P`
 
 ### Setup systemd-boot
