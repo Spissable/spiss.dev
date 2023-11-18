@@ -8,4 +8,4 @@ zola serve
 ```
 
 ## Preview
-![spiss.dev](/content/social_cards/index.png)
+![spiss.dev](/static/socialcard.png)
