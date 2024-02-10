@@ -31,6 +31,6 @@ email = "lukas@spiss.dev"
 
 socials = [
     { name = "github", url = "https://github.com/spissable/", icon = "github" },
-    { name = "linkedin", url = "https://www.linkedin.com/in/lukas-spiss-b26559143/", icon = "linkedin" },
+    { name = "linkedin", url = "https://www.linkedin.com/in/lukas-spiss/", icon = "linkedin" },
     { name = "twitter", url = "https://twitter.com/spissable", icon = "twitter" },
 ]
