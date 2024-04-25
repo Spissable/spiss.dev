@@ -11,5 +11,5 @@ social_media_card = "/socialcard.png"
 max_posts = 2
 +++
 
-I'm a 28-year-old Software Developer currently living in Porto, Portugal.
+I'm a 29-year-old Software Developer currently living in Porto, Portugal.
 I love Linux and everything back-end related, but every once in a while I mess around in the front-end department. [Read more on the about page →](@/pages/about/index.md)
