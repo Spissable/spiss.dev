@@ -1,6 +1,6 @@
 # The URL the site will be built for
 base_url = "https://spiss.dev"
-theme = "tabi"
+theme = "tabi-local"
 title = "spiss.dev"
 description = "Lukas Spiss - personal page and blog."
 author = "spissable"
