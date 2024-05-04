@@ -12,9 +12,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        with:
-          submodules: recursive
-          lfs: true
       - name: Build with Zola
         uses: kytta/zola-build-pages@v1
         with:
