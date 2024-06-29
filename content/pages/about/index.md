@@ -7,11 +7,11 @@ insert_anchor_links = "left"
 
 {{ dual_theme_image(light_src="about/img/profile.jpeg", dark_src="about/img/profile.jpeg", alt="Photograph of Lukas Spiss") }}
 
-Hi, I'm Lukas. I'm a software developer currently based in Porto, Portugal with roots in South Tyrol, Italy.
+Hi, I'm Lukas. I'm a software engineer currently based in Porto 🇵🇹 with roots in South Tyrol, Italy 🇮🇹.
 
-Besides my obvious passions for programming and Linux, I love football (Juventus FC), cooking a decent meal and visiting gaming buddies all across Europe.
+Besides my passion for software engineering, I love football (Juventus FC), cooking a decent meal and relaxing at the beach.
 
-If you put pineapple on your Pizza or cut your Spaghetti, you deserve to rot in hell. However, if you are into dark humor then treat yourself to the Netflix specials of [Daniel Sloss](https://www.netflix.com/title/80223685) - thank me later.
+If you put pineapple on pizza or cut your spaghetti, chances are that we're not gonna be friends 🙃. If you are into dark humor then treat yourself to the Netflix specials of [Daniel Sloss](https://www.netflix.com/title/80223685) - thank me later.
 
 Anyways
 
