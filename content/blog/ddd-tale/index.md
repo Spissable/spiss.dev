@@ -22,9 +22,9 @@ Every time I started a new job, I found myself in a completely new domain. From 
 ### Hello DDD
 My first introduction to DDD was an interesting one. At the time, I was definitely one of the domain experts within the company relatively speaking, when a new colleague arrived. 
 
-Right from the beginning they had big plans. CQRS here, bounded context there… my head was spinning, but I was intrigued and asked question after question. Just to become more and more skeptical. 
+Right from the beginning they had big plans. CQRS here, bounded context there… my head was spinning, but I was intrigued and asked question after question. Just to become more and more skeptical. Even the simplest things seemed to become so unnecessarily complicated. 
 
-Even the simplest things seemed to become so unnecessarily complicated. So I blamed myself. Clearly, this person has more experience than me and is much more educated. I just don’t get it… yet.
+So I blamed myself. Clearly, this person has more experience than me and is much more educated. I just don’t understand these concepts... yet.
 
 ### Learning DDD
 To combat my shortcomings, I decided to finally grab a book about DDD. Specifically I chose [Learning Domain-Driven Design](https://www.oreilly.com/library/view/learning-domain-driven-design/9781098100124/) whose reviews seemed to resonate much better with me, compared to “the blue book” and others. And boy oh boy did it resonate with me.
