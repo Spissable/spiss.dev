@@ -23,6 +23,8 @@ one_results = "$NUMBER 个结果"
 many_results = "$NUMBER 个结果"
 
 # Navigation.
+pinned = "置顶"
+jump_to_posts = "跳转到文章"
 read_more = "阅读全文"
 one_posts = "$NUMBER 篇文章"
 many_posts = "$NUMBER 篇文章"
@@ -45,6 +47,9 @@ go_to_top = "返回页面顶部"  # Machine translated.
 go_to_comments = "转到评论区"  # Machine translated.
 
 # Post metadata.
+by_author = "由$AUTHOR"  # $AUTHOR will be replaced by the author(s).
+author_separator = "、"  # For multiple authors. Ensure spacing where necessary.
+author_conjunction = "和"  # For multiple authors. Ensure spacing where necessary.
 draft = "草稿"
 zero_min_read = "少于1分钟阅读"
 one_min_read = "$NUMBER 分钟阅读"
@@ -52,7 +57,7 @@ many_min_read = "$NUMBER 分钟阅读"
 zero_words = "没有字"
 one_words = "$NUMBER 字"
 many_words = "$NUMBER 字"
-last_updated_on = "最后更新于"
+last_updated_on = "更新于 $DATE"
 see_changes = "修改纪录"
 
 # Post body.

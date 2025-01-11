@@ -1,14 +1,14 @@
 +++
 title = "Domina la configuración de tabi: guía completa"
 date = 2023-09-18
-updated = 2024-05-03
+updated = 2025-01-02
 description = "Descubre las múltiples maneras en que puedes personalizar tabi."
 
 [taxonomies]
 tags = ["funcionalidad", "tutorial", "preguntas frecuentes"]
 
 [extra]
-footnote_backlinks = true
+pinned = true
 quick_navigation_buttons = true
 social_media_card = "social_cards/es_blog_mastering_tabi_settings.jpg"
 +++
@@ -26,11 +26,12 @@ tabi tiene una jerarquía que te permite personalizar tu sitio en diferentes niv
 
 1. **Configuraciones globales**: Estas son las configuraciones que se aplican a todo tu sitio. Se establecen en `config.toml`.
 2. **Configuraciones de sección**: Estas son las configuraciones que se aplican a una sección de tu sitio (por ejemplo, `/blog` o `/projects`). Se establecen en la metainformación del archivo `_index.md` de la sección.
-3. **Configuraciones de página**: Estas son las configuraciones que se aplican a una sola página. Se establecen en la metainformación de la página.
+3. **Configuración de la página «padre»**: Para páginas anidadas (páginas dentro de páginas), estas son las configuraciones de la página que las contiene.
+4. **Configuraciones de página**: Estas son las configuraciones que se aplican a una sola página. Se establecen en la metainformación de la página.
 
 En todos los casos, las opciones de tabi se establecen en la sección `[extra]`.
 
-Para las configuraciones que siguen esta jerarquía, el valor establecido en una página reemplaza el valor de una sección, que a su vez reemplaza el valor global. En resumen: cuanto más específica sea la configuración, mayor prioridad tendrá, o `página > sección > config.toml`.
+Para las configuraciones que siguen esta jerarquía, el valor establecido en una página reemplaza el valor de una sección, que a su vez reemplaza el valor global. En resumen: cuanto más específica sea la configuración, mayor prioridad tendrá, o `página > página padre/sección > config.toml`.
 
 ---
 
@@ -87,7 +88,7 @@ Para detalles técnicos sobre la implementación de la búsqueda en tabi, incluy
 
 ## Soporte multilingüe
 
-tabi ofrece soporte multilingüe completo para tu sitio Zola, desde configurar un idioma predeterminado hasta añadir todos los que desees. Consulta la [preguntas frecuentes sobre idiomas](/es/blog/faq-languages/) para más información.
+tabi ofrece soporte multilingüe completo para tu sitio Zola, desde configurar un idioma predeterminado hasta añadir todos los que desees. Consulta la [preguntas frecuentes sobre idiomas](@/blog/faq-languages/index.es.md) para más información.
 
 ---
 
@@ -110,37 +111,73 @@ header = {title = "¡Hola! Soy tabi~", img = "blog/mastering-tabi-settings/img/m
 
 La descripción es contenido Markdown normal, escrito fuera del front matter.
 
-#### Mostrando publicaciones recientes
+#### Listando publicaciones recientes
 
-Si deseas mostrar publicaciones en la página principal, primero necesitas decidir si su ruta será `/` o algo como `/blog`.
+Para mostrar publicaciones en la página principal, primero debes decidir de dónde se servirán: de la ruta raíz (`/`) o de un subdirectorio (por ejemplo, `/blog`).
 
-Si quieres servir las publicaciones desde `/`, necesitas configurar `paginate_by = 5` en el front matter de tu archivo `_index.md`. **Nota**: esto no se configura en el apartado `[extra]`, sino en el front matter principal. Ejemplo:
+**Opción A: Servir publicaciones desde la ruta raíz (`/`)**
 
-```toml
-sort_by = "date"
-template = "section.html"
-paginate_by = 5
-
-[extra]
-header = {title = "¡Hola! Soy tabi~", img = "img/main.webp", img_alt = "Óscar Fernández, el autor del tema" }
-```
-
-Si prefieres servir las publicaciones desde `/blog`, puedes configurar `section_path = "/blog"` en la sección `[extra]`. Esta es la configuración de esta demo:
+Configura `paginate_by` en el front matter de tu archivo `content/_index.md`:
 
 ```toml
-title = "Publicaciones recientes"
+title = "Últimas publicaciones"
 sort_by = "date"
-template = "section.html"
+paginate_by = 5  # Muestra 5 publicaciones por página.
 
 [extra]
-header = {title = "¡Hola! Soy tabi~", img = "img/main.webp", img_alt = "Óscar Fernández, el autor del tema" }
-section_path = "blog/_index.es.md"
-max_posts = 4
+header = {title = "¡Hola! Soy tabi~", img = "img/main.webp", img_alt = "Tu nombre" }
 ```
 
-Fíjate que si configuras `section_path`, no necesitas configurar `paginate_by`. Puedes establecer `max_posts` para determinar el número de publicaciones que deseas mostrar en la página principal.
+{{ admonition(type="note", text="La configuración `paginate_by` va en el front matter principal, no en la sección `[extra]`.") }}
 
-El `title` es el encabezado que aparece sobre las publicaciones.
+**Opción B: Servir publicaciones desde un subdirectorio (por ejemplo, `/blog`)**
+
+Utiliza `section_path` en la sección `[extra]` de tu archivo `content/_index.md`:
+
+```toml
+title = "Últimas publicaciones"
+sort_by = "date"
+# No configures `paginate_by` aquí.
+
+[extra]
+header = {title = "¡Hola! Soy tabi~", img = "img/main.webp", img_alt = "Tu nombre" }
+section_path = "blog/_index.md"  # Dónde encontrar tus publicaciones.
+max_posts = 5  # Muestra hasta 5 publicaciones en la página principal.
+```
+
+{{ admonition(type="warning", title="ALERTA", text="No configures `paginate_by` y `section_path` a la vez. Estas configuraciones son mutuamente excluyentes y usarlas juntas puede resultar en que no se muestren publicaciones.") }}
+
+Notas adicionales:
+
+- El `title` en el front matter establece el título que aparece sobre las publicaciones.
+- Usa la ruta completa al archivo `_index.md` de la sección para `section_path`. Usar `section_path = "blog/"` no funcionará.
+
+##### Fijar publicaciones
+
+Puedes fijar publicaciones para mantenerlas en la parte superior de la página principal. En esta demo, esta publicación está fijada, por lo que aparece primera con un icono y etiqueta de "fijada":
+
+{{ dual_theme_image(light_src="blog/mastering-tabi-settings/img/pinned_post_light.webp", dark_src="blog/mastering-tabi-settings/img/pinned_post_dark.webp", alt="Entrada fijada", full_width=true) }}
+
+Las publicaciones fijadas se muestran primero, manteniendo su orden relativo según el `sort_by` de la sección, seguidas por el resto de las publicaciones.
+
+Para fijar una publicación, añade lo siguiente a su front matter:
+
+```toml
+[extra]
+pinned = true
+```
+
+{{ admonition(type="info", text="Este ajuste solo afecta a las páginas principales del sitio (como `/`, `/es/`, `/fr/`). Otras secciones como `blog/`, `tags/` o `archive/` muestran las publicaciones en su orden habitual.") }}
+
+{{ admonition(type="warning", text='Cuando se utiliza la paginación (`paginate_by`), las publicaciones destacadas pueden aparecer dos veces: una vez en la parte superior de la primera página, y otra en su posición cronológica normal en páginas posteriores.') }}
+
+##### Mostrar la fecha de los artículos en el listado
+
+Por defecto, cuando se listan los artículos, se muestra la fecha de creación. Puedes configurar qué fecha(s) mostrar usando la opción `post_listing_date`. Configuraciones disponibles:
+
+- `date`: Muestra solo la fecha de publicación original del artículo (opción por defecto).
+- `updated`: Muestra solo la fecha de la última actualización del artículo. Si no hay fecha de actualización, muestra la fecha de publicación original.
+- `both`: Muestra tanto la fecha de publicación original como la fecha de la última actualización.
 
 #### Listado de proyectos
 
@@ -185,6 +222,18 @@ Las pieles de tabi cambian el color principal del sitio. Puedes configurar la pi
 
 Explora las pieles disponibles y aprende cómo crear la tuya propia consultando [la documentación](/es/blog/customise-tabi/#skins).
 
+### Fuente sans serif (paloseco)
+
+| Página | Sección | `config.toml` | Sigue la jerarquía | Requiere JavaScript |
+|:------:|:-------:|:-------------:|:---------------:|:-------------------:|
+|   ❌   |   ❌    |      ✅       |        ❌        |         ❌          |
+
+tabi utiliza una fuente serif para los párrafos de los artículos (la que estás viendo ahora). Puedes cambiar a una fuente sans serif (la que ves en los encabezados/menú) en todo tu sitio configurando `override_serif_with_sans = true` en `config.toml`.
+
+Haz clic en la imagen para comparar las fuentes:
+
+{{ image_toggler(default_src="blog/mastering-tabi-settings/img/serif.webp", toggled_src="blog/mastering-tabi-settings/img/sans-serif.webp", default_alt="Fuente serif", toggled_alt="Fuente sans-serif", full_width=true) }}
+
 ### Estilos CSS personalizados
 
 | Página | Sección | `config.toml` | Sigue la jerarquía | Requiere JavaScript |
@@ -224,6 +273,43 @@ Por defecto, la [página de etiquetas](/es/tags) muestra las etiquetas así:
 Establecer `compact_tags = true` mostrará las mismas de este modo:
 
 [NombreEtiqueta](#) <sup>n</sup>
+
+### Orden de las etiquetas
+
+| Página | Sección | `config.toml` | Sigue la jerarquía | Requiere JavaScript |
+|:------:|:-------:|:-------------:|:---------------:|:-------------------:|
+|   ❌   |   ❌    |      ✅       |        ❌        |         ❌          |
+
+Por defecto, la [página de etiquetas](/es/tags) ordena las etiquetas alfabéticamente, dada la configuración predeterminada de `tag_sorting = "name"`.
+Si configuras `tag_sorting = "frequency"`, se ordenarán según el número de publicaciones (de mayor a menor).
+
+---
+
+## Series
+
+Para una explicación detallada, consulta la [documentación de series](@/blog/series/index.es.md).
+
+### Enlace para saltar a las publicaciones
+
+| Página | Sección | `config.toml` | Sigue jerarquía | Requiere JavaScript |
+|:------:|:-------:|:-------------:|:------------------:|:-------------------:|
+|   ❌   |   ✅    |      ✅       |        ✅          |         ❌          |
+
+Por defecto, aparece automáticamente un enlace "Saltar a publicaciones" junto al título de la serie cuando una serie tiene un contenido de más de 2000 caracteres:
+
+{{ dual_theme_image(light_src="blog/series/img/jump_to_series_posts_light.webp", dark_src="blog/series/img/jump_to_series_posts_dark.webp" alt="enlace para saltar a las publicaciones de la serie", full_width=true) }}
+
+Establece `show_jump_to_posts = true` para forzar la activación de la función y `show_jump_to_posts = false` para desactivarla.
+
+### Indexación de páginas de series
+
+| Página | Sección | `config.toml` | Sigue la jerarquía | Requiere JavaScript |
+|:------:|:-------:|:-------------:|:------------------:|:-------------------:|
+|   ❌   |   ✅    |      ✅       |        ✅          |         ❌          |
+
+Por defecto, las páginas de series se indexan (usando una indexación basada en 1) según el `sort_by` de la sección de series.
+
+Establece `post_listing_index_reversed = true` para invertir el índice.
 
 ---
 
@@ -285,7 +371,7 @@ quick_navigation_buttons = true
 - `show_reading_time = false` oculta el tiempo estimado de lectura.
 - `quick_navigation_buttons = true` muestra los botones de navegación rápida.
 
-Junto al archivo `_index.md`, puedes crear un archivo para cada proyecto. Por ejemplo, este es el bloque de metadatos para la página del proyecto [tabi](/es/projects/tabi/):
+Junto al archivo `_index.md`, puedes crear un archivo para cada proyecto. Por ejemplo, este es el bloque de metadatos para la página del proyecto [tabi](@/projects/tabi/index.es.md):
 
 ```toml
 title = "tabi"
@@ -304,6 +390,33 @@ local_image = "img/tabi.webp"
 Cuando un usuario haga clic en la imagen o el título de un proyecto, será llevado a la página del proyecto. Si prefieres que los usuarios vayan a un enlace externo, puedes establecer `link_to = "https://example.com"` en la sección `[extra]` del archivo `.md` del proyecto.
 
 La página del proyecto individual se renderiza con la plantilla predeterminada, a menos que establezcas otra, por ejemplo, `template = "info-page.html"`.
+
+#### Filtrar proyectos
+
+Si agregas etiquetas a tus proyectos, verás un filtro de etiquetas:
+
+{{ dual_theme_image(light_src="blog/mastering-tabi-settings/img/projects_tag_filter_light.webp", dark_src="blog/mastering-tabi-settings/img/projects_tag_filter_dark.webp", alt="Página de proyectos con filtro de etiquetas", full_width=true) }}
+
+El sistema de filtrado de etiquetas utiliza mejora progresiva:
+
+- Sin JavaScript: Las etiquetas enlazan directamente a páginas de etiquetas dedicadas (por ejemplo, `/tags/nombre-etiqueta`).
+- Con JavaScript: Filtrado instantáneo, sincronización de URL (#nombre-etiqueta) y navegación por teclado.
+
+Para desactivar esta función, establece `enable_cards_tag_filtering = false` en la sección `[extra]` del archivo `projects/_index.md` o en `config.toml`.
+
+{% admonition(type="tip") %}
+
+Para filtrar proyectos por etiquetas, necesitas establecer etiquetas en el front matter de cada proyecto. Por ejemplo:
+
+```toml
+title = "nombre del proyecto"
+weight = 40
+
+[taxonomies]
+tags = ["etiqueta uno", "etiqueta 2", "tercera etiqueta"]
+```
+
+{% end %}
 
 ### Archivo
 
@@ -325,7 +438,10 @@ Por defecto, el archivo mostrará las publicaciones ubicadas en `blog/`. Para pe
   section_path = ["blog/", "notas/", "ruta-tres/"]
   ```
 
-**Nota**: la página de Archivo sólo listará publicaciones con fecha.
+**Nota**:
+
+- La página de Archivo sólo listará publicaciones con fecha.
+- El orden las publicaciones viene determinada por la variable `sort_by` de las secciones archivadas. Esta demo utiliza `sort_by = "date"` en `blog/_index.md`.
 
 ### Etiquetas
 
@@ -373,6 +489,17 @@ path = "about"
 ```
 
 Fíjate cómo se establece `path = "about"`. Zola colocará la página en `$base_url/about/`. Si deseas que la página esté disponible en `/contacto/`, tendrías que establecer `path = "contacto"`.
+
+La plantilla `info-page.html` también se puede utilizar para crear lading pages en la ruta raíz (`"/"`). Para hacerlo, el archivo `content/_index.md` debería verse así:
+
+```markdown
++++
+title = "Título de la página"
+template = "info-page.html"
++++
+
+Contenido con Markdown.
+```
 
 ---
 
@@ -422,7 +549,7 @@ Por ejemplo, si configuras `base_canonical_url = "https://example.com"`, la URL 
 
 Las tarjetas para redes sociales son las imágenes que se muestran cuando compartes un enlace en redes sociales:
 
-![Una captura de pantalla de WhatsApp mostrando un enlace con una tarjeta para redes sociales](/blog/mastering-tabi-settings/img/with_social_media_card.webp)
+{{ dimmable_image(src="img/with_social_media_card.webp", alt="Una captura de pantalla de WhatsApp mostrando un enlace con una tarjeta para redes sociales") }}
 
 Puedes establecer la imagen para redes sociales con `social_media_card = "img/social_media_card.png"`.
 
@@ -436,7 +563,19 @@ Si ambas rutas, relativa y absoluta, son válidas, la ruta relativa tendrá prio
 
 Dado que sigue la [jerarquía](#jerarquia-de-configuracion), si no está configurado en una página, pero sí lo está en una sección, se utilizará la imagen de la sección. Si no está configurado en una página o sección, pero sí en `config.toml`, se usará la imagen global.
 
-**Consejo**: automatiza su creación con un [script](https://github.com/welpo/osc.garden/blob/main/static/code/social-cards-zola): [De reservado a rey de las redes: automatizando las vistas previas de los enlaces con Zola](https://osc.garden/es/blog/automating-social-media-cards-zola/).
+{{ admonition(type="tip", title="CONSEJO", text="Automatiza su creación con un [script](https://github.com/welpo/osc.garden/blob/main/static/code/social-cards-zola): [Automatizando las vistas previas de los enlaces con Zola](https://osc.garden/es/blog/automating-social-media-cards-zola/).") }}
+
+### Creador del fediverso
+
+| Página | Sección | `config.toml` | Sigue jerarquía | Requiere JavaScript |
+|:------:|:-------:|:-------------:|:----------------:|:-------------------:|
+|   ❌   |    ❌   |      ✅       |        ❌        |         ❌          |
+
+Puedes mostrar tu perfil del fediverso en las vistas previas de enlaces de Mastodon configurando la variable `fediverse_creator` en tu `config.toml`. Por ejemplo, para @username@example.com, usa:
+
+```toml
+fediverse_creator = { handle = "username", domain = "example.com" }
+```
 
 ---
 
@@ -480,7 +619,7 @@ Para activarlos, establece `quick_navigation_buttons = true`.
 
 Habilita el índice de contenidos justo debajo del título y metadatos del artículo con `toc = true`.
 
-Para saber más sobre cómo personalizarlo, consulta [la documentación sobre la Tabla de contenido](/es/blog/toc/).
+Para saber más sobre cómo personalizarlo, consulta [la documentación sobre la Tabla de contenido](@/blog/toc/index.es.md).
 
 ### Enlace a los artículos anterior y siguiente
 
@@ -492,7 +631,7 @@ Muestra enlaces a los artículos anterior y siguiente en la parte inferior de lo
 
 {{ dual_theme_image(light_src="blog/mastering-tabi-settings/img/show_previous_next_article_links_light.webp", dark_src="blog/mastering-tabi-settings/img/show_previous_next_article_links_dark.webp", alt="Enlaces a los artículos anterior y siguiente", full_width=true) }}
 
-Para activar esta función, configura `show_previous_next_article_links = true`.
+Para activar esta función, configura `show_previous_next_article_links = true` y asegúrate de que tu sección tiene `sort_by` (por ejemplo, `sort_by = "date"`).
 
 Por defecto, los artículos siguientes estarán en el lado izquierdo de la página y los artículos anteriores en el lado derecho.
 Para invertir el orden (artículos siguientes en el lado derecho y artículos anteriores en el lado izquierdo), establece `invert_previous_next_article_links = true`.
@@ -502,6 +641,8 @@ Por defecto, esta sección de navegación tendrá el ancho completo del sitio (i
 Todas estas configuraciones siguen la jerarquía.
 
 ### Enlaces de retorno en notas al pie
+
+{{ admonition(type="warning", title="ADVERTENCIA DE DEPRECACIÓN", text="Zola v0.19.0 y posterior puede hacer esto de forma nativa. Establece `bottom_footnotes = true` en la sección `[markdown]` de tu configuración.") }}
 
 | Página | Sección | `config.toml` | Sigue la jerarquía | Requiere JavaScript |
 |:------:|:-------:|:-------------:|:---------------:|:-------------------:|
@@ -535,6 +676,14 @@ Establecer `copy_button = true` añadirá un pequeño botón de copiar en la par
 
 Establece `add_src_to_code_block = true` para habilitar el uso del [shortcode `add_src_to_code_block`](@/blog/shortcodes/index.es.md#mostrar-ruta-o-url).
 
+### Forzar bloques de código de izquierda a derecha
+
+| Página | Sección | `config.toml` | Sigue la jerarquía | Requiere JavaScript |
+|:------:|:-------:|:-------------:|:----------------:|:-------------------:|
+|   ✅   |   ✅    |      ✅       |        ✅        |         ❌         |
+
+Por defecto, los bloques de código se renderizan de izquierda a derecha, independientemente de la dirección general del texto. Establece `force_codeblock_ltr = false` para permitir que los bloques de código sigan la dirección del documento. Útil para idiomas de derecha a izquierda que necesitan bloques de código de derecha a izquierda.
+
 ### Soporte para KaTeX
 
 | Página | Sección | `config.toml` | Sigue la jerarquía | Requiere JavaScript |
@@ -542,6 +691,18 @@ Establece `add_src_to_code_block = true` para habilitar el uso del [shortcode `a
 |   ✅   |   ✅    |      ✅       |        ✅       |         ✅          |
 
 KaTeX es una biblioteca JavaScript rápida y fácil de usar para la representación de matemáticas TeX en la web. Puedes habilitarlo con `katex = true`. Mira cómo se ve en tabi [aquí](/es/blog/markdown/#katex).
+
+### Soporte para Mermaid
+
+| Página | Sección | `config.toml` | Sigue la jerarquía | Requiere JavaScript |
+|:------:|:-------:|:-------------:|:----------------:|:-------------------:|
+|   ✅   |    ✅   |      ✅       |        ✅        |         ✅          |
+
+[Mermaid](https://github.com/mermaid-js/mermaid) es una herramienta de diagramación y gráficos basada en JavaScript. Puedes activarla con `mermaid = true`.
+
+Por defecto, la biblioteca Mermaid se sirve localmente. Si prefieres usar un CDN, establece `serve_local_mermaid = false` en `config.toml`. El uso de un CDN servirá la versión más reciente de Mermaid; la opción local servirá la versión incluida con tabi.
+
+Consulta la [documentación de Mermaid](@/blog/shortcodes/index.es.md#diagramas-de-mermaid) para instrucciones de uso y ejemplos.
 
 ### Subconjunto de fuente personalizada
 
@@ -553,7 +714,7 @@ Las fuentes personalizadas causan parpadeo del texto en Firefox. Para solucionar
 
 Puedes crear un subconjunto personalizado adaptado a tu sitio, guardarlo como `static/custom_subset.css`, y hacer que se cargue con `custom_subset = true`.
 
-Para obtener más información, incluyendo instrucciones sobre cómo crear un subconjunto personalizado, consulta la [documentación](/es/blog/custom-font-subset/).
+Para obtener más información, incluyendo instrucciones sobre cómo crear un subconjunto personalizado, consulta la [documentación](@/blog/custom-font-subset/index.es.md).
 
 ### Contenido completo en el feed
 
@@ -583,7 +744,7 @@ Si quieres activar los comentarios de forma global, puedes hacerlo estableciendo
 
 Si has activado un sistema globalmente, pero quieres desactivarlo en una página específica, puedes hacerlo estableciendo el nombre del sistema como `false` en el front matter. Por ejemplo, `utterances = false`.
 
-Lee la [documentación](/es/blog/comments/) para obtener más información sobre los sistemas disponibles y su configuración.
+Lee la [documentación](@/blog/comments/index.es.md) para obtener más información sobre los sistemas disponibles y su configuración.
 
 ### Análisis web
 
@@ -598,7 +759,7 @@ Puedes configurarlos en la sección `[extra.analytics]` de tu archivo `config.to
 - `service`: el servicio a utilizar. Las opciones disponibles son `"goatcounter"`, `"umami"`, y `"plausible"`.
 
 - `id`: el identificador único para tu servicio de análisis. Esto varía según el servicio:
-  - Para GoatCounter, es el código elegido durante el registro. Instancias auto-alojadas no requieren este campo.
+  - Para GoatCounter, es el código elegido durante el registro. Instancias auto-alojadas de GoatCounter no requieren este campo.
   - Para Umami, es la ID del sitio web.
   - Para Plausible, es el nombre de dominio.
 
@@ -638,7 +799,17 @@ socials = [
 ]
 ```
 
-Los iconos provienen de Font Awesome. Para ver una lista de todos los iconos disponibles, echa un vistazo al [directorio `static/social_icons`](https://github.com/welpo/tabi/tree/main/static/social_icons).
+Para ver una lista de todos los iconos integrados, echa un vistazo al directorio [`static/social_icons` en GitHub](https://github.com/welpo/tabi/tree/main/static/social_icons).
+
+¿Echas en falta algún icono? Si crees que sería una buena adición a tabi, no dudes en [abrir un issue](https://github.com/welpo/tabi/issues/new?assignees=&labels=enhancement&projects=&template=feature_request.md&title=) o enviar un pull request ([ejemplo](https://github.com/welpo/tabi/pull/333)).
+
+Para usar un icono personalizado, puedes añadirlo al directorio `static/social_icons` de tu sitio. Por ejemplo, si añades `custom.svg`, puedes referenciarlo así:
+
+```
+{ name = "custom", url = "https://example.com", icon = "custom" }
+```
+
+{{ admonition(type="note", title="NOTA", text="Todos los enlaces sociales incluyen el [atributo](https://developer.mozilla.org/docs/Web/HTML/Attributes/rel/me) `rel='me'`. Esto ayuda a los motores de búsqueda y servicios web a verificar que las cuentas de redes sociales te pertenecen.") }}
 
 ### Icono de feed
 
@@ -647,6 +818,8 @@ Los iconos provienen de Font Awesome. Para ver una lista de todos los iconos dis
 |   ❌   |   ❌    |      ✅       |         ❌        |         ❌          |
 
 Puedes añadir un enlace a tu feed RSS/Atom en el pie de página con `feed_icon = true`.
+
+Nota para usuarios de Zola 0.19.X: cuando hay dos nombres de archivo en `feed_filenames`, solo se enlazará el primero en el pie de página.
 
 ### Menú de pie de página
 
@@ -695,6 +868,16 @@ copyright_translations.es = "© $CURRENT_YEAR $AUTHOR $SEPARATOR A menos que se 
 ---
 
 ## Metadatos
+
+### Mostrar autoría
+
+| Página | Sección | `config.toml` | Respeta jerarquía | Requiere JavaScript |
+|:------:|:-------:|:-------------:|:-----------------:|:-------------------:|
+|   ✅   |   ✅    |      ✅       |         ✅        |         ❌          |
+
+Para mostrar la autoría de un artículo, usa `show_author = true`.
+
+Esto mostrará lxs autorxs establecidxs en la variable `authors = []` en el front matter del artículo. Si esto no está disponible, se usará `author = ""` en `config.toml`.
 
 ### Tiempo de lectura
 
@@ -786,9 +969,7 @@ allowed_domains = [
 
 Esta función está habilitada por defecto. Para deshabilitarla (y permitir todo), configura `enable_csp = false` en una página, sección o globalmente. La opción `enable_csp` sigue [la jerarquía](#jerarquia-de-configuracion).
 
-Para obtener más información, consulta la [página de documentación de CSP](/es/blog/security/).
-
----
+Para obtener más información, consulta la [página de documentación de CSP](@/blog/security/index.es.md).
 
 [^1]: Si estás utilizando un repositorio Git remoto, es posible que quieras automatizar el proceso de actualización del campo `updated`. Aquí tienes una guía para eso: [Zola Git Hook: actualizando las fechas de las publicaciones](https://osc.garden/es/blog/zola-date-git-hook/).
 

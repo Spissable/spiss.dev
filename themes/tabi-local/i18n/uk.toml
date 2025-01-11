@@ -33,6 +33,8 @@ few_results = "$NUMBER результати"
 many_results = "$NUMBER результатів"
 
 # Navigation.
+pinned = "Закріплено"
+jump_to_posts = "Перейти до дописів"
 read_more = "Читати далі"
 one_posts = "$NUMBER пост"
 few_posts = "$NUMBER пости"  # 2, 3, 4 but not 12-14
@@ -56,6 +58,9 @@ go_to_top = "Перейти на початок сторінки"
 go_to_comments = "Перейти до коментарів"
 
 # Post metadata.
+by_author = "Від $AUTHOR"  # $AUTHOR will be replaced by the author(s).
+author_separator = ", "  # For multiple authors. Ensure spacing where necessary.
+author_conjunction = " і "  # For multiple authors. Ensure spacing where necessary.
 draft = "ЧЕРНЕТКА"
 zero_min_read = "<1 хв. читання"
 one_min_read = "$NUMBER хв. читання"
@@ -65,7 +70,7 @@ zero_words = "Без слів"
 one_words = "$NUMBER слово"
 few_words = "$NUMBER слова"  # 2, 3, 4 but not 12-14
 many_words = "$NUMBER слів"  # 5-9, 0, 11-14, and others
-last_updated_on = "Останнє оновлення"
+last_updated_on = "Оновлено $DATE"
 see_changes = "Переглянути зміни"
 
 # Post body.

@@ -27,6 +27,8 @@ one_results = "$NUMBER Ergebnis"  # "1 result"
 many_results = "$NUMBER Ergebnisse"  # "3 results"
 
 # Navigation.
+pinned = "Angeheftet"
+jump_to_posts = "Zu den Beiträgen springen"
 read_more = "Weiterlesen"
 one_posts = "$NUMBER Beitrag"
 many_posts = "$NUMBER Beiträge"
@@ -49,6 +51,9 @@ go_to_top = "Zum Seitenanfang"
 go_to_comments = "Zum Kommentarbereich"
 
 # Post metadata.
+by_author = "Von $AUTHOR"  # $AUTHOR will be replaced by the author(s).
+author_separator = ", "  # For multiple authors. Ensure spacing where necessary.
+author_conjunction = " und "  # For multiple authors. Ensure spacing where necessary.
 draft = "ENTWURF"
 zero_min_read = "weniger als 1 Min. Lesezeit"
 one_min_read = "$NUMBER Min. Lesezeit"
@@ -56,7 +61,7 @@ many_min_read = "$NUMBER Min. Lesezeit"
 zero_words = "Keine Wörter"
 one_words = "$NUMBER Wort"
 many_words = "$NUMBER Wörter"
-last_updated_on = "Zuletzt aktualisiert am"
+last_updated_on = "Aktualisiert am $DATE"
 see_changes = "Änderungen anzeigen"
 
 # Post body.

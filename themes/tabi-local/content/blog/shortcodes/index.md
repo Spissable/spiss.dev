@@ -1,7 +1,7 @@
 +++
 title = "Custom shortcodes"
 date = 2023-02-19
-updated = 2024-05-03
+updated = 2024-12-28
 description = "This theme includes some useful custom shortcodes that you can use to enhance your posts. Whether you want to display images that adapt to light and dark themes, or format a professional-looking reference section, these custom shortcodes have got you covered."
 
 [taxonomies]
@@ -12,16 +12,107 @@ toc = true
 toc_levels = 2
 quick_navigation_buttons = true
 add_src_to_code_block = true
+mermaid = true
 social_media_card = "social_cards/blog_shortcodes.jpg"
 +++
 
+## Diagram shortcode
+
+### Mermaid diagrams
+
+[Mermaid](https://github.com/mermaid-js/mermaid) is a a diagramming and charting tool that uses text and code to generate diagrams. It supports flowcharts, sequence diagrams, Gantt charts, and more.
+
+To include a Mermaid diagram in your post, there are two steps:
+
+1. Set `mermaid = true` in the `[extra]` section of the front matter of your page, section or `config.toml`. This will load the JavaScript needed to render the diagrams.
+
+2. Use the `mermaid()` shortcode to define your diagram in your posts. For example:
+
+```txt
+{%/* mermaid() */%}
+classDiagram
+    class CognitiveDistortions {
+        +AllOrNothingThinking()
+        +Overgeneralization()
+        +MentalFilter()
+        +JumpingToConclusions()
+    }
+    class AllOrNothingThinking {
+        +SeeInExtremes()
+    }
+    class Overgeneralization {
+        +GeneralizeFromSingle()
+    }
+    class MentalFilter {
+        +FocusOnNegative()
+    }
+    class JumpingToConclusions {
+        +MakeAssumptions()
+    }
+    CognitiveDistortions *-- AllOrNothingThinking
+    CognitiveDistortions *-- Overgeneralization
+    CognitiveDistortions *-- MentalFilter
+    CognitiveDistortions *-- JumpingToConclusions
+{%/* end */%}
+```
+
+The diagram will be rendered as follows:
+
+{% mermaid() %}
+classDiagram
+    class CognitiveDistortions {
+        +AllOrNothingThinking()
+        +Overgeneralization()
+        +MentalFilter()
+        +JumpingToConclusions()
+    }
+    class AllOrNothingThinking {
+        +SeeInExtremes()
+    }
+    class Overgeneralization {
+        +GeneralizeFromSingle()
+    }
+    class MentalFilter {
+        +FocusOnNegative()
+    }
+    class JumpingToConclusions {
+        +MakeAssumptions()
+    }
+    CognitiveDistortions *-- AllOrNothingThinking
+    CognitiveDistortions *-- Overgeneralization
+    CognitiveDistortions *-- MentalFilter
+    CognitiveDistortions *-- JumpingToConclusions
+{% end %}
+
+The Mermaid shortcode supports two parameters:
+
+- `invertible`: If set to `true` (default), the diagram will be inverted in dark mode, just like [invertible images](#invertible-image).
+- `full_width`: Allows the diagram to take up the width of the header. See [full-width image](#full-width-image).
+
+{{ admonition(type="tip", text="You can use the [Mermaid Live Editor](https://mermaid.live/) to create and preview your diagrams.") }}
+
+#### Usage
+
+```
+{%/* mermaid(invertible=true, full_width=false) */%}
+
+Your diagram goes here.
+
+`invertible` or `full_width` can be omitted if default values are used.
+
+{%/* end */%}
+```
+
 ## Image shortcodes
 
-**Note**: all image shortcodes have two optional parameters: `full_width`, which defaults to `false` (see [below](#full-width-image)), and `lazy_loading`, which defaults to `true`.
+All image shortcodes support absolute paths, relative paths, and remote sources in the `src` parameter.
 
-**Note 2**: as of [PR #222](https://github.com/welpo/tabi/pull/222) (commit [7796162](https://github.com/welpo/tabi/commit/7796162e378cacb9b4d6129f95138121224714f1)), all image shortcodes support relative paths in the `src` parameter.
+All image shortcodes have these optional parameters:
 
-**Note 3**: as of [PR #280](https://github.com/welpo/tabi/pull/280), all image shortcodes support remote images in the `src` parameter.
+- `raw_path`. Defaults to `false`. If set to `true`, the `src` parameter will be used as is. Useful for colocated assets with a custom slug (see [Zola issue #2598](https://github.com/getzola/zola/issues/2598)).
+- `inline`. Defaults to `false`. If set to `true`, the image will be displayed inline with the text.
+- `full_width`. Defaults to `false` (see [below](#full-width-image))
+- `lazy_loading`. Defaults to `true`.
 
 ### Dual theme images
 
@@ -125,14 +216,54 @@ dist/
 
 ## Text shortcodes
 
+### Aside (side/margin note)
+
+Add supplementary content in the margins on wide screens, or as distinct blocks on mobile.
+
+{{ aside(text="*Sidenote* comes from Latin *nota* ('mark') + Old English *síde* ('side').") }}
+
+The shortcode accepts two parameters:
+
+- `position`: Set to `"right"` to place in right margin (defaults to left)
+- Content can be provided via `text` parameter or between shortcode tags
+
+#### Usage
+
+{{ admonition(type="warning", text="Place the aside shortcode on its own line to prevent formatting issues.") }}
+
+Using the `text` parameter:
+
+```
+{{/* aside(text="*Sidenote* comes from Latin *nota* ('mark') + Old English *síde* ('side').") */}}
+```
+
+Using the content body and setting the position to right:
+
+```
+{%/* aside(position="right") */%}
+A longer note that
+can span multiple lines.
+
+*Markdown* is supported.
+{%/* end */%}
+```
+
 ### Remote text
 
 Embed text from a remote URL or a local file. To display the path or URL on the code block, see the [show source or path shortcode](#show-source-or-path).
 
+The shortcode accepts three parameters:
+
+- `src`: The source URL or file path (required)
+- `start`: First line to display (optional, starts at 1)
+- `end`: The ending line number (optional, defaults to 0, meaning the last line)
+
+{{ admonition(type="info", text="`start` and `end` are inclusive. `start=3, end=3` will display only the third line.") }}
+
 **Important**:
 
 - **Remote VS local files**: If `src` starts with "http", it will be treated as a remote file. Otherwise, it assumes a local file path.
-- **Files access**: As it uses Zola's [`load_data`](https://www.getzola.org/documentation/templates/overview/#load-data), local files must be inside the Zola directory—see [File searching logic](https://www.getzola.org/documentation/templates/overview/#file-searching-logic).
+- **Files access**: As it uses Zola's [`load_data`](https://www.getzola.org/documentation/templates/overview/#load-data), local files must be inside the Zola directory—see [File searching logic](https://www.getzola.org/documentation/templates/overview/#file-searching-logic). As of [tabi 2.16.0](https://github.com/welpo/tabi/releases/tag/v2.16.0), the shortcode supports both relative and absolute paths.
 - **Code block formatting**: To display the text as a code block, you must manually add the Markdown code fences (backticks) and, optionally, specify the programming language for syntax highlighting.
 
 #### Usage
@@ -151,6 +282,12 @@ Displaying text from a local file:
 {{/* remote_text(src="path/to/file.txt") */}}
 ```
 
+Display lines 3 to 7 (both inclusive) of a local file:
+
+```
+{{/* remote_text(src="path/to/file.txt", start=3, end=7) */}}
+```
+
 ### Admonitions
 
 Bring attention to information with these admonition shortcodes. They come in five `type`s: `note`, `tip`, `info`, `warning`, and `danger`.
@@ -165,15 +302,31 @@ Bring attention to information with these admonition shortcodes. They come in fi
 
 {{ admonition(type="danger", text="Some **content** with _Markdown_ `syntax`. Check [this `api`](#).") }}
 
-You can set a custom title with the `title` parameter:
+You can change the `title` and `icon` of the admonition. Both parameters take a string and default to the type of admonition. `icon` can be any of the available admonition types.
 
-{{ admonition(type="note", title="Custom title", text="Some **content** with _Markdown_ `syntax`. Check [this `api`](#).") }}
+{{ admonition(type="note", icon="tip", title="Custom title and icon", text="Some **content** with _Markdown_ `syntax`. Check [this `api`](#).") }}
 
 #### Usage
 
+You can use admonitions in two ways:
+
+1. Inline with parameters:
+
+```md
+{{/* admonition(type="danger", icon="tip", title="An important tip", text="Stay hydrated~") */}}
 ```
-{{/* admonition(type="info", title="Optional custom title", text="Something.") */}}
+
+2. With a content body:
+
+```md
+{%/* admonition(type="danger", icon="tip", title="An important tip") */%}
+Stay hydrated~
+
+This method is particularly useful for longer content or multiple paragraphs.
+{%/* end */%}
 ```
+
+Both methods support the same parameters (`type`, `icon`, and `title`), with the content either passed as the `text` parameter or as the body between tags.
 
 ### Multilingual quotes
 
@@ -258,3 +411,31 @@ Markdown will of course be rendered.
 
 {%/* end */%}
 ```
+
+### Force text direction
+
+Force the text direction of a content block. Overrides both the global `force_codeblock_ltr` setting and the document's overall direction.
+
+Accepts the parameter `direction`: the desired text direction. This can be either "ltr" (left-to-right) or "rtl" (right-to-left). Defaults to "ltr".
+
+{% force_text_direction(direction="rtl") %}
+```python
+def مرحبا_بالعالم():
+    print("مرحبا بالعالم!")
+```
+{% end %}
+
+#### Usage
+
+In a LTR page we can force a code block to be RTL (as shown above) like so:
+
+````
+{%/* force_text_direction(direction="rtl") */%}
+
+```python
+def مرحبا_بالعالم():
+    print("مرحبا بالعالم!")
+```
+
+{%/* end */%}
+````

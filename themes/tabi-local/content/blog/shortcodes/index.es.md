@@ -1,7 +1,7 @@
 +++
 title = "Shortcodes personalizados"
 date = 2023-02-19
-updated = 2024-05-03
+updated = 2024-12-28
 description = "Este tema incluye algunos shortcodes personalizados útiles que puedes utilizar para mejorar tus publicaciones. Puedes mostrar imágenes que se adapten a los temas claro y oscuro, dar formato a una sección de referencias con un aspecto profesional, y más."
 
 [taxonomies]
@@ -12,16 +12,105 @@ toc = true
 toc_levels = 2
 quick_navigation_buttons = true
 add_src_to_code_block = true
+mermaid = true
 social_media_card = "social_cards/es_blog_shortcodes.jpg"
 +++
 
+## Shortcodes de diagramas
+
+### Diagramas de Mermaid
+
+[Mermaid](https://github.com/mermaid-js/mermaid) es una herramienta de diagramación y gráficos que usa texto y código para generar diagramas. Admite diagramas de flujo, diagramas de secuencia, gráficos de Gantt y más.
+
+Para incluir un diagrama Mermaid en tu publicación, sigue estos dos pasos:
+
+1. Establece `mermaid = true` en la sección `[extra]` del front matter de tu página, sección o `config.toml`. Esto cargará el JavaScript necesario para renderizar los diagramas.
+
+2. Usa el shortcode `mermaid()` para definir tu diagrama. Por ejemplo:
+
+```txt
+{%/* mermaid() */%}
+classDiagram
+    class DistorsionesCognitivas {
+        +PensamientoTodoONada()
+        +Sobregeneralizacion()
+        +FiltroMental()
+        +SacarConclusionesPrecipitadas()
+    }
+    class PensamientoTodoONada {
+        +VerEnExtremos()
+    }
+    class Sobregeneralizacion {
+        +GeneralizarDeUnicoEjemplo()
+    }
+    class FiltroMental {
+        +EnfocarseEnNegativo()
+    }
+    class SacarConclusionesPrecipitadas {
+        +HacerSuposiciones()
+    }
+    DistorsionesCognitivas *-- PensamientoTodoONada
+    DistorsionesCognitivas *-- Sobregeneralizacion
+    DistorsionesCognitivas *-- FiltroMental
+    DistorsionesCognitivas *-- SacarConclusionesPrecipitadas
+{%/* end */%}
+```
+
+El diagrama se renderizará así:
+
+{% mermaid() %}
+classDiagram
+    class DistorsionesCognitivas {
+        +PensamientoTodoONada()
+        +Sobregeneralizacion()
+        +FiltroMental()
+        +SacarConclusionesPrecipitadas()
+    }
+    class PensamientoTodoONada {
+        +VerEnExtremos()
+    }
+    class Sobregeneralizacion {
+        +GeneralizarDeUnicoEjemplo()
+    }
+    class FiltroMental {
+        +EnfocarseEnNegativo()
+    }
+    class SacarConclusionesPrecipitadas {
+        +HacerSuposiciones()
+    }
+    DistorsionesCognitivas *-- PensamientoTodoONada
+    DistorsionesCognitivas *-- Sobregeneralizacion
+    DistorsionesCognitivas *-- FiltroMental
+    DistorsionesCognitivas *-- SacarConclusionesPrecipitadas
+{% end %}
+
+El shortcode de Mermaid admite dos parámetros:
+
+- `invertible`: Si se establece en `true` (por defecto), el diagrama se invertirá en modo oscuro, igual que las [imágenes invertibles](#imagen-invertible).
+- `full_width`: Permite que el diagrama ocupe el ancho del encabezado. Mira [imagen a ancho completo](#imagen-a-ancho-completo).
+
+{{ admonition(type="tip", title="CONSEJO", text="Puedes usar el [editor de Mermaid](https://mermaid.live/) para crear y previsualizar tus diagramas.") }}
+
+#### Uso
+
+```
+{%/* mermaid(invertible=true, full_width=false) */%}
+
+Tu diagrama Mermaid va aquí. Puedes omitir los parámetros para usar los valores predeterminados.
+
+{%/* end */%}
+```
+
 ## Shortcodes de imagen
 
-**Nota**: todos los shortcodes de imagen tienen dos parámetros opcionales: `full_width`, que tiene como valor predeterminado `false` (ver [más abajo](#imagen-a-ancho-completo)), y `lazy_loading`, que tiene como valor predeterminado `true`.
+Todos los shortcodes de imagen admiten rutas absolutas, rutas relativas, y fuentes remotas en el parámetro `src`.
 
-**Nota 2**: a partir del [PR #222](https://github.com/welpo/tabi/pull/222) (commit [7796162](https://github.com/welpo/tabi/commit/7796162e378cacb9b4d6129f95138121224714f1)), todos los shortcodes de imágenes admiten rutas relativas en el parámetro `src`.
+Todos los shortcodes de imagen tienen los siguientes parámetros opcionales:
 
-**Nota 3**: a partir del [PR #280](https://github.com/welpo/tabi/pull/280), todos los shortcodes de imágenes admiten imágenes remotas en el parámetro `src`.
+- `raw_path`. Por defecto es `false`. Si se establece en `true`, el parámetro `src` se usará tal cual. Útil para activos ubicados en la misma carpeta que tienen un slug personalizado (ver [Zola issue #2598](https://github.com/getzola/zola/issues/2598)).
+- `inline`. Valor predeterminado: `false`. Si se establece `true`, la imagen se mostrará en línea con el texto.
+- `full_width`. Valor predeterminado: `false` (ver [más abajo](#imagen-a-ancho-completo)).
+- `lazy_loading`. Valor predeterminado: `true`.
 
 ### Imágenes de doble tema
 
@@ -126,14 +215,54 @@ dist/
 
 ## Shortcodes de texto
 
+### Aside (nota al margen)
+
+Añade contenido complementario en los márgenes en pantallas anchas, o como bloques distintivos en móvil.
+
+{{ aside(text="*Nota al margen* viene de *nota* (del latín, 'marca' o 'señal') y *margen* (del latín *margo*, 'borde' o 'límite').") }}
+
+El shortcode acepta dos parámetros:
+
+- `position`: Establecer como `"right"` para colocar en el margen derecho (por defecto, izquierdo)
+- El contenido puede proporcionarse mediante el parámetro `text` o entre las etiquetas del shortcode
+
+#### Uso
+
+{{ admonition(type="warning", text="Separa la llamada al shortcode con saltos de línea para evitar errores de renderizado.") }}
+
+Usando el parámetro `text`:
+
+```
+{{/* aside(text="*Nota al margen* viene de *nota* (del latín, 'marca' o 'señal') y *margen* (del latín *margo*, 'borde' o 'límite').") */}}
+```
+
+Usando el cuerpo del contenido e indicando la posición:
+
+```
+{%/* aside(position="right") */%}
+Una nota más larga que
+puede ocupar varias líneas.
+
+Se admite *Markdown*.
+{%/* end */%}
+```
+
 ### Texto remoto
 
 Añade texto desde una URL remota o un archivo local.
 
+El shortcode acepta tres parámetros:
+
+- `src`: La URL de origen o ruta del archivo (obligatorio)
+- `start`: Primera línea a mostrar (opcional, empieza en 1)
+- `end`: Número de la última línea (opcional, por defecto es 0, la última línea)
+
+{{ admonition(type="info", text="`start` y `end` son inclusivos. `start=3, end=3` mostrará solo la tercera línea.") }}
+
 **Importante**:
 
 - **Archivos remotos VS archivos locales**: Si `src` empieza con "http", se tratará como un archivo remoto. De lo contrario, se asume que es una ruta de archivo local.
-- **Acceso a archivos**: Dado que utiliza la función [`load_data`](https://www.getzola.org/documentation/templates/overview/#load-data) de Zola, los archivos locales deben estar dentro del directorio de Zola —ver la [lógica de búsqueda de archivos](https://www.getzola.org/documentation/templates/overview/#file-searching-logic).
+- **Acceso a archivos**: Dado que utiliza la función [`load_data`](https://www.getzola.org/documentation/templates/overview/#load-data) de Zola, los archivos locales deben estar dentro del directorio de Zola —ver la [lógica de búsqueda de archivos](https://www.getzola.org/documentation/templates/overview/#file-searching-logic). Desde [tabi 2.16.0](https://github.com/welpo/tabi/releases/tag/v2.16.0), el shortcode admite también rutas relativas.
 - **Formateo de bloques de código**: Para mostrar el texto como un bloque de código, debes añadir manualmente las cercas de código Markdown (comillas invertidas) y, opcionalmente, especificar el lenguaje de programación para el resaltado sintáctico.
 
 #### Uso
@@ -152,6 +281,12 @@ Visualización de texto de un archivo local:
 {{/* remote_text(src="ruta/a/archivo.txt") */}}
 ```
 
+Mostar sólo las líneas 3 a 5 de un archivo remoto:
+
+```
+{{/* remote_text(src="https://example.com/script.py", start=3, end=5) */}}
+```
+
 ### Advertencias
 
 Destaca información con estos shortcodes. Hay cinco tipos (`type`): `note`, `tip`, `info`, `warning`, y `danger`.
@@ -166,15 +301,31 @@ Destaca información con estos shortcodes. Hay cinco tipos (`type`): `note`, `ti
 
 {{ admonition(type="danger", text="Contenido con **sintaxis** *Markdown*. Consulta [esta `api`](#).") }}
 
-Puedes personalizar el título con el parámetro `title`:
+Puedes cambiar el `title` y el `icon` de la advertencia. Ambos parámetros aceptan texto y por defecto coinciden con el tipo de advertencia. `icon` puede ser cualquiera de los tipos de advertencia disponibles.
 
-{{ admonition(type="info", title="Título personalizado", text="Contenido con **sintaxis** *Markdown*. Consulta [esta `api`](#).") }}
+{{ admonition(type="note", icon="tip", title="Título e icono personalizados", text="Contenido con **sintaxis** *Markdown*. Consulta [esta `api`](#).") }}
 
 #### Uso
 
+Puedes usar las advertencias de dos formas:
+
+1. En línea con parámetros:
+
+```md
+{{/* admonition(type="danger", icon="tip", title="Un consejo importante", text="Mantente hidratado") */}}
 ```
-{{/* admonition(type="info", title="Título opcional", text="Algo.") */}}
+
+2. Con contenido en el cuerpo:
+
+```md
+{%/* admonition(type="danger", icon="tip", title="Un consejo importante") */%}
+Mantente hidratado
+
+Este método es especialmente útil para contenido largo o múltiples párrafos.
+{%/* end */%}
 ```
+
+Ambos métodos admiten los mismos parámetros (`type`, `icon`, y `title`).
 
 ### Citas multilenguaje
 
@@ -260,3 +411,31 @@ El Markdown, por supuesto, será interpretado.
 
 {%/* end */%}
 ```
+
+### Forzar dirección del texto
+
+Fuerza la dirección del texto de un bloque de contenido. Anula tanto la configuración global `force_codeblock_ltr` como la dirección general del documento.
+
+Acepta el parámetro `direction`: la dirección de texto deseada. Puede ser "ltr" (de izquierda a derecha) o "rtl" (de derecha a izquierda). Por defecto es "ltr".
+
+{% force_text_direction(direction="rtl") %}
+```python
+def مرحبا_بالعالم():
+    print("مرحبا بالعالم!")
+```
+{% end %}
+
+#### Uso
+
+En una página LTR podemos forzar que un bloque de código sea RTL (como se muestra arriba) de la siguiente manera:
+
+````
+{%/* force_text_direction(direction="rtl") */%}
+
+```python
+def مرحبا_بالعالم():
+    print("مرحبا بالعالم!")
+```
+
+{%/* end */%}
+````

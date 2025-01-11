@@ -23,6 +23,8 @@ one_results = "$NUMBER result"  # "1 result"
 many_results = "$NUMBER results"  # "3 results"
 
 # Navigation.
+pinned = "Pinned"
+jump_to_posts = "Jump to posts"
 read_more = "Read more"
 one_posts = "$NUMBER post"
 many_posts = "$NUMBER posts"  # "3 posts"
@@ -45,6 +47,9 @@ go_to_top = "Go to the top of the page"
 go_to_comments = "Go to the comments section"
 
 # Post metadata.
+by_author = "By $AUTHOR"  # $AUTHOR will be replaced by the author(s).
+author_separator = ", "  # For multiple authors. Ensure spacing where necessary.
+author_conjunction = " and "  # For multiple authors. Ensure spacing where necessary.
 draft = "DRAFT"
 zero_min_read = "<1 min read"
 one_min_read = "$NUMBER min read"
@@ -52,7 +57,7 @@ many_min_read = "$NUMBER min read"
 zero_words = "No words"
 one_words = "$NUMBER word"
 many_words = "$NUMBER words"
-last_updated_on = "Last updated on"
+last_updated_on = "Updated on $DATE"
 see_changes = "See changes"
 
 # Post body.

@@ -23,6 +23,8 @@ one_results = "$NUMBER resultaat"  # "1 result"
 many_results = "$NUMBER resultaten"  # "3 results"
 
 # Navigation.
+pinned = "Vastgezet"
+jump_to_posts = "Naar berichten springen"
 read_more = "Lees meer"
 one_posts = "$NUMBER bericht" # "1 post"
 many_posts = "$NUMBER berichten"  # "3 posts"
@@ -45,6 +47,9 @@ go_to_top = "Ga naar de bovenkant van de pagina"
 go_to_comments = "Ga naar opmerkingen"
 
 # Post metadata.
+by_author = "Door $AUTHOR"  # $AUTHOR will be replaced by the author(s).
+author_separator = ", "  # For multiple authors. Ensure spacing where necessary.
+author_conjunction = " en "  # For multiple authors. Ensure spacing where necessary.
 draft = "VOORLOPIGE VERSIE"
 zero_min_read = "<1 minuut lezen"
 one_min_read = "$NUMBER minuut lezen"
@@ -52,7 +57,7 @@ many_min_read = "$NUMBER minuten lezen"
 zero_words = "Geen woorden"
 one_words = "$NUMBER woord"
 many_words = "$NUMBER woorden"
-last_updated_on = "Laatst geupdate op"
+last_updated_on = "Bijgewerkt op $DATE"
 see_changes = "Zie wijzigingen"
 
 # Post body.
