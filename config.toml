@@ -34,3 +34,12 @@ socials = [
     { name = "linkedin", url = "https://www.linkedin.com/in/lukas-spiss/", icon = "linkedin" },
     { name = "instagram", url = "https://instagram.com/spisslukas", icon = "instagram" },
 ]
+
+allowed_domains = [
+    { directive = "font-src", domains = ["'self'", "data:"] },
+    { directive = "img-src", domains = ["'self'", "https://*", "data:"] },
+    { directive = "media-src", domains = ["'self'"] },
+    { directive = "script-src", domains = ["'self'"] },
+    { directive = "style-src", domains = ["'self'"] },
+    { directive = "frame-src", domains = ["*.spiss.dev"] },
+]
