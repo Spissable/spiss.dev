@@ -30,7 +30,7 @@ This one is a bit of an odd one for me. I've been going back and forth between t
 
 
 #### [TablePlus](https://tableplus.com/)
-As someone who browses databases almost every day and is a sucker for a simple, clean UI, TablePlus is the perfect database client for me. Aside from that, the absolute killer feature is the "Safe-Mode", which, when enabled, asks for your password (the fingerprint sensor works on Mac as well) for every written operation.
+As someone who browses databases almost every day and is a sucker for a simple, clean UI, TablePlus is the perfect database client for me. Aside from that, the absolute killer feature is the "Safe-Mode", which, when enabled, asks for your password (the fingerprint sensor works on Mac as well) for every write operation.
 
 
 #### [Podman](https://podman.io/)
