@@ -36,10 +36,10 @@ socials = [
 ]
 
 allowed_domains = [
-    { directive = "font-src", domains = ["'self'", "data:"] },
+    { directive = "font-src", domains = ["'self'", "spiss.dev", "*.spiss.dev", "data:"] },
     { directive = "img-src", domains = ["'self'", "https://*", "data:"] },
-    { directive = "media-src", domains = ["'self'"] },
-    { directive = "script-src", domains = ["'self'"] },
-    { directive = "style-src", domains = ["'self'"] },
-    { directive = "frame-src", domains = ["*.spiss.dev"] },
+    { directive = "media-src", domains = ["'self'", "spiss.dev", "*.spiss.dev"] },
+    { directive = "script-src", domains = ["'self'", "spiss.dev", "*.spiss.dev"] },
+    { directive = "style-src", domains = ["'self'", "spiss.dev", "*.spiss.dev"] },
+    { directive = "frame-src", domains = ["'self'", "spiss.dev", "*.spiss.dev"] },
 ]
