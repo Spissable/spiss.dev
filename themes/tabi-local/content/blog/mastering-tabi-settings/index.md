@@ -1,7 +1,7 @@
 +++
 title = "Mastering tabi Settings: A Comprehensive Guide"
 date = 2023-09-18
-updated = 2025-01-02
+updated = 2025-08-07
 description = "Discover the many ways you can customise your tabi site."
 
 [taxonomies]
@@ -113,7 +113,7 @@ The description is regular Markdown content, set outside the front matter.
 
 #### Listing Recent Posts
 
-To show posts on your main page, you first need to decide where these posts will be served from: the root path (`/`) or a subdirectory (e.g., `/blog`). 
+To show posts on your main page, you first need to decide where these posts will be served from: the root path (`/`) or a subdirectory (e.g., `/blog`).
 
 **Option A: Serve posts from the root path (`/`)**
 
@@ -183,6 +183,10 @@ By default, when listing posts, the date of post creation is shown. You can conf
 post_listing_date = "date"
 ```
 
+{% admonition(type="tip") %}
+This setting follows the hierarchy: you can set a global value in `config.toml` or override it for specific sections in their `_index.md` file. In both cases, add it to the `[extra]` section.
+{% end %}
+
 #### Listing Projects
 
 You can showcase a selection of projects on your main page. To do this, you'll need to set up the `projects` directory first.
@@ -224,7 +228,7 @@ tabi's skins change the main colour of the site. You can set the skin in `config
 
 {{ image_toggler(default_src="blog/customise-tabi/skins/lavender_light.webp", toggled_src="blog/customise-tabi/skins/lavender_dark.webp", default_alt="lavender skin in light mode", toggled_alt="lavender skin in dark mode", full_width=true) }}
 
-Explore the available skins and learn how to create your own reading [the documentation](/blog/customise-tabi/#skins).
+Explore the available skins and learn how to create your own reading [the documentation](@/blog/customise-tabi/index.md#skins).
 
 ### Sans-serif Font
 
@@ -237,6 +241,25 @@ tabi uses a serif font for article paragraphs (the one you're seeing now). You c
 Click on the image below to compare the two looks:
 
 {{ image_toggler(default_src="blog/mastering-tabi-settings/img/serif.webp", toggled_src="blog/mastering-tabi-settings/img/sans-serif.webp", default_alt="Serif font", toggled_alt="Sans-serif font", full_width=true) }}
+
+### External Link Indicator
+
+| Page | Section | `config.toml` | Follows Hierarchy | Requires JavaScript |
+|:----:|:-------:|:-------------:|:-----------------:|:-------------------:|
+|  ❌  |   ❌    |      ✅       |         ❌        |         ❌          |
+
+{{ admonition(type="info", text="Requires Zola 0.20.0 or later.") }}
+
+If you'd like to add an icon to external links, configure the `[markdown]` (not `[extra]`) section in your `config.toml`:
+
+```toml
+[markdown]
+external_links_class = "external"
+```
+
+This will add a small icon next to external links:
+
+{{ dual_theme_image(light_src="blog/mastering-tabi-settings/img/external_link_light.webp", dark_src="blog/mastering-tabi-settings/img/external_link_dark.webp", alt="External link icon", full_width=true) }}
 
 ### Custom CSS
 
@@ -443,10 +466,14 @@ By default, the archive will list posts located in `blog/`. To customise this, y
   section_path = ["blog/", "notes/", "path-three/"]
   ```
 
-**Notes**:
+The archive displays posts in reverse chronological order (newest first). You can reverse this order by setting `archive_reverse = true` in the `[extra]` section:
 
-- the Archive page will only list posts that have a date in their front matter.
-- Post sorting is determined by the `sort_by` variable of the sections you are archiving. This demo uses `sort_by = "date"` set in the `blog/_index.md`.
+```toml
+[extra]
+archive_reverse = true  # displays oldest posts first.
+```
+
+{{ admonition(type="note", text="The Archive page will only list posts that have a date in their front matter.") }}
 
 ### Tags
 
@@ -594,7 +621,9 @@ This adds metadata to your HTML, allowing Mastodon to display the author's fediv
 |:----:|:-------:|:-------------:|:-----------------:|:-------------------:|
 |  ❌  |   ❌    |      ✅       |         ❌        |         ❌          |
 
-The navigation bar is the bar at the top of the page that contains the site title and the navigation menu. You can customise which items appear by setting `menu` in `config.toml`. For example:
+The navigation bar is the bar at the top of the page that contains the site title and the navigation menu. You can customise which items appear by setting `menu` in `config.toml`.
+
+The menu supports both relative URLs for internal pages and absolute URLs for external links. For example:
 
 ```toml
 menu = [
@@ -603,6 +632,7 @@ menu = [
     { name = "tags", url = "tags", trailing_slash = true },
     { name = "projects", url = "projects", trailing_slash = true },
     { name = "about", url = "about", trailing_slash = true },
+    { name = "github", url = "https://github.com/welpo/tabi", trailing_slash = false },
 ]
 ```
 
@@ -678,13 +708,13 @@ Setting `copy_button = true` will add a small copy button to the top right of co
 
 {{ dual_theme_image(light_src="blog/mastering-tabi-settings/img/copy_button_on_code_blocks_light.webp", dark_src="blog/mastering-tabi-settings/img/copy_button_on_code_blocks_dark.webp" alt="Copy button on code blocks", full_width=true) }}
 
-### Source/Path on Code Blocks
+### Clickable Code Block Names
 
 | Page | Section | `config.toml` | Follows Hierarchy | Requires JavaScript |
 |:----:|:-------:|:-------------:|:-----------------:|:-------------------:|
 |  ✅  |   ✅    |      ✅       |         ✅        |         ✅          |
 
-Setting `add_src_to_code_block = true` enables the use of the [`add_src_to_code_block` shortcode](@/blog/shortcodes/index.md#show-source-or-path).
+Setting `code_block_name_links = true` enables URLs in code block names to become clickable links. Check out the [documentation](@/blog/shortcodes/index.md#show-source-or-path) for examples and usage.
 
 ### Force Code Blocks LTR
 
@@ -720,9 +750,9 @@ See the [Mermaid documentation](@/blog/shortcodes/index.md#mermaid-diagrams) for
 |:----:|:-------:|:-------------:|:-----------------:|:-------------------:|
 |  ❌  |   ❌    |      ✅       |         ❌        |         ❌          |
 
-Custom fonts cause flashing text in Firefox. To amend this, tabi loads a subset of glyphs for the header. Since this (slightly) increases the initial load time, it's a good idea to try and minimise the size of this subset.
+Custom fonts cause flashing text in Firefox. To amend this, tabi loads a subset of glyphs for the header. Since this (slightly) increases the initial load time, it's a good idea to try and minimise the size of this subset, or disable it completely if you're not using a custom font in your skin.
 
-You can create a custom subset tailored to your site, save it as `static/custom_subset.css`, and have it load with `custom_subset = true`.
+You can create a custom subset tailored to your site, save it as `static/custom_subset.css`, and have it load with `custom_subset = true`. Disabling the subset can be done with `enable_subset = false`.
 
 For more information, including instructions on how to create a custom subset, see the [docs](@/blog/custom-font-subset/index.md).
 
@@ -740,7 +770,10 @@ By default, the Atom feed only contains the summary/description of your posts. Y
 |:----:|:-------:|:-------------:|:-----------------:|:-------------------:|
 |  ✅  |   ✅    |      ✅       |         ✅        |         ❌          |
 
-You can hide specific pages or entire sections from your feed by setting `hide_from_feed = true`.
+You can control how content appears in your feeds using two settings:
+
+1. `hide_from_feed = true`: Hides content from all feeds (main, section, and tag feeds)
+2. `hide_from_main_feed = true`: Hides content only from the main feed while keeping it visible in section and tag feeds
 
 ### Comments {#adding-comments}
 
@@ -755,6 +788,37 @@ To enable a system globally (on all pages), set `enabled_for_all_posts = true` i
 If you have enabled a system globally, but want to disable it on a specific page, set the name of the system to `false` in the front matter of that page. For example, `utterances = false`.
 
 Read [the docs](@/blog/comments/index.md) for more information on the available systems and their setup.
+
+### iine Like Buttons {#iine}
+
+| Page | Section | `config.toml` | Follows Hierarchy | Requires JavaScript |
+|:----:|:-------:|:-------------:|:-----------------:|:-------------------:|
+|  ✅  |   ✅    |      ✅       |         ✅        |         ❌          |
+
+tabi supports [iine](https://iine.to/) like buttons for anonymous appreciation of your content. These privacy-focused buttons work without JavaScript and don't track users.
+
+To enable iine buttons globally:
+
+```toml
+[extra]
+iine = true
+```
+
+You can customise the icon used for the buttons (follows the hierarchy):
+
+```toml
+[extra]
+iine_icon = "thumbs_up"  # Options: "heart", "thumbs_up", "upvote", or any emoji
+```
+
+For multilingual sites, you can unify like counts across language versions of the same content (config-only setting; true by default):
+
+```toml
+[extra]
+iine_unified_languages = true  # Likes on /es/blog/hello/ count towards /blog/hello/
+```
+
+You can also enable iine buttons on individual pages or sections by setting `iine = true` in their front matter, or override the icon with `iine_icon = "🚀"`.
 
 ### Analytics
 
@@ -777,6 +841,8 @@ You can set them up in the `[extra.analytics]` section of your `config.toml`.
   - For GoatCounter: `"https://stats.example.com"`
   - For Umami: `"https://umami.example.com"`
   - For Plausible: `"https://plausible.example.com"`
+
+- `do_not_track`: (Umami only) Optional. When set to `true`, the generated tracking script will include the `data-do-not-track="true"` attribute, which disables tracking for users whose browsers send a "Do Not Track" header.
 
 An example configuration for non-self-hosted GoatCounter would look like this:
 
@@ -917,11 +983,24 @@ By default, the date is shown below the post title. You can hide it with `show_d
 |:----:|:-------:|:-------------:|:-----------------:|:-------------------:|
 |  ❌  |   ❌    |      ✅       |         ❌        |         ❌          |
 
-tabi has two date formats: `long_date_format` and `short_date_format`. The short format is used in a post's metadata, while the long format is used when listing posts (i.e. on the [blog section](@/blog/_index.md) or the [main page](@/_index.md)).
+tabi has three date formats: `long_date_format`, `short_date_format` and `archive_date_format`. The short format is used in a post's metadata, while the long format is used when listing posts (i.e. on the [blog section](@/blog/_index.md) or the [main page](@/_index.md)). The archive format is used to display day and month on the archive page.
 
-The default is "6th July 2049" for both formats in English. For other languages, the defaut is `"%d %B %Y"` for the long format and `"%-d %b %Y"` for the short format.
+The default is "6th July 2049" for `long_date_format` and `short_date_format` in English. For other languages, the defaut is `"%d %B %Y"` for the long format and `"%-d %b %Y"` for the short format. The universal default for the archive format is `"%d %b"`.
 
 In Zola, time formatting syntax is inspired fom strftime. A full reference is available in the [chrono docs](https://docs.rs/chrono/0.4.31/chrono/format/strftime/index.html).
+
+#### Per-language date formats
+
+You can customise date formats for specific languages using the `date_formats` array in `config.toml`:
+
+```toml
+date_formats = [
+    { lang = "es", long = "%d de %B de %Y", short = "%-d %b %Y", archive = "%d de %b" },
+    { lang = "de", long = "%d. %B %Y", short = "%d.%m.%Y", archive = "%d. %b" },
+]
+```
+
+This allows different languages to use culturally appropriate date formatting (e.g. Spanish "3 de febrero de 2024" vs German "3. Februar 2024").
 
 ### Custom Separator
 
@@ -982,6 +1061,68 @@ allowed_domains = [
 This feature is enabled by default. To disable it (and allow all connections), set `enable_csp = false` on a page, section or globally. The `enable_csp` setting follows the [hierarchy](#settings-hierarchy).
 
 See the [CSP documentation page](@/blog/security/index.md) for more information.
+
+---
+
+## Indieweb
+
+### Webmentions
+
+| Page | Section | `config.toml` | Follows Hierarchy | Requires JavaScript |
+|:----:|:-------:|:-------------:|:-----------------:|:-------------------:|
+|  ❓  |   ❓    |      ✅       |         ❓        |         ✅          |
+
+As described by the recommended W3C standard [Webmention](https://www.w3.org/TR/webmention/#abstract-p-1) is a simple way to notify any URL when you mention it on your site. From the receiver's perspective, it's a way to request notifications when other sites mention it.
+
+For static sites [webmention.io](https://webmention.io/) hosts a webmention endpoint that can be used to receive webmentions. This feature fetches the webmentions stored at webmention.io and displays them for a page. You will need to have setup an account for your website at webmention.io. When you enable the webmention feature it will advertise your webmention.io endpoint and display the webmentions for all posts.
+
+Enable webmentions for your site by adding the following to your `config.toml` file.
+
+```toml
+[extra.webmentions]
+enable = true
+# Specify the domain registered with webmention.io.
+domain = "www.example.com"
+```
+
+❓: To disable webmentions for a specific section or page, set `webmentions = false` in the `[extra]` section of that section or page's front matter.
+
+The webmentions section looks like this:
+
+{{ dual_theme_image(light_src="blog/mastering-tabi-settings/img/webmention_light.webp", dark_src="blog/mastering-tabi-settings/img/webmention_dark.webp" alt="Webmentions screenshot showing reposts, likes, bookmarks, and comments", full_width=true) }}
+
+### Representative h-card
+
+| Page | Section | `config.toml` | Follows Hierarchy | Requires JavaScript |
+| :--: | :-----: | :-----------: | :---------------: | :-----------------: |
+|  ❌  |   ❌    |      ✅       |        ❌         |         ❌          |
+
+By default, tabi adds a **hidden** representative [h-card](https://microformats.org/wiki/h-card) to the homepage. While invisible to visitors, it's available to microformat parsers. You can check the validity of the card with the [Indiewebify.me](https://indiewebify.me/validate-h-card/) tool.
+
+To disable the h-card, set `enable = false` in the `[extra.hcard]` section of `config.toml`.
+
+The default h-card includes your name, website url and social media links.
+
+You can set a profile picture and a small bio with the `avatar` and `biography` settings.
+
+All other [h-card properties](https://microformats.org/wiki/h-card#Properties) can be added by listing them under the `[extra.hcard]`section of the config file. Simply replace all `-` characters by `_`.
+
+---
+
+## Extending HTML Elements in tabi
+
+Some HTML elements in tabi can be extended to support additional use cases such as adding custom JavaScript for site-wide behavior at the end of the `<body>` tag or including additional content at the end of the `<head>` element that is not otherwise supported by other tabi settings.
+
+See the table below for elements that can be extended:
+
+| Element  | Template                          |
+| :------: | :-------------------------------: |
+| `<head>` | `templates/tabi/extend_head.html` |
+| `<body>` | `templates/tabi/extend_body.html` |
+
+There are no explicit settings to configure for your site or pages. Simply create the relevant template file for your site, and tabi will automatically include it.
+
+---
 
 [^1]: If you're using a remote Git repository, you might want to automate the process of updating the `updated` field. Here's a guide for that: [Zola Git Pre-Commit Hook: Updating Post Dates](https://osc.garden/blog/zola-date-git-hook/).
 

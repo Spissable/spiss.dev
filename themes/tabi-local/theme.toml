@@ -56,6 +56,9 @@ skin = ""
 # browser_theme_color = "#087e96"  # Example of single value.
 # browser_theme_color = ["#ffffff", "#000000"]  # Example of light/dark colours.
 
+# Show current language code on the language switcher
+show_selected_language_code_in_language_switcher = false
+
 # List additional stylesheets to load site-wide.
 # These stylesheets should be located in your site's `static` directory.
 # Example: stylesheets = ["extra1.css", "path/extra2.css"]
@@ -87,9 +90,9 @@ show_remote_source = true  # Defaults to true.
 # Can be set at page or section levels, following the hierarchy: page > section > config. See: https://welpo.github.io/tabi/blog/mastering-tabi-settings/#settings-hierarchy
 copy_button = true
 
-# Loads the necessary JavaScript (~400 bytes) to use the "Show source or path" shortcode: https://welpo.github.io/tabi/blog/shortcodes/#show-source-or-path
+# Make code block names clickable if they are URLs (loads ~400 bytes of JavaScript).
 # Can be set at page or section levels, following the hierarchy: page > section > config. See: https://welpo.github.io/tabi/blog/mastering-tabi-settings/#settings-hierarchy
-add_src_to_code_block = false
+code_block_name_links = false
 
 # Force left-to-right (LTR) direction for code blocks.
 # Set to false to allow code to follow the document's natural direction.
@@ -113,6 +116,14 @@ show_date = true
 # "updated" - Show only the last updated date of the post. If there is no last updated date, it shows the original date.
 # "both" - Show both the original date and the last updated date.
 post_listing_date = "date"
+
+# Enable iine like buttons on all posts: https://iine.to/
+# Can be set at page or section levels, following the hierarchy: page > section > config. See: https://welpo.github.io/tabi/blog/mastering-tabi-settings/#settings-hierarchy
+iine = false
+iine_icon = "heart"  # See https://iine.to/#customise
+# Unify like counts across all language versions of the same page.
+# When enabled, likes on /es/blog/hello/ will count towards /blog/hello/ (default language).
+iine_unified_languages = true
 
 # Show "Jump to posts" link next to series' title.
 # By default, the link appears automatically when a series description exceeds 2000 characters.
@@ -174,6 +185,17 @@ quick_navigation_buttons = false
 # Date format used for blog posts.
 # Default is "6th July 2049" in English and "%-d %B %Y" in other languages.
 short_date_format = ""
+
+# Date format used for the archive page.
+# Default is "06 July" in English and "%d %b" in other languages.
+# archive_date_format = ""
+
+# Per-language date format overrides.
+# Examples: Spanish uses "3 de febrero de 2024", German uses "3. Februar 2024"
+# date_formats = [
+#     { lang = "es", long = "%d de %B de %Y", short = "%d %b %Y" },
+#     { lang = "de", long = "%d. %B %Y", short = "%d.%m.%Y" },
+# ]
 
 # Custom separator used in title tag and posts metadata (between date, time to read, and tags).
 separator = "•"
@@ -291,11 +313,15 @@ allowed_domains = [
 # Can be set at page or section levels, following the hierarchy: page > section > config. See: https://welpo.github.io/tabi/blog/mastering-tabi-settings/#settings-hierarchy
 enable_csp = true
 
-# Custom subset of characters for the header.
-# If set to true, the `static/custom_subset.css` file will be loaded first.
-# This avoids a flashing text issue in Firefox.
-# Please see https://welpo.github.io/tabi/blog/custom-font-subset/ to learn how to create this file.
-# custom_subset = true
+# Font subsetting configuration.
+# This feature helps prevent text flashing in Firefox when using custom fonts.
+# See: https://welpo.github.io/tabi/blog/custom-font-subset/
+# Enable or disable font subsetting completely, both built-in and custom subsets.
+enable_subset = true
+# Use a custom subset of characters for the header.
+# If true, tabi will load the `static/custom_subset.css` file.
+# If false, tabi will use the default language-specific subset (English or Spanish).
+custom_subset = true
 
 [extra.analytics]
 # Specify which analytics service you want to use.
@@ -315,6 +341,9 @@ enable_csp = true
 # For Plausible: Base URL like "https://plausible.example.com"
 # Leave this field empty if you're using the service's default hosting.
 # self_hosted_url = ""
+
+# Optional: For Umami, enable this option to respect users' Do Not Track (DNT) settings. The default is true.
+do_not_track = true
 
 # giscus support for comments. https://giscus.app
 # Setup instructions: https://welpo.github.io/tabi/blog/comments/#setup
@@ -371,3 +400,69 @@ enable_csp = true
 # voting = true
 # page_author_hashes = ""  # hash (or list of hashes) of the author.
 # lazy_loading = true  # Loads when the comments are in the viewport (using the Intersection Observer API).
+
+[extra.webmentions]
+# To disable for a specific section or page, set webmentions = false in that page/section's front matter's [extra] section.
+enable = false
+# Specify the domain registered with webmention.io.
+# domain = ""
+
+# The HTML ID for the object to fill in with the webmention data.
+# Defaults to "webmentions"
+# id = "webmentions"
+
+# data configuration for the webmention.min.js script
+# The base URL to use for this page. Defaults to window.location
+# page_url =
+
+# Additional URLs to check, separated by |s
+# add_urls
+
+# The maximum number of words to render in reply mentions.
+# wordcount = 20
+
+# The maximum number of mentions to retrieve. Defaults to 30.
+# max_webmentions = 30
+
+# By default, Webmentions render using the mf2 'url' element, which plays
+# nicely with webmention bridges (such as brid.gy and telegraph)
+# but allows certain spoofing attacks. If you would like to prevent
+# spoofing, set this to a non-empty string (e.g. "true").
+# prevent_spoofing
+
+# What to order the responses by; defaults to 'published'. See
+# https://github.com/aaronpk/webmention.io#api
+# sort_by
+
+# The order to sort the responses by; defaults to 'up' (i.e. oldest
+# first). See https://github.com/aaronpk/webmention.io#api
+# sort_dir
+
+# If set to a non-empty string (e.g. "true"), will display comment-type responses
+# (replies/mentions/etc.) as being part of the reactions
+# (favorites/bookmarks/etc.) instead of in a separate comment list.
+# comments_are_reactions = "true"
+
+# h-card configuration
+# Will identify you on the indieweb (see https://microformats.org/wiki/h-card)
+[extra.hcard]
+# Enable home page h-card.
+enable = true
+# Add your email to the card if extra.email is set and not encoded.
+# with_mail = true
+# Add your social links ('socials' config) to the card.
+with_social_links = true
+# Homepage url. Defaults to the value of 'base_url'.
+# homepage = "https://myhomepage.net"
+# avatar = "img/profile.webp"
+# Display name, default to the value of 'author'.
+# full_name = "John Doe"
+# Small bio, as shown on social media profiles.
+# biography = "Fond of the indieweb"
+#
+# You can add any property from https://microformats.org/wiki/h-card#Properties
+# Make sure to replace all '-' characters by '_'
+# Examples:
+# p_nickname = "nickname"
+# p_locality = "Bordeaux"
+# p_country_name = "France"

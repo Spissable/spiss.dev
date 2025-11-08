@@ -33,6 +33,7 @@ few_results = "$NUMBER результати"
 many_results = "$NUMBER результатів"
 
 # Navigation.
+skip_to_content = "Перейти до вмісту"
 pinned = "Закріплено"
 jump_to_posts = "Перейти до дописів"
 read_more = "Читати далі"
@@ -80,6 +81,9 @@ load_comments = "Завантажити коментарі"
 # Copy code block button.
 copied = "Скопійовано!"
 copy_code_to_clipboard = "Копіювати код у буфер обміну"
+
+# iine appreciation button.
+like_this_post = "Мені подобається ця стаття"
 
 # Footer: Powered by Zola and tabi.
 powered_by = "Під управлінням"

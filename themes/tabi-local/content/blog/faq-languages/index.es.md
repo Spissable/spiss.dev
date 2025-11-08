@@ -1,7 +1,7 @@
 +++
 title = "¿Lost in Translation? Explora las capacidades multilingües de tabi"
 date = 2023-09-12
-updated = 2024-08-18
+updated = 2025-09-14
 description = "Descubre cómo tabi te ayuda a conectar con una audiencia global gracias a sus funciones multilingües. Aprende a cambiar el idioma por defecto, añadir más idiomas y aportar tus propias traducciones."
 
 [taxonomies]
@@ -30,6 +30,7 @@ tabi admite los siguientes idiomas:
 - Coreano
 - Español
 - Estonio
+- Finlandés
 - Francés
 - Hindi
 - Inglés
@@ -106,6 +107,19 @@ Por lo tanto, si creas `i18n/en.toml` en tu directorio base, tabi leerá las cad
 
 Asegúrate de copiar todo el archivo para ese idioma primero, o el tema usará el inglés para las claves faltantes.
 
+## ¿Cómo personalizo los formatos de fecha para diferentes idiomas?
+
+Puedes establecer formatos de fecha específicos por idioma en tu `config.toml` usando la matriz `date_formats`:
+
+```toml
+date_formats = [
+    { lang = "es", long = "%d de %B de %Y", short = "%-d %b %Y", archive = "%d de %b" },
+    { lang = "de", long = "%d. %B %Y", short = "%d.%m.%Y", archive = "%d. %b" },
+]
+```
+
+Esto permite que cada idioma muestre las fechas según las convenciones locales. Por ejemplo, el español mostrará «3 de febrero de 2024» mientras que el alemán mostrará «3. Februar 2024». Si no se define un formato específico para un idioma, tabi usará la configuración global `long_date_format`, `short_date_format` y `archive_date_format`.
+
 ## ¿Qué pasa si falta una traducción o está incompleta?
 
 Si una cadena no se encuentra en el archivo de idioma, tabi recurrirá a la cadena predeterminada en inglés.
@@ -133,3 +147,7 @@ Si lo hiciste, tendrás que actualizar manualmente las traducciones. Puedes hace
 ## ¿tabi traduce el contenido de mi sitio?
 
 No. tabi sólo traduce el tema. Los posts deberás traducirlos tú mismo.
+
+## ¿Cómo puedo mostrar el código del idioma actual en el conmutador de idioma?
+
+Añade `show_selected_language_code_in_language_switcher = true` en la sección `[extra]` de tu `config.toml`.

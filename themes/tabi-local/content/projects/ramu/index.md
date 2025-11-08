@@ -1,5 +1,5 @@
 +++
-title = "ラム (ramu)"
+title = "ramu"
 description = "A web app to practice reading and listening to Japanese numbers."
 weight = 35
 
@@ -10,6 +10,7 @@ tags = ["Japanese", "interactive", "web app", "web", "PWA", "JavaScript"]
 local_image = "projects/ramu/ramu_logo.webp"
 canonical_url = "https://osc.garden/projects/ramu/"
 social_media_card = "social_cards/projects_ramu.jpg"
+iine_icon = '🐏'
 +++
 
 <ruby>ラ<rt>ra</rt>ム<rt>mu</rt></ruby> is a Progressive Web App to practice reading and listening to Japanese numbers. The name reflects its purpose: achieving RAM (Random Access Memory) to numbers, as opposed to sequential memory (1, 2, 3…).

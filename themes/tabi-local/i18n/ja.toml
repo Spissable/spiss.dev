@@ -27,6 +27,7 @@ one_results = "$NUMBER 結果"  # "1 result"
 many_results = "$NUMBER 結果"  # "3 results"
 
 # Navigation.
+skip_to_content = "コンテンツにスキップ"
 pinned = "固定"
 jump_to_posts = "投稿へジャンプ"
 read_more = "続きを読む"
@@ -71,6 +72,9 @@ load_comments = "コメントを読む"
 # Copy code block button.
 copied = "コピーしました！"
 copy_code_to_clipboard = "コードをクリップボードにコピー"
+
+# iine appreciation button.
+like_this_post = "いいね！"
 
 # Footer: Powered by Zola and tabi.
 powered_by = "Powered by"

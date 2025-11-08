@@ -1,7 +1,7 @@
 +++
 title = "Lost in Translation? Explora les capacitats multilingües de tabi"
 date = 2023-09-12
-updated = 2024-08-18
+updated = 2025-09-14
 description = "Descobreix com tabi t'ajuda a connectar amb una audiència global gràcies a les seves funcions multilingües. Aprèn a canviar la llengua per defecte, afegir més llengües i aportar les teves pròpies traduccions."
 
 [taxonomies]
@@ -30,6 +30,7 @@ tabi admet les següents llengües:
 - Coreà
 - Espanyol
 - Estonià
+- Finès
 - Francès
 - Hindi
 - Italià
@@ -106,6 +107,19 @@ Per tant, si crees `i18n/ca.toml` al teu directori base, tabi llegirà les caden
 
 Assegura't de copiar tot el fitxer per a aquest idioma primer, o el tema utilitzarà l'anglès per les claus que faltin.
 
+## Com personalitzo els formats de data per a diferents idiomes?
+
+Pots establir formats de data específics per idioma al teu `config.toml` utilitzant la matriu `date_formats`:
+
+```toml
+date_formats = [
+    { lang = "es", long = "%d de %B de %Y", short = "%-d %b %Y", archive = "%d de %b" },
+    { lang = "de", long = "%d. %B %Y", short = "%d.%m.%Y", archive = "%d. %b" },
+]
+```
+
+Això permet que cada idioma mostri les dates segons les convencions locals. Per exemple, l'espanyol mostrarà «3 de febrero de 2024» mentre que l'alemany mostrarà «3. Februar 2024». Si no es defineix un format específic per a un idioma, tabi utilitzarà la configuració global `long_date_format`, `short_date_format` i `archive_date_format`.
+
 ## Què passa si falta una traducció o està incompleta?
 
 Si una cadena no es troba en el fitxer d'idioma, tabi utilitzarà a la cadena predeterminada en anglès.
@@ -133,3 +147,7 @@ Si ho vas fer, hauràs d'actualitzar manualment les traduccions. Pots fer-ho cop
 ## tabi tradueix el meu contingut?
 
 No. tabi només tradueix les cadenes de text del tema. Hauràs de traduir el teu contingut tu mateix.
+
+## Com puc mostrar el codi de l'idioma actual al commutador d'idioma?
+
+Afegeix `show_selected_language_code_in_language_switcher = true` a la secció `[extra]` del teu `config.toml`.

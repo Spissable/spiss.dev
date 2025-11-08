@@ -23,6 +23,7 @@ one_results = "$NUMBER résultat"  # "1 result"
 many_results = "$NUMBER résultats"  # "3 results"
 
 # Navigation.
+skip_to_content = "Passer au contenu"
 pinned = "Épinglé"
 jump_to_posts = "Aller aux articles"
 read_more = "Lire plus"
@@ -67,6 +68,9 @@ load_comments = "Afficher les commentaires"
 # Copy code block button.
 copied = "Copié !"
 copy_code_to_clipboard = "Copier le code dans le presse-papier"
+
+# iine appreciation button.
+like_this_post = "J'aime cet article"
 
 # Footer: Powered by Zola and tabi.
 powered_by = "Propulsé par"

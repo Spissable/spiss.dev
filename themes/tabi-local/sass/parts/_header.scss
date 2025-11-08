@@ -31,7 +31,6 @@ header {
         flex-wrap: inherit;
         justify-content: inherit;
         align-items: inherit;
-        gap: inherit;
         gap: 1px;
         margin: 0;
         padding: 0;
@@ -39,7 +38,13 @@ header {
     }
 }
 
-#menu-icons-group {
+.menu-icons-container {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+}
+
+.menu-icons-group {
     gap: 1px;
     margin: 0;
     padding: 0;
@@ -93,11 +98,11 @@ header {
     .tag {
         margin-inline-end: 0;
     }
+}
 
-    .separator {
-        margin-inline-end: 0.2rem;
-        user-select: none;
-    }
+.separator {
+    margin-inline-end: 0.2rem;
+    user-select: none;
 }
 
 .language-switcher {
@@ -119,6 +124,28 @@ header {
         &:hover {
             background: var(--meta-color);
         }
+    }
+
+    .language-switcher-icon-with-code {
+        margin-inline-end: 0.3rem;
+        width: 0.7rem;
+        height: 0.7rem;
+    }
+}
+
+.language-switcher-icon-code {
+    position: absolute;
+    top: -0.15rem;
+    z-index: 10;
+    inset-inline-start: 0.7rem;
+    width: 100%;
+    height: 100%;
+    color: var(--text-color);
+    font-size: 0.5rem;
+    text-transform: uppercase;
+
+    &:hover {
+        color: var(--meta-color);
     }
 }
 
@@ -167,6 +194,10 @@ header {
     .nav-navs {
         display: flex;
         justify-content: center;
+    }
+
+    .menu-icons-container {
+        margin-left: 0;
     }
 }
 

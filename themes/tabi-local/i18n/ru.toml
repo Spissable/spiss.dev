@@ -28,6 +28,7 @@ few_results = "$NUMBER результата"  # 2, 3, 4 but not 12-14
 many_results = "$NUMBER результатов"  # 5-9, 0, 11-14, and others
 
 # Navigation.
+skip_to_content = "Перейти к содержанию"
 pinned = "Закреплено"
 jump_to_posts = "Перейти к записям"
 read_more = "Читать далее"
@@ -76,6 +77,9 @@ load_comments = "Загрузить комментарии"
 # Copy code block button.
 copied = "Скопировано!"
 copy_code_to_clipboard = "Скопировать код в буфер обмена"
+
+# iine appreciation button.
+like_this_post = "Мне нравится эта статья"
 
 # Footer: Powered by Zola and tabi.
 powered_by = "Под управлением"

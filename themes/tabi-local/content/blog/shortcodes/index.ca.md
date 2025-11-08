@@ -1,7 +1,7 @@
 +++
 title = "Shortcodes personalitzats"
 date = 2023-02-19
-updated = 2024-12-28
+updated = 2025-10-21
 description = "Aquest tema inclou alguns shortcodes personalitzats útils que pots utilitzar per millorar les teves publicacions. Ja sigui per mostrar imatges que s'adapten als temes clar i fosc, o per donar format a una secció de referències amb un aspecte professional, aquests shortcodes personalitzats t'ajudaran."
 
 [taxonomies]
@@ -11,7 +11,7 @@ tags = ["funcionalitat", "shortcodes"]
 toc = true
 toc_levels = 2
 quick_navigation_buttons = true
-add_src_to_code_block = true
+code_block_name_links = true
 mermaid = true
 social_media_card = "social_cards/ca_blog_shortcodes.jpg"
 +++
@@ -187,27 +187,81 @@ Tots els altres shortcodes d'imatges poden utilizar l'amplada completa assignant
 {{/* full_width_image(src="img/amsterdam_by_oskerwyld.webp", alt="Fotografia d'un canal a Àmsterdam") */}}
 ```
 
+## Shortcodes socials
+
+### iine
+
+{{ aside(text="Per afegir-lo a totes les publicacions, estableix `iine = true` a la secció `[extra]` del teu `config.toml`.") }}
+
+Aquest shortcode et permet afegir botons addicionals d'[iine.to](https://iine.to) a les teves publicacions, com aquest:
+
+{{ iine(slug="/blog/shortcodes/demo-button") }}
+
+#### Ús
+
+```
+{{/* iine(icon="heart", slug="/post/el-meu-slug-de-post/like", label="M'agrada aquesta publicació") */}}
+```
+
+El shortcode accepta els següents paràmetres opcionals:
+
+- `icon`: La icona a mostrar. Pot ser `heart`, `thumbs_up`, `upvote`, o qualsevol emoji.
+- `slug`: Un identificador únic. Per defecte és la ruta de la pàgina actual. Útil si vols més d'un botó a la mateixa pàgina.
+- `label`: L'etiqueta d'accessibilitat per al botó. Per defecte és "M'agrada aquesta publicació".
+
 ## Shortcodes de codi
 
 ### Mostrar ruta o URL
 
-Mostra una ruta o URL al següent bloc de codi trobat. Si comença amb "http", es convertirà en un enllaç. Particularment útil quan s'utilitza en conjunció amb el [shortcode de text remot](#text-remot).
+Pots mostrar una ruta o URL per a un bloc de codi utilitzant la sintaxi nativa de Zola:
 
-{{ admonition(type="warning", title="IMPORTANT", text="Aquesta funcionalitat requereix JavaScript. Per activar-la, configura `add_src_to_code_block = true` a la secció `[extra]` de la teva pàgina, secció, o `config.toml`.") }}
+{{ aside(text="Requereix Zola 0.20.0 o superior.") }}
 
-{{ add_src_to_code_block(src="https://github.com/welpo/doteki/blob/main/.gitignore") }}
+````
+```rust,name=src/main.rs
+fn main() {
+    println!("Hola, món!");
+}
+```
+````
 
-```.gitignore
-{{ remote_text(src="https://raw.githubusercontent.com/welpo/doteki/main/.gitignore") }}
+Això renderitza:
+
+```rust,name=src/main.rs
+fn main() {
+    println!("Hola, món!");
+}
+```
+
+Si estableixes el `name` com una URL (és a dir, comença amb `http` o `https`), pots convertir-lo en un enllaç clicable. Això és particularment útil quan s'utilitza juntament amb el [shortcode de text remot](#text-remot).
+
+{{ admonition(type="warning", title="JavaScript necessari", text="La funció d'URLs clicables requereix JavaScript. Per habilitar-la, configura `code_block_name_links = true` a la secció `[extra]` de la teva pàgina, secció, o `config.toml`.") }}
+
+```.gitignore,name=https://github.com/welpo/doteki/blob/main/.gitignore
+__pycache__/
+*coverage*
+.vscode/
+dist/
+```
+
+### Suport de shortcode heretat
+
+El shortcode `add_src_to_code_block` segueix funcionant per retrocompatibilitat però serà descontinuat en una versió futura. Si us plau, utilitza la sintaxi nativa de Zola:
+
+```
+# Forma antiga (descontinuada):
+{{/* add_src_to_code_block(src="ruta/al/fitxer.rs") */}}
+
+# Forma nova (recomanada):
+```rust,name=ruta/al/fitxer.rs
 ```
 
 #### Ús
 
 ````
 {{/* add_src_to_code_block(src="https://github.com/welpo/doteki/blob/main/.gitignore") */}}
-
 ```.gitignore
-__pycache__/
+**pycache**/
 *coverage*
 .vscode/
 dist/
@@ -290,7 +344,7 @@ Mostreu només les línies 3 a 5 d'un arxiu local:
 
 ### Advertències
 
-Destaca informació amb aquests shortcodes. Hi ha cinc tipus (`type`): `note`, `tip`, `info`, `warning`, i `danger`.
+Destaca informació amb aquests shortcodes d'advertència/alerta. Hi ha cinc tipus (`type`): `note`, `tip`, `info`, `warning`, i `danger`.
 
 {{ admonition(type="note", text="Contingut amb **sintaxi** *Markdown*. Consulta [aquesta `api`](#).") }}
 

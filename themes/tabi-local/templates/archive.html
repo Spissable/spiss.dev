@@ -7,6 +7,18 @@
 {# Set locale for date #}
 {% set date_locale = macros_translate::translate(key="date_locale", default="en_GB", language_strings=language_strings) %}
 
+{#- Check for language-specific date formats -#}
+{%- set language_format = "" -%}
+{%- if config.extra.date_formats -%}
+    {%- for format_config in config.extra.date_formats -%}
+        {%- if format_config.lang == lang -%}
+            {%- if format_config.archive -%}
+                {%- set_global language_format = format_config.archive -%}
+            {%- endif -%}
+        {%- endif -%}
+    {%- endfor -%}
+{%- endif -%}
+
 <div class="archive">
     <ul class="list-with-title">
         {%- set source_paths = section.extra.section_path | default(value="blog/") -%}
@@ -25,6 +37,13 @@
             {%- set_global all_posts = all_posts | concat(with=section_item.pages) -%}
         {%- endfor %}
 
+        {# Sort all posts by date #}
+        {%- set archive_reverse = section.extra.archive_reverse | default(value=false) -%}
+        {%- set all_posts = all_posts | sort(attribute="date") -%}
+        {%- if not archive_reverse -%}
+            {%- set all_posts = all_posts | reverse -%}
+        {%- endif -%}
+
         {# Group posts by year. #}
         {% set posts_by_year = all_posts | group_by(attribute="year") %}
         {% set years = [] %}
@@ -32,8 +51,13 @@
             {% set_global years = years | concat(with=[year]) %}
         {% endfor %}
 
-        {# Iterate over sorted & reversed years (newest to oldest). #}
-        {% for year in years | sort | reverse %}
+        {# Iterate over years #}
+        {% set years = years | sort %}
+        {%- if not archive_reverse -%}
+            {%- set years = years | reverse -%}
+        {%- endif -%}
+
+        {% for year in years %}
             {% set posts = posts_by_year[year] %}
             {% if posts | length > 0 %}
             <li>
@@ -43,10 +67,16 @@
                     <li class="listing-item">
                         <div class="post-time">
                             <span class="date">
-                                {{ post.date | date(format="%d %b", locale=date_locale) }}
+                                {%- if language_format -%}
+                                    {{ post.date | date(format=language_format, locale=date_locale) }}
+                                {%- elif config.extra.archive_date_format -%}
+                                    {{ post.date | date(format=config.extra.archive_date_format, locale=date_locale) }}
+                                {%- else -%}
+                                    {{ post.date | date(format="%d %b", locale=date_locale) }}
+                                {%- endif -%}
                             </span>
                         </div>
-                        <a href="{{ post.permalink }}" title="{{ post.title }}">{{ post.title }}</a>
+                        <a href="{{ post.permalink }}" title="{{ post.title }}">{{ post.title | markdown(inline=true) | safe }}</a>
                     </li>
                     {% endfor %}
                 </ul>

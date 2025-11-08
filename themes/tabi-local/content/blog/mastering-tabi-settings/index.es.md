@@ -1,7 +1,7 @@
 +++
 title = "Domina la configuración de tabi: guía completa"
 date = 2023-09-18
-updated = 2025-01-02
+updated = 2025-08-07
 description = "Descubre las múltiples maneras en que puedes personalizar tabi."
 
 [taxonomies]
@@ -179,6 +179,10 @@ Por defecto, cuando se listan los artículos, se muestra la fecha de creación. 
 - `updated`: Muestra solo la fecha de la última actualización del artículo. Si no hay fecha de actualización, muestra la fecha de publicación original.
 - `both`: Muestra tanto la fecha de publicación original como la fecha de la última actualización.
 
+{% admonition(type="tip") %}
+Esta configuración sigue la jerarquía: puedes establecer un valor global en `config.toml` o configurarlo para secciones específicas en su archivo `_index.md`. En ambos casos, añádelo a la sección `[extra]`.
+{% end %}
+
 #### Listado de proyectos
 
 Puedes mostrar una selección de proyectos en tu página principal. Para hacer esto, primero necesitarás configurar el directorio `projects`.
@@ -220,7 +224,7 @@ Las pieles de tabi cambian el color principal del sitio. Puedes configurar la pi
 
 {{ image_toggler(default_src="blog/customise-tabi/skins/lavender_light.webp", toggled_src="blog/customise-tabi/skins/lavender_dark.webp", default_alt="piel lavender en modo claro", toggled_alt="piel lavender en modo oscuro", full_width=true) }}
 
-Explora las pieles disponibles y aprende cómo crear la tuya propia consultando [la documentación](/es/blog/customise-tabi/#skins).
+Explora las pieles disponibles y aprende cómo crear la tuya propia consultando [la documentación](@/blog/customise-tabi/index.es.md#skins).
 
 ### Fuente sans serif (paloseco)
 
@@ -233,6 +237,25 @@ tabi utiliza una fuente serif para los párrafos de los artículos (la que está
 Haz clic en la imagen para comparar las fuentes:
 
 {{ image_toggler(default_src="blog/mastering-tabi-settings/img/serif.webp", toggled_src="blog/mastering-tabi-settings/img/sans-serif.webp", default_alt="Fuente serif", toggled_alt="Fuente sans-serif", full_width=true) }}
+
+### Indicador de enlaces externos
+
+| Página | Sección | `config.toml` | Sigue Jerarquía | Requiere JavaScript |
+|:------:|:-------:|:-------------:|:----------------:|:------------------:|
+|   ❌   |    ❌   |      ✅       |        ❌        |         ❌         |
+
+{{ admonition(type="info", text="Requiere Zola 0.20.0 o posterior.") }}
+
+Si deseas añadir un icono a los enlaces externos, configura la sección `[markdown]` (no `[extra]`) en tu `config.toml`:
+
+```toml
+[markdown]
+external_links_class = "external"
+```
+
+Esto añadirá un pequeño icono junto a los enlaces externos:
+
+{{ dual_theme_image(light_src="blog/mastering-tabi-settings/img/external_link_light.webp", dark_src="blog/mastering-tabi-settings/img/external_link_dark.webp", alt="Icono de enlace externo", full_width=true) }}
 
 ### Estilos CSS personalizados
 
@@ -438,10 +461,14 @@ Por defecto, el archivo mostrará las publicaciones ubicadas en `blog/`. Para pe
   section_path = ["blog/", "notas/", "ruta-tres/"]
   ```
 
-**Nota**:
+El archivo muestra las publicaciones en orden cronológico inverso (las más recientes primero). Puedes invertir este orden estableciendo `archive_reverse = true` en la sección `[extra]`:
 
-- La página de Archivo sólo listará publicaciones con fecha.
-- El orden las publicaciones viene determinada por la variable `sort_by` de las secciones archivadas. Esta demo utiliza `sort_by = "date"` en `blog/_index.md`.
+```toml
+[extra]
+archive_reverse = true  # muestra las publicaciones más antiguas primero
+```
+
+{{ admonition(type="note", title="nota" text="La página de Archivo sólo listará publicaciones que tengan fecha en su encabezado.") }}
 
 ### Etiquetas
 
@@ -587,7 +614,9 @@ fediverse_creator = { handle = "username", domain = "example.com" }
 |:------:|:-------:|:-------------:|:---------------:|:-------------------:|
 |   ❌   |   ❌    |      ✅       |        ❌       |         ❌          |
 
-La barra de navegación es la barra en la parte superior de la página que contiene el título del sitio y el menú de navegación. Puedes personalizar los elementos que aparecen configurando `menu` en `config.toml`. Por ejemplo:
+La barra de navegación es la barra en la parte superior de la página que contiene el título del sitio y el menú de navegación. Puedes personalizar los elementos que aparecen configurando `menu` en `config.toml`.
+
+Soporta links relativos para páginas internas y links absolutos para enlaces externos. Por ejemplo:
 
 ```toml
 menu = [
@@ -596,6 +625,7 @@ menu = [
     { name = "etiquetas", url = "tags", trailing_slash = true },
     { name = "proyectos", url = "projects", trailing_slash = true },
     { name = "acerca de", url = "about", trailing_slash = true },
+    { name = "github", url = "https://github.com/welpo/tabi", trailing_slash = false },
 ]
 ```
 
@@ -668,13 +698,13 @@ Establecer `copy_button = true` añadirá un pequeño botón de copiar en la par
 
 {{ dual_theme_image(light_src="blog/mastering-tabi-settings/img/copy_button_on_code_blocks_light.webp", dark_src="blog/mastering-tabi-settings/img/copy_button_on_code_blocks_dark.webp", alt="Botón de copiar en bloques de código", full_width=true) }}
 
-### Mostrar ruta/URL en bloques de código
+### Nombres de bloques de código clicables
 
 | Página | Sección | `config.toml` | Sigue la jerarquía | Requiere JavaScript |
 |:------:|:-------:|:-------------:|:---------------:|:-------------------:|
 |   ✅   |   ✅    |      ✅       |        ✅       |         ✅          |
 
-Establece `add_src_to_code_block = true` para habilitar el uso del [shortcode `add_src_to_code_block`](@/blog/shortcodes/index.es.md#mostrar-ruta-o-url).
+Establece `code_block_name_links = true` para habilitan los enlaces clickables en los nombres de bloques de código. Consulta la [documentación](@/blog/shortcodes/index.es.md#mostrar-ruta-o-url) para ver ejemplos y uso.
 
 ### Forzar bloques de código de izquierda a derecha
 
@@ -710,9 +740,11 @@ Consulta la [documentación de Mermaid](@/blog/shortcodes/index.es.md#diagramas-
 |:------:|:-------:|:-------------:|:---------------:|:-------------------:|
 |   ❌   |   ❌    |      ✅       |        ❌       |         ❌          |
 
-Las fuentes personalizadas causan parpadeo del texto en Firefox. Para solucionar esto, tabi carga un subconjunto de glifos para el encabezado. Dado que esto (ligeramente) aumenta el tiempo de carga inicial, es una buena idea intentar minimizar el tamaño de este subconjunto.
+Las fuentes personalizadas causan parpadeo del texto en Firefox. Para solucionar esto, tabi carga un subconjunto de glifos para el encabezado. Dado que esto (ligeramente) aumenta el tiempo de carga inicial, es una buena idea intentar minimizar el tamaño de este subconjunto, o desactivarlo por completo si no estás usando una fuente personalizada en tu tema.
 
 Puedes crear un subconjunto personalizado adaptado a tu sitio, guardarlo como `static/custom_subset.css`, y hacer que se cargue con `custom_subset = true`.
+
+Para desactivar el subconjunto, puedes usar `enable_subset = false`.
 
 Para obtener más información, incluyendo instrucciones sobre cómo crear un subconjunto personalizado, consulta la [documentación](@/blog/custom-font-subset/index.es.md).
 
@@ -730,7 +762,10 @@ Por defecto, el feed Atom solo contiene el resumen/descripción de tus publicaci
 |:----:|:-------:|:-------------:|:-----------------:|:-------------------:|
 |  ✅  |   ✅    |      ✅       |         ✅        |         ❌          |
 
-Puedes ocultar páginas específicas o secciones enteras del feed con `hide_from_feed = true`.
+Puedes controlar cómo aparece el contenido en los feeds usando dos configuraciones:
+
+- `hide_from_feed = true`: Oculta el contenido de todos los feeds (feed principal, feeds de sección y feeds de etiquetas)
+- `hide_from_main_feed = true`: Oculta el contenido solo del feed principal mientras lo mantiene visible en los feeds de sección y de etiquetas
 
 ### Comentarios {#añadir-comentarios}
 
@@ -745,6 +780,37 @@ Si quieres activar los comentarios de forma global, puedes hacerlo estableciendo
 Si has activado un sistema globalmente, pero quieres desactivarlo en una página específica, puedes hacerlo estableciendo el nombre del sistema como `false` en el front matter. Por ejemplo, `utterances = false`.
 
 Lee la [documentación](@/blog/comments/index.es.md) para obtener más información sobre los sistemas disponibles y su configuración.
+
+### Botones de iine {#iine}
+
+| Página | Sección | `config.toml` | Sigue la jerarquía | Requiere JavaScript |
+|:------:|:-------:|:-------------:|:-------------------:|:-------------------:|
+|   ✅   |   ✅    |      ✅       |          ✅         |         ❌          |
+
+tabi soporta botones de [iine](https://iine.to/) para mostrar apreciación anónima por tu contenido. Estos botones centrados en la privacidad funcionan sin JavaScript y no rastrean usuarios.
+
+Para activar los botones iine globalmente:
+
+```toml
+[extra]
+iine = true
+```
+
+Puedes personalizar el icono usado en los botones (esta configuración sigue la jerarquía):
+
+```toml
+[extra]
+iine_icon = "thumbs_up"  # Opciones: "heart", "thumbs_up", "upvote", o cualquier emoji
+```
+
+Para sitios multilingües, puedes unificar los conteos de likes entre versiones en diferentes idiomas del mismo contenido (configuración solo de config; valor predeterminado: `true`):
+
+```toml
+[extra]
+iine_unified_languages = true  # Los likes en /es/blog/hello/ cuentan hacia /blog/hello/
+```
+
+También puedes activar los botones iine en páginas o secciones individuales estableciendo `iine = true` en su front matter, o personalizar el icono con `iine_icon = "🚀"`.
 
 ### Análisis web
 
@@ -767,6 +833,8 @@ Puedes configurarlos en la sección `[extra.analytics]` de tu archivo `config.to
   - Para GoatCounter: `"https://stats.example.com"`
   - Para Umami: `"https://umami.example.com"`
   - Para Plausible: `"https://plausible.example.com"`
+
+- `do_not_track`: (sólo para Umami) opcional. Cuando se establece en `true`, se desactiva el seguimiento para los usuarios cuyos navegadores envían un encabezado "Do Not Track".
 
 Un ejemplo de configuración para GoatCounter no auto-alojada sería:
 
@@ -905,11 +973,24 @@ Por defecto, la fecha se muestra debajo del título de la publicación. Puedes o
 |:------:|:-------:|:-------------:|:------------------:|:-------------------:|
 |   ❌   |   ❌    |      ✅       |         ❌         |         ❌          |
 
-tabi tiene dos formatos de fecha: `long_date_format` y `short_date_format`. El formato corto se utiliza en los metadatos de una publicación, mientras que el formato largo se utiliza al listar las publicaciones (es decir, en la [sección de blog](/es/blog/) o en la [página principal](/es/)).
+tabi tiene tres formatos de fecha: `long_date_format`, `short_date_format` y `archive_date_format`. El formato corto se utiliza en los metadatos de una publicación, mientras que el formato largo se utiliza al listar las publicaciones (es decir, en la [sección de blog](/es/blog/) o en la [página principal](/es/)). El formato de archivo se usa para mostrar el día y el mes en la página de archivo.
 
-Por defecto es "6th July 2049" para ambos formatos en inglés. Para otros idiomas, el predeterminado es `"%d %B %Y"` para el formato largo y `"%-d %b %Y"` para el formato corto.
+Por defecto es "6th July 2049" para los formatos corto y largo en inglés. Para otros idiomas, el predeterminado es `"%d %B %Y"` para el formato largo y `"%-d %b %Y"` para el formato corto. El formato de archivo predeterminado universal es `"%d %b"`.
 
 En Zola, la sintaxis para el formateo de tiempo está inspirada en strftime. Una referencia completa está disponible en la [documentación de chrono](https://docs.rs/chrono/0.4.31/chrono/format/strftime/index.html).
+
+#### Formatos de fecha por idioma
+
+Puedes personalizar los formatos de fecha para idiomas específicos usando la matriz `date_formats` en `config.toml`:
+
+```toml
+date_formats = [
+    { lang = "es", long = "%d de %B de %Y", short = "%-d %b %Y", archive = "%d de %b" },
+    { lang = "de", long = "%d. %B %Y", short = "%d.%m.%Y", archive = "%d. %b" },
+]
+```
+
+Esto permite que diferentes idiomas usen formatos de fecha culturalmente apropiados (por ejemplo, "6 de julio de 2049" en español o "6. Juli 2049" en alemán).
 
 ### Separador personalizado
 
@@ -970,6 +1051,68 @@ allowed_domains = [
 Esta función está habilitada por defecto. Para deshabilitarla (y permitir todo), configura `enable_csp = false` en una página, sección o globalmente. La opción `enable_csp` sigue [la jerarquía](#jerarquia-de-configuracion).
 
 Para obtener más información, consulta la [página de documentación de CSP](@/blog/security/index.es.md).
+
+---
+
+## Indieweb
+
+### Webmentions
+
+| Página | Sección | `config.toml` | Sigue la jerarquía | Requiere JavaScript |
+|:------:|:-------:|:-------------:|:---------------:|:-------------------:|
+|   ❓   |   ❓    |      ✅       |        ❓       |         ✅          |
+
+Como se describe en el estándar W3C recomendado, [Webmention](https://www.w3.org/TR/webmention/#abstract-p-1) es una manera sencilla de notificar cualquier URL cuando la mencionas en tu sitio web. Desde la perspectiva del receptor, es una forma de solicitar notificaciones cuando otros sitios web la mencionan.
+
+Para sitios web estáticos, [webmention.io](https://webmention.io/) aloja un punto final de webmention que se puede utilizar para recibir webmentions. Esta función recupera las webmentions almacenadas en webmention.io y las muestra para una página. Necesitarás configurar una cuenta para tu sitio web en webmention.io. Cuando habilites la función, anunciará tu punto final de webmention.io y mostrará las webmentions para cualquier página.
+
+Habilita las webmentions para tu sitio web agregando lo siguiente a tu archivo `config.toml`.
+
+```toml
+[extra.webmentions]
+enable = true
+# Especifica el dominio registrado con webmention.io.
+domain = "www.example.com"
+```
+
+❓: Para desactivar las webmentions para una sección o página específica, establece `webmentions = false` en la sección `[extra]` del front matter de esa sección o página.
+
+La sección de webmentions se ve así:
+
+{{ dual_theme_image(light_src="blog/mastering-tabi-settings/img/webmention_light.webp", dark_src="blog/mastering-tabi-settings/img/webmention_dark.webp" alt="Captura de pantalla de webmentions mostrando reposts, me gusta, marcadores y comentarios", full_width=true) }}
+
+### h-card representativa
+
+| Página | Sección | `config.toml` | Sigue Jerarquía | Requiere JavaScript |
+| :--: | :-----: | :-----------: | :---------------: | :-----------------: |
+|  ❌  |   ❌    |      ✅       |        ❌         |         ❌          |
+
+Por defecto, tabi añade una [h-card](https://microformats.org/wiki/h-card) representativa **oculta** a la página de inicio. Aunque es invisible para los visitantes, está disponible para los analizadores de microformatos. Puedes comprobar la validez de la tarjeta con la herramienta [Indiewebify.me](https://indiewebify.me/validate-h-card/).
+
+Para desactivar la h-card, establece `enable = false` en la sección `[extra.hcard]` de `config.toml`.
+
+La h-card predeterminada incluye tu nombre, la URL del sitio web y los enlaces a redes sociales.
+
+Puedes establecer una imagen de perfil y una pequeña biografía con los ajustes `avatar` y `biography`.
+
+Todas las demás [propiedades de h-card](https://microformats.org/wiki/h-card#Properties) se pueden añadir listándolas en la sección `[extra.hcard]` del archivo de configuración. Simplemente reemplaza todos los caracteres `-` por `_`.
+
+---
+
+## Extendiendo elementos HTML en tabi
+
+Algunos elementos HTML en tabi pueden extenderse para admitir casos de uso adicionales, como agregar JavaScript personalizado para comportamientos en todo el sitio al final de la etiqueta `<body>` o incluir contenido adicional al final del elemento `<head>` que no esté soportado por otras configuraciones de tabi.
+
+Consulta la tabla a continuación para ver los elementos que pueden extenderse:
+
+| Elemento | Plantilla                         |
+| :------: | :-------------------------------: |
+| `<head>` | `templates/tabi/extend_head.html` |
+| `<body>` | `templates/tabi/extend_body.html` |
+
+No hay configuraciones explícitas que debas establecer para tu sitio o páginas. Simplemente crea el archivo de plantilla correspondiente para tu sitio, y tabi lo incluirá automáticamente.
+
+---
 
 [^1]: Si estás utilizando un repositorio Git remoto, es posible que quieras automatizar el proceso de actualización del campo `updated`. Aquí tienes una guía para eso: [Zola Git Hook: actualizando las fechas de las publicaciones](https://osc.garden/es/blog/zola-date-git-hook/).
 
