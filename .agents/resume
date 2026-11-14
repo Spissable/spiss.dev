@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# A static Zola site has nothing to reconnect; services are supervised by Amp.
+# Confirm the pinned toolchain is still present so a broken snapshot is visible.
+if ! command -v zola >/dev/null 2>&1; then
+  echo "[resume] zola is missing; run .agents/setup" >&2
+  exit 0
+fi
+echo "[resume] $(zola --version) ok"

@@ -1,0 +1,7 @@
+services:
+  site:
+    command: zola serve --interface 0.0.0.0 --port "$PORT" --base-url "$PUBLIC_URL" --no-port-append
+    health: /
+    portal:
+      title: spiss.dev preview
+      description: Zola dev server with live reload, serving the site.
