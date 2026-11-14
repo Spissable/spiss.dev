@@ -86,5 +86,5 @@ To achieve this, I configured yet another systemd service: [GitHub link](https:/
 Using the power of my desktop PC right from the browser, including forwarding of locally hosted web services. In fact, I wrote this whole blog post on my iPad via code-server on my PC. The locally running `0.0.0.0:1111` Zola site was automatically served via `1111.XXXXXXXXXX.spiss.dev` behind the same password protection.
 And nowadays, I even find myself connecting to the code-server from my Dell XPS 13, as the Desktop PC is just way more powerful, especially when compiling large Rust projects ;)
 
-{{ full_width_image(src="blog/codeserver/img/codeserver.png", alt="VS Code on iPad") }}
+{{< full_width_image src="blog/codeserver/img/codeserver.png" alt="VS Code on iPad" />}}
 

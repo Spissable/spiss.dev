@@ -14,7 +14,7 @@ While working from home is nice and all, there is one thing that has been drivin
 
 Dock the laptop, and suddenly I'm on the built-in mic. Wake from sleep, built-in mic. Toggle the KVM switch, you guessed it. And it never happens _before_ the meeting starts - it's always mid-sentence, followed by the dreaded "hey, you sound different, are you on your laptop mic?".
 
-{{ dimmable_image(src="blog/mike/screenshot.png", alt="Mike menu bar popover showing microphone priority list") }}
+{{< dimmable_image src="blog/mike/screenshot.png" alt="Mike menu bar popover showing microphone priority list" />}}
 
 ### The Solution
 

@@ -8,7 +8,7 @@ footnote_backlinks = true
 quick_navigation_buttons = true
 +++
 
-{{ dimmable_image(src="desk.jpg", alt="Photo of desk with laptop and PC") }}<br>
+{{< dimmable_image src="desk.jpg" alt="Photo of desk with laptop and PC" />}}<br>
 
 ### First, the hardware
 

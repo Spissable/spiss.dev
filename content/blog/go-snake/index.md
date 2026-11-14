@@ -21,7 +21,7 @@ The game is a super simplistic version of the good ol' snake, written with the G
 
 P.S. You have to first click on the visible game area for the input keys to work.
 
-{{ game(url="https://snake.spiss.dev", class="go-snake") }}
+{{< game url="https://snake.spiss.dev" class="go-snake" />}}
 
 ### Conclusion
 

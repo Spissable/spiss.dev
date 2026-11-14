@@ -39,4 +39,4 @@ On the flip side, there are of course some negatives as well:
 
 Finally, I also had the chance to visit GopherCon EU this year, and it's an experience I can wholeheartedly recommend. Lots of interesting talks, passionate people, and all in all just great vibes.
 
-{{ dimmable_image(src="blog/one-year-go/img/gophercon.jpeg", alt="Gopher Eating Microsoft Logo") }}
+{{< dimmable_image src="blog/one-year-go/img/gophercon.jpeg" alt="Gopher Eating Microsoft Logo" />}}

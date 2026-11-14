@@ -1,10 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Zola version pinned to the newest release that builds this site.
-# Zola 0.23.0 changed Tera template syntax, which the vendored tabi-local
-# theme does not support yet (its series.html fails to parse).
-ZOLA_VERSION="${ZOLA_VERSION:-0.22.1}"
+# Zola version pinned to the newest release. tabi v5.0.0 (and its Tera 2
+# component syntax) requires Zola 0.23.6 or newer.
+ZOLA_VERSION="${ZOLA_VERSION:-0.23.6}"
 
 step() { printf '[setup] %s %s\n' "$(date +%H:%M:%S)" "$*"; }
 
@@ -42,8 +41,8 @@ else
   cat >> "$notes_file" <<EOF
 
 $notes_marker
-- Zola ${ZOLA_VERSION} is installed at /usr/local/bin/zola. Do not upgrade to Zola 0.23+: the vendored tabi-local theme does not build under its Tera changes.
-- \`zola build\` finishes in under a second; the dev server is declared as the \`site\` service in .amp/services.yaml (\`amp orb services ensure\`).
+- Zola ${ZOLA_VERSION} is installed at /usr/local/bin/zola. The theme (tabi v5.0.0) requires Zola 0.23.6+; shortcodes are Tera components under templates/components/.
+- \`zola build\` finishes in about a second; the dev server is declared as the \`site\` service in .amp/services.yaml (\`amp orb services ensure\`).
 EOF
 fi
 

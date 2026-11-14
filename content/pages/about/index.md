@@ -5,7 +5,7 @@ render = true
 insert_anchor_links = "left"
 +++
 
-{{ dual_theme_image(light_src="profile.jpeg", dark_src="profile.jpeg", alt="Photograph of Lukas Spiss") }}
+{{< dual_theme_image light_src="profile.jpeg" dark_src="profile.jpeg" alt="Photograph of Lukas Spiss" />}}
 
 Hi, I'm Lukas. I'm a software engineer currently based in Porto 🇵🇹 with roots in South Tyrol, Italy 🇮🇹.
 
