@@ -1,0 +1,4 @@
+{
+  "$schema": "ampcode.com/cli-settings.schema.json",
+  "amp.git.commit.ampThread.enabled": false
+}
